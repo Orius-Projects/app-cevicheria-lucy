@@ -289,8 +289,7 @@ const OrderSchema = new Schema<IOrderDocument>(
     },
     clientRequestId: {
       type: String,
-      trim: true,
-      default: null
+      trim: true
     },
     version: {
       type: Number,
@@ -313,7 +312,10 @@ const OrderSchema = new Schema<IOrderDocument>(
 // Índices canónicos según data-model.md §3.10
 // Restricción constitucional: PROHIBIDO customer, paymentStatus, paymentMethod, taxCents, igvRate, billing
 // El índice único de orderNumber se define en el campo ({ unique: true })
-OrderSchema.index({ clientRequestId: 1 }, { unique: true, sparse: true });
+OrderSchema.index(
+  { clientRequestId: 1 },
+  { unique: true, sparse: true, partialFilterExpression: { clientRequestId: { $type: 'string' } } }
+);
 OrderSchema.index({ status: 1, enviadoEn: 1 });
 OrderSchema.index({ shiftId: 1, status: 1 });
 OrderSchema.index({ tableSessionId: 1 });

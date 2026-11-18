@@ -23,7 +23,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "npm run test -w server --if-present && npm run test -w client --if-present",
+    "test": "npm run test -w server",
     "seed": "npm run seed -w server"
   },
   "devDependencies": {

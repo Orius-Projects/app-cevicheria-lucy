@@ -2,6 +2,7 @@ export * from './user.model';
 export * from './table.model';
 export * from './table-session.model';
 export * from './shift.model';
+export * from './shift-summary.model';
 export * from './menu-section.model';
 export * from './dish.model';
 export * from './menu-day.model';

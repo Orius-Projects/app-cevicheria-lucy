@@ -5,6 +5,7 @@ import { getEnv } from './config/env';
 import { requestIdMiddleware } from './config/logger';
 import { errorHandler, NotFoundError } from './middlewares/error';
 import { isDBConnected } from './config/db';
+import { apiRouter } from './routes';
 
 const app: Express = express();
 const env = getEnv();
@@ -30,6 +31,9 @@ app.get('/api/health', (_req: Request, res: Response) => {
     timestamp: new Date().toISOString()
   });
 });
+
+// Rutas de la API REST
+app.use('/api', apiRouter);
 
 // Manejo de rutas inexistentes (404)
 app.use((_req: Request, _res: Response) => {

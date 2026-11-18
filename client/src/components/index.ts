@@ -1,2 +1,1 @@
-// Client UI Components
-export {};
+export * from './waiter/TableSelector';

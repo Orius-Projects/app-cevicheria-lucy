@@ -31,7 +31,7 @@ export type Env = z.infer<typeof envSchema>;
 let parsedEnv: Env | null = null;
 
 export function validateEnv(): Env {
-  if (parsedEnv) {
+  if (parsedEnv && process.env.NODE_ENV !== 'test') {
     return parsedEnv;
   }
 
