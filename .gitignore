@@ -1,0 +1,26 @@
+# Dependencias
+node_modules/
+
+# Builds
+dist/
+build/
+*.tsbuildinfo
+
+# Entorno
+.env
+.env.local
+.env.*.local
+
+# Pruebas y cobertura
+coverage/
+.nyc_output/
+
+# Logs
+*.log
+logs/
+
+# Editores y sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
