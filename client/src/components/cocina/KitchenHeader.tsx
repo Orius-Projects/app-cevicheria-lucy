@@ -1,5 +1,6 @@
 import React from 'react';
 import { KitchenConnectionState } from '@cevicheria/shared';
+import { NotificationCenter } from '../notifications/NotificationCenter';
 
 interface KitchenHeaderProps {
   pendingCount: number;
@@ -80,6 +81,8 @@ export const KitchenHeader: React.FC<KitchenHeaderProps> = ({
               : 'Desconectado'}
           </span>
         </div>
+
+        <NotificationCenter showSoundToggle={false} />
 
         <button
           type="button"

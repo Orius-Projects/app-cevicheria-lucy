@@ -18,6 +18,7 @@ interface ShiftState {
   fetchCurrentShift: () => Promise<void>;
   openShift: (label: string, date?: string) => Promise<void>;
   closeShift: (shiftId: string, observations?: string) => Promise<any>;
+  markClosed: () => void;
   clearError: () => void;
 }
 
@@ -28,6 +29,14 @@ export const useShiftStore = create<ShiftState>((set, get) => ({
   error: null,
 
   clearError: () => set({ error: null }),
+
+  markClosed: () =>
+    set((state) => ({
+      currentShift: state.currentShift
+        ? { ...state.currentShift, status: 'CERRADO' }
+        : null,
+      isOpen: false
+    })),
 
   fetchCurrentShift: async () => {
     set({ isLoading: true, error: null });

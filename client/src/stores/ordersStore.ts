@@ -19,6 +19,8 @@ interface OrdersState {
   deliverOrder: (id: string, version: number) => Promise<OrderDTO>;
   cancelOrder: (id: string, reason: string, version: number) => Promise<OrderDTO>;
   applyOrderEvent: (data: OrderDTO | { event: string; order: OrderDTO }) => void;
+  upsertOrder: (order: OrderDTO) => void;
+  removeOrder: (id: string) => void;
   clearError: () => void;
 }
 
@@ -163,11 +165,22 @@ export const useOrdersStore = create<OrdersState>((set, get) => ({
     }
   },
 
+  upsertOrder: (order: OrderDTO) => {
+    get().applyOrderEvent(order);
+  },
+
+  removeOrder: (id: string) => {
+    set((state) => ({
+      active: state.active.filter((o) => o.id !== id),
+      ready: state.ready.filter((o) => o.id !== id)
+    }));
+  },
+
   applyOrderEvent: (data: OrderDTO | { event: string; order: OrderDTO }) => {
     const order = data && 'order' in data && data.order ? data.order : (data as OrderDTO);
     if (!order || !order.id) return;
     const { active, ready, detail } = get();
-    const isTerminal = order.status === 'ENTREGADO' || order.status === 'CANCELADO';
+    const isTerminal = order.status === 'ENTREGADO' || order.status === 'CANCELADO' || order.manualClose;
     const isReady = order.status === 'LISTO';
     const isActive = order.status === 'ENVIADO' || order.status === 'LISTO';
 

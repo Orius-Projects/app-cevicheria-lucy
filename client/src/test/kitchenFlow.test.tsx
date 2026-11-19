@@ -284,7 +284,9 @@ describe('Kitchen Flow (Spec 004 KDS)', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText(/Sin conexión con el servidor/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/(Sin conexión con el servidor|Reconectando con el servidor)/i)
+    ).toBeInTheDocument();
 
     const retryBtn = screen.getByRole('button', { name: /Reintentar conexión/i });
     expect(retryBtn).toBeInTheDocument();

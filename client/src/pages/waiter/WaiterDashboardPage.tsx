@@ -9,6 +9,9 @@ import { useOrderEvents } from '../../hooks/useOrderEvents';
 import { TableSelector } from '../../components/mozo/TableSelector';
 import { ReadyOrderCard } from '../../components/mozo/ReadyOrderCard';
 import { CancelOrderModal } from '../../components/mozo/CancelOrderModal';
+import { ConnectionBanner } from '../../components/common/ConnectionBanner';
+import { NotificationCenter } from '../../components/notifications/NotificationCenter';
+import { ToastContainer } from '../../components/notifications/ToastContainer';
 import { OrderDTO } from '@cevicheria/shared';
 
 export const WaiterDashboardPage: React.FC = () => {
@@ -80,6 +83,9 @@ export const WaiterDashboardPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Banner de estado de conexión */}
+      <ConnectionBanner />
+
       {/* Header */}
       <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex flex-wrap justify-between items-center gap-3 shadow-sm sticky top-0 z-40">
         <div>
@@ -101,6 +107,8 @@ export const WaiterDashboardPage: React.FC = () => {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
+          <NotificationCenter />
+
           <Link
             to="/mozo/pedido/nuevo"
             className="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold min-h-[44px] flex items-center shadow-sm active:scale-95 transition-all"
@@ -311,6 +319,9 @@ export const WaiterDashboardPage: React.FC = () => {
           }}
         />
       )}
+
+      {/* Contenedor de Toasts con aria-live */}
+      <ToastContainer />
     </div>
   );
 };

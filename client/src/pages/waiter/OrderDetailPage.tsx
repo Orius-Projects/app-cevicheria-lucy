@@ -4,6 +4,10 @@ import { useAuthStore } from '../../stores/authStore';
 import { useOrdersStore } from '../../stores/ordersStore';
 import { OrderStatusBadge } from '../../components/mozo/OrderStatusBadge';
 import { CancelOrderModal } from '../../components/mozo/CancelOrderModal';
+import { ConnectionBanner } from '../../components/common/ConnectionBanner';
+import { NotificationCenter } from '../../components/notifications/NotificationCenter';
+import { ToastContainer } from '../../components/notifications/ToastContainer';
+import { useOrderEvents } from '../../hooks/useOrderEvents';
 import { formatLima } from '../../utils/datetime';
 import { formatSoles } from '../../utils/money';
 import { OrderDTO } from '@cevicheria/shared';
@@ -12,6 +16,8 @@ export const OrderDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuthStore();
   const { detail, fetchById, deliverOrder, cancelOrder, loading, error, clearError } = useOrdersStore();
+
+  useOrderEvents({ pollingIntervalMs: 15000 });
 
   const [order, setOrder] = useState<OrderDTO | null>(null);
   const [isDelivering, setIsDelivering] = useState(false);
@@ -68,6 +74,9 @@ export const OrderDetailPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Banner de estado de conexión */}
+      <ConnectionBanner />
+
       {/* Header */}
       <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex justify-between items-center shadow-sm">
         <div className="flex items-center space-x-3">
@@ -85,7 +94,10 @@ export const OrderDetailPage: React.FC = () => {
           </div>
         </div>
 
-        <OrderStatusBadge status={order.status} />
+        <div className="flex items-center space-x-2">
+          <NotificationCenter />
+          <OrderStatusBadge status={order.status} />
+        </div>
       </header>
 
       {/* Main Content */}
@@ -249,6 +261,9 @@ export const OrderDetailPage: React.FC = () => {
           }}
         />
       )}
+
+      {/* Contenedor de Toasts con aria-live */}
+      <ToastContainer />
     </div>
   );
 };

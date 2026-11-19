@@ -11,6 +11,10 @@ import { DishCard } from '../../components/menu/DishCard';
 import { OrderCart } from '../../components/mozo/OrderCart';
 import { OrderSummary } from '../../components/mozo/OrderSummary';
 import { VariationSheet } from '../../components/mozo/VariationSheet';
+import { ConnectionBanner } from '../../components/common/ConnectionBanner';
+import { NotificationCenter } from '../../components/notifications/NotificationCenter';
+import { ToastContainer } from '../../components/notifications/ToastContainer';
+import { useOrderEvents } from '../../hooks/useOrderEvents';
 import { OrderDTO, DishStatus, DishVariation } from '@cevicheria/shared';
 import { TodayMenuItem } from '../../api/menu.api';
 
@@ -20,6 +24,8 @@ export const NewOrderPage: React.FC = () => {
   const { isOpen: isShiftOpen, fetchCurrentShift } = useShiftStore();
   const { todayMenu, loading: isMenuLoading, error: menuError, loadToday } = useMenuPublicStore();
   const { tables, fetchTables } = useTablesStore();
+
+  useOrderEvents({ pollingIntervalMs: 15000 });
 
   const {
     tableId,
@@ -192,6 +198,9 @@ export const NewOrderPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Banner de conexión */}
+      <ConnectionBanner />
+
       {/* Header */}
       <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex justify-between items-center shadow-sm sticky top-0 z-40">
         <div className="flex items-center space-x-3">
@@ -210,6 +219,8 @@ export const NewOrderPage: React.FC = () => {
         </div>
 
         <div className="flex items-center space-x-2">
+          <NotificationCenter />
+
           <button
             type="button"
             onClick={() => setIsTableModalOpen(true)}
@@ -444,6 +455,9 @@ export const NewOrderPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Contenedor de Toasts con aria-live */}
+      <ToastContainer />
     </div>
   );
 };

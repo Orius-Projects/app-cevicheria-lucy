@@ -394,3 +394,56 @@ export interface KitchenBoard {
 }
 
 export type KitchenConnectionState = 'connected' | 'reconnecting' | 'disconnected';
+
+// ==========================================
+// Tipos para Eventos en Vivo / Realtime (Spec 005)
+// ==========================================
+
+export type RealtimeConnectionStatus = 'connected' | 'connecting' | 'disconnected' | 'error';
+
+export interface EventEnvelope<T = any> {
+  eventId: string;
+  type: string;
+  occurredAt: string;
+  version: number;
+  schemaVersion: 2;
+  orderId: string | null;
+  payload: T;
+}
+
+export interface OrderEventPayload {
+  order: OrderDTO;
+  previousStatus?: OrderStatus | null;
+  changedBy: {
+    id: string;
+    name: string;
+    role: string;
+  };
+}
+
+export interface MenuAvailabilityEventPayload {
+  menuDayId: string;
+  menuItemId: string;
+  dishId: string;
+  dishName: string;
+  state: DishStatus;
+  remainingRations?: number | null;
+  manuallySoldOut: boolean;
+  changeType: string;
+  changedBy: {
+    id: string;
+    name: string;
+    role: string;
+  };
+}
+
+export interface ShiftClosedEventPayload {
+  shiftId: string;
+  date: string;
+  label: string;
+  closedBy: {
+    id: string;
+    name: string;
+    role: string;
+  };
+}

@@ -5,6 +5,9 @@ import { useOrdersStore } from '../../stores/ordersStore';
 import { useOrderEvents } from '../../hooks/useOrderEvents';
 import { OrderStatusBadge } from '../../components/mozo/OrderStatusBadge';
 import { CancelOrderModal } from '../../components/mozo/CancelOrderModal';
+import { ConnectionBanner } from '../../components/common/ConnectionBanner';
+import { NotificationCenter } from '../../components/notifications/NotificationCenter';
+import { ToastContainer } from '../../components/notifications/ToastContainer';
 import { formatLimaTime } from '../../utils/datetime';
 import { formatSoles } from '../../utils/money';
 import { OrderDTO } from '@cevicheria/shared';
@@ -38,6 +41,9 @@ export const ActiveOrdersPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Banner de estado de conexión */}
+      <ConnectionBanner />
+
       {/* Header */}
       <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex justify-between items-center shadow-sm sticky top-0 z-40">
         <div className="flex items-center space-x-3">
@@ -56,6 +62,8 @@ export const ActiveOrdersPage: React.FC = () => {
         </div>
 
         <div className="flex items-center space-x-2">
+          <NotificationCenter />
+
           <Link
             to="/mozo/pedido/nuevo"
             className="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold min-h-[44px] flex items-center shadow-sm"
@@ -253,6 +261,9 @@ export const ActiveOrdersPage: React.FC = () => {
           }}
         />
       )}
+
+      {/* Contenedor de Toasts con aria-live */}
+      <ToastContainer />
     </div>
   );
 };
