@@ -158,6 +158,28 @@ export interface DishDTO {
   updatedAt: Date | string;
 }
 
+export type Dish = DishDTO;
+export type DishState = DishStatus;
+
+export interface CreateDishInput {
+  sectionId: string;
+  name: string;
+  description?: string;
+  priceCents: number;
+  course: DishCourse;
+  isFixed?: boolean;
+  isRotating?: boolean;
+  sortOrder?: number;
+  variations?: Array<{
+    id?: string;
+    name: string;
+    sortOrder?: number;
+    active?: boolean;
+  }>;
+}
+
+export type UpdateDishInput = Partial<CreateDishInput> & { active?: boolean };
+
 export interface MenuDayDTO {
   id: string;
   date: string;
@@ -165,8 +187,29 @@ export interface MenuDayDTO {
   publishedBy?: string | null;
   publishedAt?: Date | string | null;
   notes?: string;
+  items?: MenuItemDTO[];
   createdAt: Date | string;
   updatedAt: Date | string;
+}
+
+export type MenuDay = MenuDayDTO;
+
+export interface CreateMenuDayInput {
+  date: string;
+  notes?: string;
+}
+
+export interface UpdateMenuDayItemInput {
+  dishId: string;
+  active?: boolean;
+  hasRationsLimit?: boolean;
+  totalRations?: number | null;
+  remainingRations?: number | null;
+}
+
+export interface UpdateMenuDayInput {
+  notes?: string;
+  items?: UpdateMenuDayItemInput[];
 }
 
 export interface MenuItemDTO {
@@ -191,6 +234,18 @@ export interface MenuItemDTO {
   status?: DishStatus;
 }
 
+export type MenuItem = MenuItemDTO;
+export type MenuSection = MenuSectionDTO;
+export type RationAdjustment = RationAdjustmentDTO;
+
+export interface ActorSummary {
+  _id?: string;
+  id?: string;
+  username: string;
+  displayName?: string;
+  role?: string;
+}
+
 export interface RationAdjustmentDTO {
   id: string;
   menuItemId: string;
@@ -202,7 +257,7 @@ export interface RationAdjustmentDTO {
   previousRemaining?: number | null;
   newRemaining?: number | null;
   reason: string;
-  actorId: string;
+  actorId: string | ActorSummary;
   actorRole: ActorRole;
   at: Date | string;
 }

@@ -168,6 +168,112 @@ describe('Módulo de Menú y Raciones (T042–T052)', () => {
       expect(pubRes.status).toBe(422);
       expect(pubRes.body.error.code).toBe('VALIDATION_ERROR');
     });
+
+    it('debe permitir quitar un ítem de un borrador de menú y persistir la eliminación al guardar (F5)', async () => {
+      const dishesRes = await request(app)
+        .get('/api/dishes')
+        .set('Authorization', `Bearer ${encargadoToken}`);
+      const dish1 = dishesRes.body[0];
+      const dish2 = dishesRes.body[1];
+
+      // 1. Crear menú en borrador
+      const createRes = await request(app)
+        .post('/api/menu/days')
+        .set('Authorization', `Bearer ${encargadoToken}`)
+        .send({ date: '2026-12-20', notes: 'Menú de prueba para quitar ítem' });
+      expect(createRes.status).toBe(201);
+      const menuId = createRes.body.id;
+
+      // 2. Guardar con 2 ítems
+      const saveRes1 = await request(app)
+        .put(`/api/menu/days/${menuId}`)
+        .set('Authorization', `Bearer ${encargadoToken}`)
+        .send({
+          items: [
+            { dishId: dish1.id, active: true, priceCents: dish1.priceCents },
+            { dishId: dish2.id, active: true, priceCents: dish2.priceCents }
+          ]
+        });
+      expect(saveRes1.status).toBe(200);
+      expect(saveRes1.body.items.length).toBe(2);
+
+      const itemsInDbBefore = await MenuItem.find({ menuDayId: menuId });
+      expect(itemsInDbBefore.length).toBe(2);
+
+      // 3. Quitar el segundo ítem (enviar solo dish1) y guardar
+      const saveRes2 = await request(app)
+        .put(`/api/menu/days/${menuId}`)
+        .set('Authorization', `Bearer ${encargadoToken}`)
+        .send({
+          items: [
+            { dishId: dish1.id, active: true, priceCents: dish1.priceCents }
+          ]
+        });
+      expect(saveRes2.status).toBe(200);
+      expect(saveRes2.body.items.length).toBe(1);
+      expect(saveRes2.body.items[0].dishId.toString()).toBe(dish1.id);
+
+      // Verificar en BD que se eliminó el ítem excluido
+      const itemsInDbAfter = await MenuItem.find({ menuDayId: menuId });
+      expect(itemsInDbAfter.length).toBe(1);
+      expect(itemsInDbAfter[0].dishId.toString()).toBe(dish1.id);
+
+      // 4. Si items es undefined, no se altera la lista de platos
+      const saveRes3 = await request(app)
+        .put(`/api/menu/days/${menuId}`)
+        .set('Authorization', `Bearer ${encargadoToken}`)
+        .send({ notes: 'Notas actualizadas sin tocar items' });
+      expect(saveRes3.status).toBe(200);
+      expect(saveRes3.body.items.length).toBe(1);
+      expect(saveRes3.body.notes).toBe('Notas actualizadas sin tocar items');
+    });
+
+    it('debe permitir quitar todos los ítems de un borrador y que la publicación devuelva 422 (F5)', async () => {
+      const dishesRes = await request(app)
+        .get('/api/dishes')
+        .set('Authorization', `Bearer ${encargadoToken}`);
+      const dish = dishesRes.body[0];
+
+      // 1. Crear menú en borrador
+      const createRes = await request(app)
+        .post('/api/menu/days')
+        .set('Authorization', `Bearer ${encargadoToken}`)
+        .send({ date: '2026-12-21', notes: 'Menú borrador que quedará vacío' });
+      expect(createRes.status).toBe(201);
+      const menuId = createRes.body.id;
+
+      // 2. Guardar con 1 ítem
+      const saveRes1 = await request(app)
+        .put(`/api/menu/days/${menuId}`)
+        .set('Authorization', `Bearer ${encargadoToken}`)
+        .send({
+          items: [
+            { dishId: dish.id, active: true, priceCents: dish.priceCents }
+          ]
+        });
+      expect(saveRes1.status).toBe(200);
+      expect(saveRes1.body.items.length).toBe(1);
+
+      // 3. Quitar todos los ítems enviando items: []
+      const saveRes2 = await request(app)
+        .put(`/api/menu/days/${menuId}`)
+        .set('Authorization', `Bearer ${encargadoToken}`)
+        .send({ items: [] });
+      expect(saveRes2.status).toBe(200);
+      expect(saveRes2.body.items.length).toBe(0);
+
+      // Verificar en BD que no quedan ítems
+      const itemsInDb = await MenuItem.find({ menuDayId: menuId });
+      expect(itemsInDb.length).toBe(0);
+
+      // 4. Intentar publicar el menú vacío debe responder 422 VALIDATION_ERROR
+      const pubRes = await request(app)
+        .post(`/api/menu/days/${menuId}/publish`)
+        .set('Authorization', `Bearer ${encargadoToken}`);
+
+      expect(pubRes.status).toBe(422);
+      expect(pubRes.body.error.code).toBe('VALIDATION_ERROR');
+    });
   });
 
   describe('Gestión y Auditoría de Raciones', () => {

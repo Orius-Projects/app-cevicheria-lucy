@@ -9,8 +9,8 @@
 | 001 | Plataforma base | Fases 0–1 (setup, modelos, middlewares) | ✅ verificado y commiteado (`a2ee939`) |
 | 001 | Plataforma base | Fases 2–4 (auth, mesas, turnos) | ✅ verificado (30 pruebas) |
 | 001 | Plataforma base | Fases 5–8 (menú/raciones, pedidos, seed, pulido) | ✅ verificado (60 pruebas + 4 bugs corregidos) |
-| 002 | Menú y raciones | UI encargado + mozo | 🔄 siguiente |
-| 003 | Toma de pedidos | UI mozo + flujo de pedido | ⏳ pendiente |
+| 002 | Menú y raciones | UI encargado + mozo | ✅ verificado (98 pruebas + F1–F6 corregidos) |
+| 003 | Toma de pedidos | UI mozo + flujo de pedido | 🔄 siguiente |
 | 004 | Cocina | Tablero FIFO y “Marcar listo” | ⏳ pendiente |
 | 005 | Avisos tiempo real | Socket.IO + sonido/visual | ⏳ pendiente |
 | 006 | Cierre de turno | Resumen y cierre | ⏳ pendiente |
@@ -19,7 +19,8 @@
 ## Protocolo por milestone
 
 1. El orquestador escribe `BRIEF-<n>.md` con alcance, contratos y criterios.
-2. Envía el brief a `agy` por `hc` y espera.
+2. Reparte por `hc`: `agy-fe` (cliente), `agy-be` (servidor) y `agy-qa`
+   (pruebas independientes). Cada uno tiene archivos asignados; nadie commitea.
 3. El orquestador **verifica de forma independiente**:
    - `npm run typecheck`
    - `npm run lint`
@@ -41,5 +42,7 @@
 
 ## Terminales de trabajo
 
-- `t1h` (`agy-dev`): agy en `D:\Cevicheria\app-cevicheria-lucy`.
-- `t1d`: OpenCode (orquestador).
+- `t1d`: OpenCode (orquestador; único que hace commits).
+- `t1h` (`agy-fe`): frontend en `client/**`.
+- `t1p` (`agy-be`): backend en `server/**`.
+- `t1n` (`agy-qa`): pruebas independientes y verificación final.

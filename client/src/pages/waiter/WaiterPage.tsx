@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { TableSelector } from '../../components/waiter/TableSelector';
 import { TableItem, useTablesStore } from '../../stores/tablesStore';
 import { useAuthStore } from '../../stores/authStore';
@@ -32,12 +33,20 @@ export const WaiterPage: React.FC = () => {
             {user?.displayName} ({user?.role})
           </p>
         </div>
-        <button
-          onClick={() => logout()}
-          className="text-xs px-3 py-2 min-h-[44px] text-slate-600 hover:text-slate-900 border border-slate-300 rounded-lg"
-        >
-          Cerrar sesión
-        </button>
+        <div className="flex items-center space-x-2">
+          <Link
+            to="/mozo/menu"
+            className="text-xs px-3 py-2 min-h-[44px] bg-brand-50 text-brand-700 hover:bg-brand-100 rounded-lg font-semibold flex items-center border border-brand-200"
+          >
+            📋 Ver Menú del Día
+          </Link>
+          <button
+            onClick={() => logout()}
+            className="text-xs px-3 py-2 min-h-[44px] text-slate-600 hover:text-slate-900 border border-slate-300 rounded-lg"
+          >
+            Cerrar sesión
+          </button>
+        </div>
       </header>
 
       {/* Main Content */}

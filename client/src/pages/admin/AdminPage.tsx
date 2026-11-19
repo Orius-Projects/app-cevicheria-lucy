@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthStore } from '../../stores/authStore';
 import { useShiftStore } from '../../stores/shiftStore';
+import { AdminNavigation } from '../../components/menu/AdminNavigation';
 
 export const AdminPage: React.FC = () => {
   const { user, logout } = useAuthStore();
@@ -54,6 +55,7 @@ export const AdminPage: React.FC = () => {
       </header>
 
       <main className="flex-1 max-w-4xl w-full mx-auto p-6 space-y-6">
+        <AdminNavigation />
         {feedback && (
           <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-sm">
             {feedback}

@@ -5,6 +5,10 @@ import { LoginPage } from '../pages/LoginPage';
 import { WaiterPage } from '../pages/waiter/WaiterPage';
 import { KitchenPage } from '../pages/kitchen/KitchenPage';
 import { AdminPage } from '../pages/admin/AdminPage';
+import { DishesPage } from '../pages/encargado/DishesPage';
+import { MenuDayPage } from '../pages/encargado/MenuDayPage';
+import { RationAdjustmentsPage } from '../pages/encargado/RationAdjustmentsPage';
+import { MenuView } from '../pages/shared/MenuView';
 import { ProtectedRoute } from './ProtectedRoute';
 import { RoleGuard } from './RoleGuard';
 
@@ -32,7 +36,7 @@ export const AppRoutes: React.FC = () => {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
 
-        {/* Ruta protegida Mozo */}
+        {/* Rutas Mozo */}
         <Route
           path="/mozo"
           element={
@@ -43,8 +47,18 @@ export const AppRoutes: React.FC = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/mozo/menu"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['MOZO', 'ENCARGADO']}>
+                <MenuView />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
 
-        {/* Ruta protegida Cocina */}
+        {/* Rutas Cocina */}
         <Route
           path="/cocina"
           element={
@@ -56,7 +70,7 @@ export const AppRoutes: React.FC = () => {
           }
         />
 
-        {/* Ruta protegida Encargado */}
+        {/* Rutas Encargado */}
         <Route
           path="/encargado"
           element={
@@ -64,6 +78,46 @@ export const AppRoutes: React.FC = () => {
               <RoleGuard allowedRoles={['ENCARGADO']}>
                 <AdminPage />
               </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/encargado/menu"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['ENCARGADO']}>
+                <MenuDayPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/encargado/platos"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['ENCARGADO']}>
+                <DishesPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/encargado/raciones"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['ENCARGADO']}>
+                <RationAdjustmentsPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Menú compartido público / consulta */}
+        <Route
+          path="/menu"
+          element={
+            <ProtectedRoute>
+              <MenuView />
             </ProtectedRoute>
           }
         />

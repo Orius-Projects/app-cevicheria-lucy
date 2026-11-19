@@ -178,38 +178,51 @@ export async function updateMenuDay(
     await menuDay.save();
   }
 
-  if (data.items && data.items.length > 0) {
-    for (const itemInput of data.items) {
-      const dish = await Dish.findById(itemInput.dishId).populate('sectionId');
-      if (!dish) continue;
+  if (data.items !== undefined) {
+    if (data.items.length === 0) {
+      await MenuItem.deleteMany({ menuDayId: menuDay._id });
+    } else {
+      const incomingDishIds = data.items
+        .filter((item) => mongoose.Types.ObjectId.isValid(item.dishId))
+        .map((item) => new mongoose.Types.ObjectId(item.dishId));
 
-      const section = dish.sectionId as any;
-      const sectionKey = section?.key || 'CRIOLLO';
+      await MenuItem.deleteMany({
+        menuDayId: menuDay._id,
+        dishId: { $nin: incomingDishIds }
+      });
 
-      const price = itemInput.priceCents !== undefined ? itemInput.priceCents : dish.priceCents;
-      const hasLimit = itemInput.hasRationsLimit ?? false;
-      const totalRations = hasLimit ? itemInput.totalRations ?? 30 : null;
-      const remainingRations = hasLimit ? itemInput.remainingRations ?? totalRations : null;
+      for (const itemInput of data.items) {
+        const dish = await Dish.findById(itemInput.dishId).populate('sectionId');
+        if (!dish) continue;
 
-      await MenuItem.findOneAndUpdate(
-        { menuDayId: menuDay._id, dishId: dish._id },
-        {
-          $set: {
-            dishName: dish.name,
-            sectionKey,
-            priceCents: price,
-            active: itemInput.active ?? true,
-            hasRationsLimit: hasLimit,
-            totalRations,
-            remainingRations,
-            lowStockThreshold: 5,
-            manuallySoldOut: false,
-            updatedAt: new Date()
+        const section = dish.sectionId as any;
+        const sectionKey = section?.key || 'CRIOLLO';
+
+        const price = itemInput.priceCents !== undefined ? itemInput.priceCents : dish.priceCents;
+        const hasLimit = itemInput.hasRationsLimit ?? false;
+        const totalRations = hasLimit ? itemInput.totalRations ?? 30 : null;
+        const remainingRations = hasLimit ? itemInput.remainingRations ?? totalRations : null;
+
+        await MenuItem.findOneAndUpdate(
+          { menuDayId: menuDay._id, dishId: dish._id },
+          {
+            $set: {
+              dishName: dish.name,
+              sectionKey,
+              priceCents: price,
+              active: itemInput.active ?? true,
+              hasRationsLimit: hasLimit,
+              totalRations,
+              remainingRations,
+              lowStockThreshold: 5,
+              manuallySoldOut: false,
+              updatedAt: new Date()
+            },
+            $inc: { version: 1 }
           },
-          $inc: { version: 1 }
-        },
-        { upsert: true, new: true }
-      );
+          { upsert: true, new: true }
+        );
+      }
     }
   }
 
