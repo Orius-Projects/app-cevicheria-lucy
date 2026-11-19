@@ -31,7 +31,11 @@ export async function connectDB(): Promise<typeof mongoose> {
 
   try {
     logger.info(`Conectando a MongoDB en ${env.MONGODB_URI.split('@').pop() /* oculta credenciales */}`);
-    const timeout = env.NODE_ENV === 'development' ? 2500 : 30000;
+    const timeout = process.env.DB_TIMEOUT_MS
+      ? Number(process.env.DB_TIMEOUT_MS)
+      : env.NODE_ENV === 'development'
+        ? 2500
+        : 5000;
     const conn = await mongoose.connect(env.MONGODB_URI, { serverSelectionTimeoutMS: timeout });
     isConnected = true;
     return conn;

@@ -30,19 +30,35 @@ npm run seed
 
 # 4. Compilar los paquetes
 npm run build
+
+# 5. Iniciar en modo servicio único (producción)
+NODE_ENV=production npm run start -w server
 ```
+
+El sistema estará listo en `http://localhost:3000` sirviendo la SPA, la API REST en `/api` y Socket.IO en `/socket.io`.
 
 ## 4. Scripts Disponibles
 
-- `npm run dev`: Inicia el servidor de desarrollo del cliente.
+- `npm run dev`: Inicia el servidor de desarrollo del cliente con Vite.
 - `npm run dev:server`: Inicia el backend en modo watch (`tsx`).
 - `npm run dev:client`: Inicia el frontend con Vite.
-- `npm run build`: Compila `shared`, `server` y `client`.
+- `npm run build`: Compila `shared`, `server` y `client` (incluye PWA y service worker).
+- `npm run start -w server`: Inicia el servidor compilado de producción en Node.js.
+- `npm run preview -w client`: Previsualiza el build de Vite localmente.
 - `npm run typecheck`: Ejecuta la verificación estricta de tipos de TypeScript en todos los workspaces.
 - `npm run lint`: Ejecuta ESLint en todo el proyecto.
 - `npm run format`: Formatea el código con Prettier.
-- `npm test`: Ejecuta la suite de 56 pruebas de integración y concurrencia.
+- `npm test`: Ejecuta la suite de pruebas automatizadas.
 - `npm run seed`: Siembra datos iniciales de demostración de manera idempotente.
+
+## 5. Modos de Ejecución y Despliegue
+
+- **Modo Servicio Único (Producción / Local / LAN)**:
+  Un solo proceso Express sirve el frontend compilado (`client/dist`), la API (`/api`) y los WebSockets (`/socket.io`).
+- **Modo Desarrollo**:
+  Ejecutar `npm run dev:server` (puerto 3000) y `npm run dev:client` (puerto 5173 con proxy inverso).
+
+Para instrucciones detalladas sobre despliegue en red local (LAN) para tablets/móviles, MongoDB Atlas, PWA, copias de seguridad (`mongodump`/`mongorestore`) y troubleshooting, consulta **[DEPLOY.md](./DEPLOY.md)**.
 
 ## 5. Credenciales Demo
 

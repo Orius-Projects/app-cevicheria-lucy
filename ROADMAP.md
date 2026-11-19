@@ -14,7 +14,7 @@
 | 004 | Cocina | Tablero FIFO y “Marcar listo” | 🔄 siguiente |
 | 005 | Avisos tiempo real | Socket.IO + sonido/visual | ⏳ pendiente |
 | 006 | Cierre de turno | Resumen y cierre | ⏳ pendiente |
-| 007 | Despliegue | Build, responsive, PWA | ⏳ pendiente |
+| 007 | Despliegue | Build, servicio único, responsive, PWA | 🔄 implementado (verificado build/types/lint/humo; pendiente validación manual) |
 
 > Nota: `useOrderEvents` ya sincroniza por polling cada 15 s y al reconectar.
 > El transporte Socket.IO se conectará cuando se implemente la spec `005`.

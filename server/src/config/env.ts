@@ -23,7 +23,19 @@ export const envSchema = z.object({
     })
     .min(1, 'JWT_SECRET is required for authentication'),
   JWT_EXPIRES_IN: z.string().default('8h'),
-  CORS_ORIGIN: z.string().default('http://localhost:5173')
+  CORS_ORIGIN: z
+    .union([z.string(), z.array(z.string())])
+    .default('http://localhost:5173')
+    .transform((val) => {
+      if (Array.isArray(val)) return val;
+      const parts = val.split(',').map((s) => s.trim()).filter(Boolean);
+      return parts.length > 1 ? parts : parts[0] || '*';
+    }),
+  SERVE_STATIC: z
+    .union([z.boolean(), z.string()])
+    .optional()
+    .transform((val) => val === true || val === 'true' || val === '1')
+    .default(false)
 });
 
 export type Env = z.infer<typeof envSchema>;
