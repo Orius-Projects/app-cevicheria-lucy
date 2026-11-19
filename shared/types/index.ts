@@ -447,3 +447,6 @@ export interface ShiftClosedEventPayload {
     role: string;
   };
 }
+
+export * from './shift';
+

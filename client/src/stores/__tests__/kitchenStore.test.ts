@@ -68,7 +68,7 @@ describe('kitchenStore', () => {
   });
 
   it('sortFifo sorts 10 orders strictly in ascending chronological order of arrival (FIFO)', () => {
-    // Generar 10 pedidos con tiempos desordenados
+    // Generar 10 pedidos con marcas de llegada desordenadas
     const timestamps = [
       '2026-11-18T12:09:00.000Z',
       '2026-11-18T12:02:00.000Z',
@@ -89,7 +89,7 @@ describe('kitchenStore', () => {
     const sorted = sortFifo(unorderedOrders);
 
     expect(sorted).toHaveLength(10);
-    // Verificar que cada elemento sea menor o igual en tiempo al siguiente
+    // Verificar que cada elemento sea menor o igual en marca de llegada al siguiente
     for (let i = 0; i < sorted.length - 1; i++) {
       const t1 = new Date(sorted[i].enviadoEn).getTime();
       const t2 = new Date(sorted[i + 1].enviadoEn).getTime();

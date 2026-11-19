@@ -6,7 +6,8 @@ export const AdminNavigation: React.FC = () => {
     { to: '/encargado', label: 'Turnos', exact: true },
     { to: '/encargado/menu', label: 'Menú del Día' },
     { to: '/encargado/platos', label: 'Platos Maestros' },
-    { to: '/encargado/raciones', label: 'Raciones y Agotados' }
+    { to: '/encargado/raciones', label: 'Raciones y Agotados' },
+    { to: '/encargado/cierre', label: 'Cierre de Turno' }
   ];
 
   return (

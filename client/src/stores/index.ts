@@ -8,3 +8,5 @@ export * from './ordersStore';
 export * from './kitchenStore';
 export * from './realtimeStore';
 export * from './notificationsStore';
+export * from './shiftCloseStore';
+

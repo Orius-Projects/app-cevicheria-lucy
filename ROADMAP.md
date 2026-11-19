@@ -11,13 +11,17 @@
 | 001 | Plataforma base | Fases 5–8 (menú/raciones, pedidos, seed, pulido) | ✅ verificado (60 pruebas + 4 bugs corregidos) |
 | 002 | Menú y raciones | UI encargado + mozo | ✅ verificado (98 pruebas + F1–F6 corregidos) |
 | 003 | Toma de pedidos | UI mozo + flujo de pedido | ✅ verificado (135 pruebas + variaciones 422) |
-| 004 | Cocina | Tablero FIFO y “Marcar listo” | 🔄 siguiente |
-| 005 | Avisos tiempo real | Socket.IO + sonido/visual | ⏳ pendiente |
-| 006 | Cierre de turno | Resumen y cierre | ⏳ pendiente |
-| 007 | Despliegue | Build, servicio único, responsive, PWA | 🔄 implementado (verificado build/types/lint/humo; pendiente validación manual) |
+| 004 | Cocina | Tablero FIFO y “Marcar listo” | ✅ verificado (KDS + E2E de cocina) |
+| 005 | Avisos tiempo real | Socket.IO + sonido/visual | ✅ verificado (servidor + cliente + dedupe y resync) |
+| 006 | Cierre de turno | Resumen y cierre | ✅ verificado (backend + UI + E2E) |
+| 007 | Despliegue | Build, servicio único, responsive, PWA | ✅ implementado y verificado (build/humo); validación manual pendiente |
 
-> Nota: `useOrderEvents` ya sincroniza por polling cada 15 s y al reconectar.
-> El transporte Socket.IO se conectará cuando se implemente la spec `005`.
+> Nota: el transporte Socket.IO ya está activo; el polling por REST queda solo como
+> respaldo cuando el canal se cae (NFR-010).
+>
+> Suite final: **200 pruebas** (108 backend + 92 cliente). Validación manual pendiente
+> para la spec 007: Chrome Android a 360 px, instalación PWA (requiere HTTPS/localhost),
+> `mongodump`/`mongorestore` reales y prueba con MongoDB local.
 
 ## Protocolo por milestone
 

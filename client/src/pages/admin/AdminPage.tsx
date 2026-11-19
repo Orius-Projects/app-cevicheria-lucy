@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
 import { useShiftStore } from '../../stores/shiftStore';
 import { AdminNavigation } from '../../components/menu/AdminNavigation';
@@ -96,7 +97,16 @@ export const AdminPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="space-y-3">
+              <div className="pt-2 flex flex-col sm:flex-row gap-3">
+                <Link
+                  to="/encargado/cierre"
+                  className="flex-1 py-3 px-4 bg-brand-600 hover:bg-brand-700 text-white text-center rounded-xl font-bold text-sm min-h-[44px] flex items-center justify-center transition-colors shadow-sm"
+                >
+                  Ir a Cierre de Turno
+                </Link>
+              </div>
+
+              <div className="space-y-3 pt-2 border-t border-slate-100">
                 <label className="block text-sm font-medium text-slate-700">
                   Observaciones de cierre de turno
                 </label>

@@ -11,6 +11,7 @@ import { AdminPage } from '../pages/admin/AdminPage';
 import { DishesPage } from '../pages/encargado/DishesPage';
 import { MenuDayPage } from '../pages/encargado/MenuDayPage';
 import { RationAdjustmentsPage } from '../pages/encargado/RationAdjustmentsPage';
+import { ShiftClosePage } from '../pages/encargado/ShiftClosePage';
 import { MenuView } from '../pages/shared/MenuView';
 import { ProtectedRoute } from './ProtectedRoute';
 import { RoleGuard } from './RoleGuard';
@@ -140,6 +141,16 @@ export const AppRoutes: React.FC = () => {
             <ProtectedRoute>
               <RoleGuard allowedRoles={['ENCARGADO']}>
                 <RationAdjustmentsPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/encargado/cierre"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['ENCARGADO']}>
+                <ShiftClosePage />
               </RoleGuard>
             </ProtectedRoute>
           }

@@ -114,3 +114,30 @@ npm run test -w client
 ```
 
 Reporta archivos, salidas reales y cualquier desajuste con el contrato del servidor.
+
+## Anexo — contrato real ya implementado (verifícalo en `server/src/services/shift.service.ts`)
+
+Resumen (`GET /api/shifts/:id/summary`), campos exactos:
+
+```ts
+{
+  soldDishes: { dishId, dishName, quantity, amountCents }[],   // solo entregados
+  remainingRations: { dishId, dishName, remainingRations }[],
+  soldOutDishes: { dishId, dishName, reason }[],
+  cancellations: { orderNumber, reason, cancelledBy }[],
+  manualRecords: { id, tableCode, items: { name, quantity, amountCents }[],
+                   totalCents, notes, source: 'PAPER', createdBy, createdAt }[],
+  manualTotalCents, totalAmountCents,
+  observations: string,
+  closedAt: string | null
+}
+```
+
+Registro manual (`POST /api/shifts/:id/manual-records`): body
+`{ tableCode, items: [{ name, quantity, amountCents }], totalCents?, notes? }`.
+El servidor exige `tableCode` no vacío, ≥ 1 ítem, `quantity` entero ≥ 1 y
+`amountCents` entero ≥ 0. `totalCents` es opcional (calcúlalo en cliente y envíalo).
+Turno `CERRADO` → `409`.
+
+No reutilices `menuStore` para el resumen; usa `ShiftSummary` del API.
+El cierre de mesa es `POST /api/table-sessions/:id/close` (ya existe desde 001).
