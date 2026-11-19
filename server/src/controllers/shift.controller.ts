@@ -3,7 +3,9 @@ import {
   openShift,
   getCurrentShift,
   closeShift,
-  getShiftSummary
+  getShiftSummary,
+  createManualRecord,
+  getManualRecords
 } from '../services/shift.service';
 import { UnauthorizedError } from '../middlewares/error';
 
@@ -67,3 +69,34 @@ export async function getSummary(
     next(error);
   }
 }
+
+export async function createManualRecordHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    if (!req.user) {
+      throw new UnauthorizedError('Usuario no autenticado');
+    }
+
+    const record = await createManualRecord(req.params.id, req.body, req.user);
+    res.status(201).json(record);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getManualRecordsHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    const records = await getManualRecords(req.params.id);
+    res.status(200).json(records);
+  } catch (error) {
+    next(error);
+  }
+}
+

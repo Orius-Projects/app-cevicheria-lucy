@@ -617,8 +617,12 @@ export async function manualCloseOrder(
     throw new NotFoundError('Pedido no encontrado');
   }
 
-  if (order.status === 'ENTREGADO') {
-    throw new ConflictError('El pedido ya se encuentra entregado');
+  if (order.status !== 'ENVIADO' && order.status !== 'LISTO') {
+    throw new ConflictError(
+      order.status === 'ENTREGADO' || order.status === 'CANCELADO'
+        ? `No se puede cerrar manualmente un pedido con estado terminal '${order.status}'`
+        : `No se puede cerrar manualmente un pedido con estado '${order.status}'`
+    );
   }
 
   const previousStatus = order.status;

@@ -11,3 +11,4 @@ export * from './ration-adjustment.model';
 export * from './order.model';
 export * from './counter.model';
 export * from './settings.model';
+export * from './manual-record.model';

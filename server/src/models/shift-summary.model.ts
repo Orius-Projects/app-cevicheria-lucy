@@ -25,6 +25,23 @@ export interface ICancellationSummary {
   cancelledBy: string;
 }
 
+export interface IManualRecordSummaryItem {
+  name: string;
+  quantity: number;
+  amountCents: number;
+}
+
+export interface IManualRecordSummary {
+  id?: string;
+  tableCode: string;
+  items: IManualRecordSummaryItem[];
+  totalCents: number;
+  notes?: string;
+  source?: string;
+  createdBy?: any;
+  createdAt?: Date;
+}
+
 export interface IShiftSummary {
   shiftId: mongoose.Types.ObjectId;
   generatedAt: Date;
@@ -33,6 +50,8 @@ export interface IShiftSummary {
   remainingRations: IRemainingRationSummary[];
   soldOutDishes: ISoldOutDishSummary[];
   cancellations: ICancellationSummary[];
+  manualRecords?: IManualRecordSummary[];
+  manualTotalCents?: number;
   totalAmountCents: number;
   observations?: string;
   closedAt: Date;
@@ -98,6 +117,32 @@ const ShiftSummarySchema = new Schema<IShiftSummaryDocument>(
         }
       ],
       default: []
+    },
+    manualRecords: {
+      type: [
+        {
+          id: { type: String },
+          tableCode: { type: String, required: true },
+          items: [
+            {
+              name: { type: String, required: true },
+              quantity: { type: Number, required: true },
+              amountCents: { type: Number, required: true }
+            }
+          ],
+          totalCents: { type: Number, required: true },
+          notes: { type: String, default: '' },
+          source: { type: String, default: 'PAPER' },
+          createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
+          createdAt: { type: Date }
+        }
+      ],
+      default: []
+    },
+    manualTotalCents: {
+      type: Number,
+      required: true,
+      default: 0
     },
     totalAmountCents: {
       type: Number,
