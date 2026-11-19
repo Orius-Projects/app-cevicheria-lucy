@@ -1,6 +1,6 @@
 # Cevichería Lucy — Sistema de Pedidos y Cocina
 
-Sistema web responsive de pedidos y cocina en tiempo real para la Cevichería Lucy.
+Sistema web responsive de pedidos y cocina en tiempo real para la Cevichería Lucy. Plataforma base completa (Fases 0 a 8).
 
 ## 1. Arquitectura del Monorepo
 
@@ -25,7 +25,10 @@ npm install
 # 2. Configurar variables de entorno
 cp .env.example .env
 
-# 3. Compilar los paquetes
+# 3. Sembrar datos de demostración
+npm run seed
+
+# 4. Compilar los paquetes
 npm run build
 ```
 
@@ -38,6 +41,16 @@ npm run build
 - `npm run typecheck`: Ejecuta la verificación estricta de tipos de TypeScript en todos los workspaces.
 - `npm run lint`: Ejecuta ESLint en todo el proyecto.
 - `npm run format`: Formatea el código con Prettier.
-- `npm run seed`: Siembra datos de demostración en la base de datos (Fase 2+).
+- `npm test`: Ejecuta la suite de 56 pruebas de integración y concurrencia.
+- `npm run seed`: Siembra datos iniciales de demostración de manera idempotente.
 
-Para más detalles, consulta [quickstart.md](./quickstart.md).
+## 5. Credenciales Demo
+
+| Rol | Usuario | Contraseña |
+|---|---|---|
+| `ENCARGADO` | `encargado1` | `encargado123` |
+| `MOZO` | `mozo1` | `mozo123` |
+| `MOZO` | `mozo2` | `mozo223` |
+| `COCINERO` | `cocinero1` | `cocina123` |
+
+Para más detalles, ejemplos cURL y arquitectura de datos, consulta [quickstart.md](./quickstart.md).

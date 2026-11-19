@@ -54,6 +54,8 @@ export interface OrderItemVariation {
 }
 
 export interface OrderItem {
+  menuItemId?: string;
+  menuDayId?: string;
   dishId: string;
   dishName: string;
   sectionName: string;

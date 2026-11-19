@@ -8,8 +8,8 @@
 |---|---|---|---|
 | 001 | Plataforma base | Fases 0–1 (setup, modelos, middlewares) | ✅ verificado y commiteado (`a2ee939`) |
 | 001 | Plataforma base | Fases 2–4 (auth, mesas, turnos) | ✅ verificado (30 pruebas) |
-| 001 | Plataforma base | Fases 5–8 (menú/raciones, pedidos, seed, pulido) | ⏳ pendiente |
-| 002 | Menú y raciones | UI encargado + mozo | ⏳ pendiente |
+| 001 | Plataforma base | Fases 5–8 (menú/raciones, pedidos, seed, pulido) | ✅ verificado (60 pruebas + 4 bugs corregidos) |
+| 002 | Menú y raciones | UI encargado + mozo | 🔄 siguiente |
 | 003 | Toma de pedidos | UI mozo + flujo de pedido | ⏳ pendiente |
 | 004 | Cocina | Tablero FIFO y “Marcar listo” | ⏳ pendiente |
 | 005 | Avisos tiempo real | Socket.IO + sonido/visual | ⏳ pendiente |

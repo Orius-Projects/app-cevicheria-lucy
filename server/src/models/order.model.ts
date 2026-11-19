@@ -50,6 +50,16 @@ const OrderItemVariationSchema = new Schema(
 
 const OrderItemSchema = new Schema(
   {
+    menuItemId: {
+      type: Schema.Types.ObjectId,
+      ref: 'MenuItem',
+      required: false
+    },
+    menuDayId: {
+      type: Schema.Types.ObjectId,
+      ref: 'MenuDay',
+      required: false
+    },
     dishId: {
       type: Schema.Types.ObjectId,
       ref: 'Dish',
@@ -310,7 +320,7 @@ const OrderSchema = new Schema<IOrderDocument>(
 );
 
 // Índices canónicos según data-model.md §3.10
-// Restricción constitucional: PROHIBIDO customer, paymentStatus, paymentMethod, taxCents, igvRate, billing
+// Restricción constitucional: PROHIBIDO campos de pagos, tributos o comprobantes fiscales
 // El índice único de orderNumber se define en el campo ({ unique: true })
 OrderSchema.index(
   { clientRequestId: 1 },

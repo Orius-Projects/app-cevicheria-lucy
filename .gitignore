@@ -19,6 +19,10 @@ coverage/
 *.log
 logs/
 
+# Datos locales de seed
+.mongo-seed-data/
+.mongo-dev-data/
+
 # Editores y sistema
 .vscode/
 .idea/

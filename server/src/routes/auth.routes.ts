@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { login, getMe, logout } from '../controllers/auth.controller';
 import { authenticate } from '../middlewares/auth';
 import { validate } from '../middlewares/validate';
+import { loginRateLimiter } from '../middlewares/rate-limit';
 
 const authRouter = Router();
 
@@ -11,7 +12,7 @@ export const loginSchema = z.object({
   password: z.string().min(1, 'La contraseña es obligatoria')
 });
 
-authRouter.post('/login', validate({ body: loginSchema }), login);
+authRouter.post('/login', loginRateLimiter, validate({ body: loginSchema }), login);
 authRouter.get('/me', authenticate, getMe);
 authRouter.post('/logout', logout);
 

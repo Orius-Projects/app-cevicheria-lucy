@@ -47,7 +47,7 @@ const TableSchema = new Schema<ITableDocument>(
 );
 
 // Índices canónicos según data-model.md §3.2
-// Nota constitucional: tables NO tiene waiterId asignado
+// Nota constitucional: las mesas son compartidas por todos los mozos (sin mozo exclusivo asignado)
 // El índice único de code se define en el campo ({ unique: true })
 TableSchema.index({ active: 1, zone: 1 });
 

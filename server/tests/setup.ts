@@ -8,7 +8,9 @@ export async function setupTestDB(): Promise<void> {
   process.env.JWT_SECRET = 'test-jwt-secret-key-at-least-32-chars-long';
   process.env.JWT_EXPIRES_IN = '8h';
 
-  mongo = await MongoMemoryServer.create();
+  mongo = await MongoMemoryServer.create({
+    instance: { launchTimeout: 30000 }
+  });
   const uri = mongo.getUri();
   process.env.MONGODB_URI = uri;
 
