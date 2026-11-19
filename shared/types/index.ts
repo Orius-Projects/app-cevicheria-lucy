@@ -382,3 +382,15 @@ export interface ApiErrorResponse {
     requestId?: string;
   };
 }
+
+// ==========================================
+// Tipos para Cocina / KDS (Spec 004)
+// ==========================================
+
+export interface KitchenBoard {
+  pending: OrderDTO[];
+  ready: OrderDTO[];
+  serverTime?: Date | string;
+}
+
+export type KitchenConnectionState = 'connected' | 'reconnecting' | 'disconnected';

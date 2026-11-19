@@ -9,6 +9,7 @@ import {
 import { deriveDishStatus } from '@cevicheria/shared';
 import { AuthUserPayload } from '../middlewares/auth';
 import { ConflictError, NotFoundError, ValidationError } from '../middlewares/error';
+import { emitMenuAvailabilityChanged } from '../realtime';
 
 function getTodayLimaDate(): string {
   const now = new Date();
@@ -387,6 +388,26 @@ export async function replenishRations(
     at: new Date()
   });
 
+  const state = deriveDishStatus({
+    active: updatedItem.active,
+    manuallySoldOut: updatedItem.manuallySoldOut,
+    hasRationsLimit: updatedItem.hasRationsLimit,
+    remainingRations: updatedItem.remainingRations,
+    lowStockThreshold: updatedItem.lowStockThreshold
+  });
+  emitMenuAvailabilityChanged({
+    menuDayId: updatedItem.menuDayId.toString(),
+    menuItemId: updatedItem._id.toString(),
+    dishId: updatedItem.dishId.toString(),
+    dishName: updatedItem.dishName,
+    state,
+    remainingRations: updatedItem.remainingRations,
+    manuallySoldOut: updatedItem.manuallySoldOut,
+    changeType: 'REPLENISH',
+    changedBy: { id: user.id, name: user.displayName, role: user.role },
+    version: updatedItem.version
+  });
+
   return updatedItem;
 }
 
@@ -435,6 +456,27 @@ export async function adjustRations(
   });
 
   const updatedItem = await MenuItem.findById(menuItemId);
+  if (updatedItem) {
+    const state = deriveDishStatus({
+      active: updatedItem.active,
+      manuallySoldOut: updatedItem.manuallySoldOut,
+      hasRationsLimit: updatedItem.hasRationsLimit,
+      remainingRations: updatedItem.remainingRations,
+      lowStockThreshold: updatedItem.lowStockThreshold
+    });
+    emitMenuAvailabilityChanged({
+      menuDayId: updatedItem.menuDayId.toString(),
+      menuItemId: updatedItem._id.toString(),
+      dishId: updatedItem.dishId.toString(),
+      dishName: updatedItem.dishName,
+      state,
+      remainingRations: updatedItem.remainingRations,
+      manuallySoldOut: updatedItem.manuallySoldOut,
+      changeType: 'ADJUSTMENT',
+      changedBy: { id: user.id, name: user.displayName, role: user.role },
+      version: updatedItem.version
+    });
+  }
   return updatedItem;
 }
 
@@ -467,6 +509,26 @@ export async function markSoldOut(
     throw new NotFoundError('Ítem de menú no encontrado');
   }
 
+  const state = deriveDishStatus({
+    active: updatedItem.active,
+    manuallySoldOut: updatedItem.manuallySoldOut,
+    hasRationsLimit: updatedItem.hasRationsLimit,
+    remainingRations: updatedItem.remainingRations,
+    lowStockThreshold: updatedItem.lowStockThreshold
+  });
+  emitMenuAvailabilityChanged({
+    menuDayId: updatedItem.menuDayId.toString(),
+    menuItemId: updatedItem._id.toString(),
+    dishId: updatedItem.dishId.toString(),
+    dishName: updatedItem.dishName,
+    state,
+    remainingRations: updatedItem.remainingRations,
+    manuallySoldOut: updatedItem.manuallySoldOut,
+    changeType: 'SOLD_OUT',
+    changedBy: { id: user.id, name: user.displayName, role: user.role },
+    version: updatedItem.version
+  });
+
   return updatedItem;
 }
 
@@ -496,6 +558,26 @@ export async function reactivateDish(
   if (!updatedItem) {
     throw new NotFoundError('Ítem de menú no encontrado');
   }
+
+  const state = deriveDishStatus({
+    active: updatedItem.active,
+    manuallySoldOut: updatedItem.manuallySoldOut,
+    hasRationsLimit: updatedItem.hasRationsLimit,
+    remainingRations: updatedItem.remainingRations,
+    lowStockThreshold: updatedItem.lowStockThreshold
+  });
+  emitMenuAvailabilityChanged({
+    menuDayId: updatedItem.menuDayId.toString(),
+    menuItemId: updatedItem._id.toString(),
+    dishId: updatedItem.dishId.toString(),
+    dishName: updatedItem.dishName,
+    state,
+    remainingRations: updatedItem.remainingRations,
+    manuallySoldOut: updatedItem.manuallySoldOut,
+    changeType: 'REACTIVATE',
+    changedBy: { id: user.id, name: user.displayName, role: user.role },
+    version: updatedItem.version
+  });
 
   return updatedItem;
 }

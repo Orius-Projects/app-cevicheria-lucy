@@ -13,7 +13,15 @@ import { assertOpenShift } from './shift.service';
 import { ensureOpenTableSession } from './table.service';
 import { AuthUserPayload } from '../middlewares/auth';
 import { ConflictError, NotFoundError, ValidationError } from '../middlewares/error';
-import { ORDER_NOTES_MAX_LENGTH, ITEM_NOTES_MAX_LENGTH } from '@cevicheria/shared';
+import { ORDER_NOTES_MAX_LENGTH, ITEM_NOTES_MAX_LENGTH, deriveDishStatus } from '@cevicheria/shared';
+import {
+  emitOrderCreated,
+  emitOrderReady,
+  emitOrderDelivered,
+  emitOrderCancelled,
+  emitOrderManualClosed,
+  emitMenuAvailabilityChanged
+} from '../realtime';
 
 export interface CreateOrderItemInput {
   dishId: string;
@@ -254,7 +262,40 @@ export async function createOrder(
       version: 0
     });
 
-    return { order: formatOrderResponse(order), isIdempotent: false };
+    const formattedOrder = formatOrderResponse(order);
+
+    emitOrderCreated(formattedOrder, {
+      id: user.id,
+      name: user.displayName,
+      role: user.role
+    });
+
+    for (const item of itemsToDiscount) {
+      const mi = await MenuItem.findById(item.menuItemId);
+      if (mi) {
+        const state = deriveDishStatus({
+          active: mi.active,
+          manuallySoldOut: mi.manuallySoldOut,
+          hasRationsLimit: mi.hasRationsLimit,
+          remainingRations: mi.remainingRations,
+          lowStockThreshold: mi.lowStockThreshold
+        });
+        emitMenuAvailabilityChanged({
+          menuDayId: mi.menuDayId.toString(),
+          menuItemId: mi._id.toString(),
+          dishId: mi.dishId.toString(),
+          dishName: mi.dishName,
+          state,
+          remainingRations: mi.remainingRations,
+          manuallySoldOut: mi.manuallySoldOut,
+          changeType: 'RATION_DECREMENT',
+          changedBy: { id: user.id, name: user.displayName, role: user.role },
+          version: mi.version
+        });
+      }
+    }
+
+    return { order: formattedOrder, isIdempotent: false };
   } catch (error) {
     // H1: Única ruta de compensación para evitar duplicidad
     if (successfullyDiscounted.length > 0) {
@@ -319,7 +360,14 @@ export async function markOrderReady(
     );
   }
 
-  return formatOrderResponse(updated);
+  const formatted = formatOrderResponse(updated);
+  emitOrderReady(formatted, {
+    id: user.id,
+    name: user.displayName,
+    role: user.role
+  });
+
+  return formatted;
 }
 
 /**
@@ -372,7 +420,14 @@ export async function deliverOrder(
     );
   }
 
-  return formatOrderResponse(updated);
+  const formatted = formatOrderResponse(updated);
+  emitOrderDelivered(formatted, {
+    id: user.id,
+    name: user.displayName,
+    role: user.role
+  });
+
+  return formatted;
 }
 
 /**
@@ -500,6 +555,26 @@ export async function cancelOrder(
               actorRole: user.role,
               at: now
             });
+
+            const state = deriveDishStatus({
+              active: menuItem.active,
+              manuallySoldOut: menuItem.manuallySoldOut,
+              hasRationsLimit: true,
+              remainingRations: next,
+              lowStockThreshold: menuItem.lowStockThreshold ?? 5
+            });
+            emitMenuAvailabilityChanged({
+              menuDayId: menuItem.menuDayId.toString(),
+              menuItemId: menuItem._id.toString(),
+              dishId: item.dishId.toString(),
+              dishName: menuItem.dishName,
+              state,
+              remainingRations: next,
+              manuallySoldOut: menuItem.manuallySoldOut,
+              changeType: 'CANCELLATION_REVERSAL',
+              changedBy: { id: user.id, name: user.displayName, role: user.role },
+              version: (updatedMenuItem.version ?? 0) + 1
+            });
           }
         }
       }
@@ -512,8 +587,15 @@ export async function cancelOrder(
     warningMessage = 'El pedido estaba listo en cocina; las raciones no han sido repuestas.';
   }
 
+  const formatted = formatOrderResponse(updated);
+  emitOrderCancelled(formatted, previousStatus, {
+    id: user.id,
+    name: user.displayName,
+    role: user.role
+  });
+
   return {
-    order: formatOrderResponse(updated),
+    order: formatted,
     ...(warningMessage ? { warning: warningMessage } : {})
   };
 }
@@ -539,6 +621,7 @@ export async function manualCloseOrder(
     throw new ConflictError('El pedido ya se encuentra entregado');
   }
 
+  const previousStatus = order.status;
   const now = new Date();
   order.status = 'ENTREGADO';
   order.manualClose = true;
@@ -549,7 +632,7 @@ export async function manualCloseOrder(
   order.version += 1;
   order.statusHistory.push({
     status: 'ENTREGADO',
-    previousStatus: order.status,
+    previousStatus,
     at: now,
     byUserId: user.id,
     byName: user.displayName,
@@ -559,7 +642,13 @@ export async function manualCloseOrder(
   });
 
   await order.save();
-  return formatOrderResponse(order);
+  const formatted = formatOrderResponse(order);
+  emitOrderManualClosed(formatted, previousStatus, {
+    id: user.id,
+    name: user.displayName,
+    role: user.role
+  });
+  return formatted;
 }
 
 /**

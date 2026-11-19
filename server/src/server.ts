@@ -3,6 +3,7 @@ import { app } from './app';
 import { validateEnv } from './config/env';
 import { connectDB, disconnectDB } from './config/db';
 import { logger } from './config/logger';
+import { initRealtime, closeRealtime } from './realtime';
 
 let server: http.Server | null = null;
 
@@ -12,6 +13,7 @@ export async function startServer(): Promise<http.Server> {
     await connectDB();
 
     server = http.createServer(app);
+    initRealtime(server);
 
     server.listen(env.PORT, () => {
       logger.info(
@@ -21,6 +23,7 @@ export async function startServer(): Promise<http.Server> {
 
     const shutdown = async (signal: string) => {
       logger.info(`Señal ${signal} recibida. Cerrando servidor elegantemente...`);
+      await closeRealtime();
       if (server) {
         server.close(async () => {
           logger.info('Servidor HTTP cerrado');

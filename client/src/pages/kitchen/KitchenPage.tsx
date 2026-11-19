@@ -1,31 +1,100 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuthStore } from '../../stores/authStore';
+import { useKitchenStore } from '../../stores/kitchenStore';
+import { useKitchenEvents } from '../../hooks/useKitchenEvents';
+import {
+  KitchenHeader,
+  KitchenConnectionBanner,
+  PendingColumn,
+  ReadyColumn
+} from '../../components/cocina';
+import { OrderDTO } from '@cevicheria/shared';
 
 export const KitchenPage: React.FC = () => {
   const { user, logout } = useAuthStore();
+  const {
+    pending,
+    ready,
+    error,
+    connection,
+    announcement,
+    recentOrderIds,
+    loadBoard,
+    markReady,
+    clearError
+  } = useKitchenStore();
+
+  useKitchenEvents({ pollingIntervalMs: 10000 });
+
+  const [markingOrderId, setMarkingOrderId] = useState<string | null>(null);
+
+  const handleMarkReady = async (order: OrderDTO) => {
+    if (markingOrderId === order.id) return;
+    setMarkingOrderId(order.id);
+    clearError();
+    try {
+      await markReady(order.id, order.version);
+    } catch {
+      // Error manejado en store
+    } finally {
+      setMarkingOrderId(null);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white flex flex-col">
-      <header className="bg-slate-800 border-b border-slate-700 px-6 py-4 flex justify-between items-center">
-        <div>
-          <h1 className="text-xl font-black text-amber-400">Cevichería Lucy — Cocina</h1>
-          <p className="text-xs text-slate-400">{user?.displayName} ({user?.role})</p>
-        </div>
-        <button
-          onClick={() => logout()}
-          className="text-xs px-3 py-2 min-h-[44px] bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-200"
-        >
-          Cerrar sesión
-        </button>
-      </header>
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+      {/* Región accesible aria-live para anuncios de voz y lectores de pantalla */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {announcement}
+      </div>
 
-      <main className="flex-1 p-6 flex flex-col items-center justify-center text-center">
-        <div className="max-w-md bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-xl space-y-4">
-          <div className="text-4xl">👨‍🍳</div>
-          <h2 className="text-xl font-bold">Tablero de Cocina (KDS)</h2>
-          <p className="text-slate-400 text-sm">
-            La cola FIFO y el botón “Marcar listo” se habilitarán en la Fase 6 (pedidos y cocina).
-          </p>
+      {/* Banner de estado de conexión */}
+      <KitchenConnectionBanner connection={connection} onRetry={loadBoard} />
+
+      {/* Cabecera de cocina con contadores */}
+      <KitchenHeader
+        pendingCount={pending.length}
+        readyCount={ready.length}
+        connection={connection}
+        onRefresh={loadBoard}
+        onLogout={logout}
+        userDisplayName={user?.displayName || 'Cocinero'}
+      />
+
+      {/* Banner de error */}
+      {error && (
+        <div
+          role="alert"
+          aria-live="polite"
+          className="bg-rose-950/90 border-b border-rose-700 px-4 py-3 text-rose-200 text-xs font-bold flex justify-between items-center"
+        >
+          <div className="flex items-center space-x-2">
+            <span>⚠️</span>
+            <span>{error}</span>
+          </div>
+          <button
+            type="button"
+            onClick={clearError}
+            className="text-rose-400 hover:text-white px-2 py-1 font-bold text-sm min-h-[44px]"
+          >
+            Cerrar ×
+          </button>
+        </div>
+      )}
+
+      {/* Contenedor Principal: 2 columnas en Tablet y Desktop (Pendientes a la izq, Listos a la der) */}
+      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="lg:col-span-7 xl:col-span-8">
+          <PendingColumn
+            orders={pending}
+            markingOrderId={markingOrderId}
+            recentOrderIds={recentOrderIds}
+            onMarkReady={handleMarkReady}
+          />
+        </div>
+
+        <div className="lg:col-span-5 xl:col-span-4">
+          <ReadyColumn orders={ready} />
         </div>
       </main>
     </div>
