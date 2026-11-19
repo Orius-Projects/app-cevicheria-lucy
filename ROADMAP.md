@@ -22,6 +22,8 @@
 > Suite final: **200 pruebas** (108 backend + 92 cliente). Validación manual pendiente
 > para la spec 007: Chrome Android a 360 px, instalación PWA (requiere HTTPS/localhost),
 > `mongodump`/`mongorestore` reales y prueba con MongoDB local.
+>
+> Todo lo pendiente y los features futuros están en [`PENDIENTES.md`](./PENDIENTES.md).
 
 ## Protocolo por milestone
 
