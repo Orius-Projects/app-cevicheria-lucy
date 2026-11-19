@@ -2,7 +2,10 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
 import { LoginPage } from '../pages/LoginPage';
-import { WaiterPage } from '../pages/waiter/WaiterPage';
+import { WaiterDashboardPage } from '../pages/waiter/WaiterDashboardPage';
+import { NewOrderPage } from '../pages/waiter/NewOrderPage';
+import { ActiveOrdersPage } from '../pages/waiter/ActiveOrdersPage';
+import { OrderDetailPage } from '../pages/waiter/OrderDetailPage';
 import { KitchenPage } from '../pages/kitchen/KitchenPage';
 import { AdminPage } from '../pages/admin/AdminPage';
 import { DishesPage } from '../pages/encargado/DishesPage';
@@ -42,7 +45,37 @@ export const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute>
               <RoleGuard allowedRoles={['MOZO', 'ENCARGADO']}>
-                <WaiterPage />
+                <WaiterDashboardPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mozo/pedido/nuevo"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['MOZO', 'ENCARGADO']}>
+                <NewOrderPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mozo/pedidos"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['MOZO', 'ENCARGADO']}>
+                <ActiveOrdersPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mozo/pedidos/:id"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['MOZO', 'ENCARGADO']}>
+                <OrderDetailPage />
               </RoleGuard>
             </ProtectedRoute>
           }

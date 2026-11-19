@@ -151,12 +151,17 @@ export async function createOrder(
 
     const selectedVariations: Array<{ id: string; name: string }> = [];
     if (itemInput.variationIds && itemInput.variationIds.length > 0) {
-      const availableMap = new Map(dish.variations.filter((v) => v.active).map((v) => [v.id, v.name]));
+      const availableMap = new Map(
+        (dish.variations || []).filter((v) => v.active).map((v) => [v.id, v.name])
+      );
       for (const varId of itemInput.variationIds) {
         const varName = availableMap.get(varId);
-        if (varName) {
-          selectedVariations.push({ id: varId, name: varName });
+        if (!varName) {
+          throw new ValidationError(
+            `La variación '${varId}' no es válida o no está activa para el plato '${dish.name}'`
+          );
         }
+        selectedVariations.push({ id: varId, name: varName });
       }
     }
 

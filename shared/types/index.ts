@@ -310,6 +310,62 @@ export interface SettingsDTO {
 }
 
 // ==========================================
+// Tipos para Toma de Pedidos (Spec 003)
+// ==========================================
+
+export interface TableWithSession {
+  id: string;
+  code: string;
+  zone?: string;
+  seats?: number;
+  state: TableStatus;
+  openSessionId?: string | null;
+  active?: boolean;
+}
+
+export interface CreateOrderItemInput {
+  dishId: string;
+  quantity: number;
+  variationIds?: string[];
+  notes?: string;
+}
+
+export interface CreateOrderInput {
+  tableId: string;
+  items: CreateOrderItemInput[];
+  notes?: string;
+  clientRequestId?: string;
+}
+
+export interface OrderDraftItem {
+  dishId: string;
+  dishName: string;
+  priceCents: number;
+  quantity: number;
+  variationIds?: string[];
+  variations?: Array<{ id: string; name: string }>;
+  notes?: string;
+  remainingRations?: number | null;
+}
+
+export interface OrderDraft {
+  tableId: string | null;
+  tableCode?: string | null;
+  items: OrderDraftItem[];
+  notes?: string;
+  clientRequestId: string;
+}
+
+export interface OrderListResponse {
+  data: OrderDTO[];
+  meta?: {
+    total?: number;
+    scope?: string;
+    [key: string]: any;
+  };
+}
+
+// ==========================================
 // Formato Uniforme de Respuestas de Error
 // ==========================================
 

@@ -10,11 +10,14 @@
 | 001 | Plataforma base | Fases 2–4 (auth, mesas, turnos) | ✅ verificado (30 pruebas) |
 | 001 | Plataforma base | Fases 5–8 (menú/raciones, pedidos, seed, pulido) | ✅ verificado (60 pruebas + 4 bugs corregidos) |
 | 002 | Menú y raciones | UI encargado + mozo | ✅ verificado (98 pruebas + F1–F6 corregidos) |
-| 003 | Toma de pedidos | UI mozo + flujo de pedido | 🔄 siguiente |
-| 004 | Cocina | Tablero FIFO y “Marcar listo” | ⏳ pendiente |
+| 003 | Toma de pedidos | UI mozo + flujo de pedido | ✅ verificado (135 pruebas + variaciones 422) |
+| 004 | Cocina | Tablero FIFO y “Marcar listo” | 🔄 siguiente |
 | 005 | Avisos tiempo real | Socket.IO + sonido/visual | ⏳ pendiente |
 | 006 | Cierre de turno | Resumen y cierre | ⏳ pendiente |
 | 007 | Despliegue | Build, responsive, PWA | ⏳ pendiente |
+
+> Nota: `useOrderEvents` ya sincroniza por polling cada 15 s y al reconectar.
+> El transporte Socket.IO se conectará cuando se implemente la spec `005`.
 
 ## Protocolo por milestone
 
