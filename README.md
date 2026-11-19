@@ -37,8 +37,27 @@ NODE_ENV=production npm run start -w server
 
 El sistema estará listo en `http://localhost:3000` sirviendo la SPA, la API REST en `/api` y Socket.IO en `/socket.io`.
 
+## 3.1 Demo sin MongoDB instalado (recomendado para probar)
+
+Si no tienes MongoDB local, un solo comando levanta la API con una instancia
+embebida en memoria, siembra los datos de demostración y arranca el cliente:
+
+```bash
+npm install
+npm run dev:mock
+```
+
+- Cliente: `http://localhost:5173`
+- API: `http://localhost:3000`
+- Datos: se guardan en `server/.mongo-dev-data` y se siembran solos si están vacíos.
+
+Usuarios: `encargado1/encargado123`, `mozo1/mozo123`, `mozo2/mozo223`,
+`cocinero1/cocina123`. Al detener el proceso se conservan los datos locales;
+si quieres empezar de cero, borra `server/.mongo-dev-data`.
+
 ## 4. Scripts Disponibles
 
+- `npm run dev:mock`: API con MongoDB embebido + seed + cliente Vite (sin instalar Mongo).
 - `npm run dev`: Inicia el servidor de desarrollo del cliente con Vite.
 - `npm run dev:server`: Inicia el backend en modo watch (`tsx`).
 - `npm run dev:client`: Inicia el frontend con Vite.

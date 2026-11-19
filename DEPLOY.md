@@ -4,6 +4,26 @@ Guía completa para la preparación, configuración, compilación y despliegue d
 
 ---
 
+## 0. Demo rápida sin MongoDB (solo desarrollo)
+
+Para probar el sistema sin instalar MongoDB:
+
+```bash
+npm install
+npm run dev:mock
+```
+
+Esto levanta:
+
+- API en `http://localhost:3000` con una instancia **embebida en memoria** de MongoDB.
+- Seed automático e idempotente (usuarios, mesas, menú del día publicado y turno abierto).
+- Cliente Vite en `http://localhost:5173` con proxy de `/api` y `/socket.io`.
+
+Datos locales: `server/.mongo-dev-data` (ignorado por git). Para reiniciar de cero,
+detén el proceso y borra esa carpeta. **No usar `USE_EMBEDDED_MONGO` en producción.**
+
+---
+
 ## 1. Arquitectura de Despliegue
 
 El sistema está diseñado para operar bajo dos modos de despliegue principales:
