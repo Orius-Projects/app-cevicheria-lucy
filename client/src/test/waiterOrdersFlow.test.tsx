@@ -475,9 +475,9 @@ describe('Waiter Orders Flow (Spec 003 UI)', () => {
     const mesa1Btn = screen.getByText('M-01').closest('button')!;
     fireEvent.click(mesa1Btn);
 
-    // Drawer should show table options
+    // Modal popup should show table options
     await waitFor(() => {
-      expect(screen.getByText(/\+ Tomar Pedido para Mesa M-01/i)).toBeInTheDocument();
+      expect(screen.getByText(/Tomar Pedido para Mesa M-01/i)).toBeInTheDocument();
     });
   });
 
