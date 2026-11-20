@@ -23,7 +23,7 @@ describe('Prueba de Seed Idempotente (T066–T070)', () => {
     // Primera ejecución
     const firstRun = await seedData();
     expect(firstRun.usersCount).toBe(4);
-    expect(firstRun.tablesCount).toBe(8);
+    expect(firstRun.tablesCount).toBe(12);
     expect(firstRun.sectionsCount).toBe(4);
     expect(firstRun.dishesCount).toBeGreaterThanOrEqual(10);
     expect(firstRun.menuItemsCount).toBeGreaterThanOrEqual(8);
@@ -38,7 +38,7 @@ describe('Prueba de Seed Idempotente (T066–T070)', () => {
     const settingsCount1 = await Settings.countDocuments();
 
     expect(usersCount1).toBe(4);
-    expect(tablesCount1).toBe(8);
+    expect(tablesCount1).toBe(12);
     expect(sectionsCount1).toBe(4);
     expect(dishesCount1).toBeGreaterThanOrEqual(10);
     expect(menuDaysCount1).toBe(1);

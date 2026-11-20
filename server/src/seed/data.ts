@@ -93,17 +93,26 @@ export async function seedData() {
     userMap[u.username] = userDoc;
   }
 
-  // 4. Mesas M01 a M08
+  // 4. Mesas (12 mesas: 4 en primer piso, 4 en segundo piso, 4 afuera del local)
   const tables = [
-    { code: 'M01', zone: 'Salón', seats: 4 },
-    { code: 'M02', zone: 'Salón', seats: 4 },
-    { code: 'M03', zone: 'Salón', seats: 4 },
-    { code: 'M04', zone: 'Salón', seats: 4 },
-    { code: 'M05', zone: 'Salón', seats: 4 },
-    { code: 'M06', zone: 'Terraza', seats: 4 },
-    { code: 'M07', zone: 'Terraza', seats: 4 },
-    { code: 'M08', zone: 'Terraza', seats: 4 }
+    // Primer Piso (4 mesas)
+    { code: 'M01', zone: 'Primer Piso', seats: 4 },
+    { code: 'M02', zone: 'Primer Piso', seats: 4 },
+    { code: 'M03', zone: 'Primer Piso', seats: 4 },
+    { code: 'M04', zone: 'Primer Piso', seats: 4 },
+    // Segundo Piso (4 mesas)
+    { code: 'M05', zone: 'Segundo Piso', seats: 4 },
+    { code: 'M06', zone: 'Segundo Piso', seats: 4 },
+    { code: 'M07', zone: 'Segundo Piso', seats: 4 },
+    { code: 'M08', zone: 'Segundo Piso', seats: 4 },
+    // Afuera del local / Terraza (4 mesas: M09 a M12)
+    { code: 'M09', zone: 'Afuera (Terraza)', seats: 4 },
+    { code: 'M10', zone: 'Afuera (Terraza)', seats: 4 },
+    { code: 'M11', zone: 'Afuera (Terraza)', seats: 4 },
+    { code: 'M12', zone: 'Afuera (Terraza)', seats: 4 }
   ];
+
+  await Table.deleteMany({ code: { $in: ['M13', 'M14', 'M15', 'M16'] } });
 
   for (const t of tables) {
     await Table.findOneAndUpdate(

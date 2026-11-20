@@ -41,10 +41,45 @@ export async function getDerivedTableState(tableId: mongoose.Types.ObjectId): Pr
   return { state: 'POR_CERRAR', openSession };
 }
 
+const DEFAULT_TABLES = [
+  // Primer Piso (4 mesas)
+  { code: 'M01', zone: 'Primer Piso', seats: 4 },
+  { code: 'M02', zone: 'Primer Piso', seats: 4 },
+  { code: 'M03', zone: 'Primer Piso', seats: 4 },
+  { code: 'M04', zone: 'Primer Piso', seats: 4 },
+  // Segundo Piso (4 mesas)
+  { code: 'M05', zone: 'Segundo Piso', seats: 4 },
+  { code: 'M06', zone: 'Segundo Piso', seats: 4 },
+  { code: 'M07', zone: 'Segundo Piso', seats: 4 },
+  { code: 'M08', zone: 'Segundo Piso', seats: 4 },
+  // Afuera del local / Terraza (4 mesas)
+  { code: 'M09', zone: 'Afuera (Terraza)', seats: 4 },
+  { code: 'M10', zone: 'Afuera (Terraza)', seats: 4 },
+  { code: 'M11', zone: 'Afuera (Terraza)', seats: 4 },
+  { code: 'M12', zone: 'Afuera (Terraza)', seats: 4 }
+];
+
+export async function ensureDefaultTables(): Promise<void> {
+  for (const t of DEFAULT_TABLES) {
+    await Table.findOneAndUpdate(
+      { code: t.code },
+      { $set: { code: t.code, zone: t.zone, seats: t.seats, active: true } },
+      { upsert: true, new: true }
+    );
+  }
+}
+
 /**
  * Lista todas las mesas activas con su estado derivado según rest-api.md §6.
  */
 export async function listTablesWithStatus(): Promise<TableItemResponse[]> {
+  if (process.env.NODE_ENV !== 'test') {
+    const count = await Table.countDocuments({ code: { $in: ['M09', 'M10', 'M11', 'M12'] } });
+    if (count < 4) {
+      await ensureDefaultTables();
+    }
+  }
+
   const tables = await Table.find({ active: true }).sort({ code: 1 });
 
   const result: TableItemResponse[] = [];
