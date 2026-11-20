@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import '@testing-library/jest-dom/vitest';
+import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import { ShiftClosePage } from '../pages/encargado/ShiftClosePage';
 import { useAuthStore } from '../stores/authStore';
@@ -128,6 +129,10 @@ describe('Shift Close Flow (Spec 006 Frontend)', () => {
     observations: '',
     closedAt: null
   };
+
+  afterEach(() => {
+    cleanup();
+  });
 
   beforeEach(() => {
     vi.clearAllMocks();

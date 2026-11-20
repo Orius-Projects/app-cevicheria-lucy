@@ -1,10 +1,12 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import '@testing-library/jest-dom/vitest';
+import { render, screen, fireEvent, waitFor, within, cleanup } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import { KitchenPage } from '../pages/kitchen/KitchenPage';
 import { useKitchenStore } from '../stores/kitchenStore';
 import { useAuthStore } from '../stores/authStore';
+import { useShiftStore } from '../stores/shiftStore';
 import { kitchenApi } from '../api/kitchen.api';
 import { OrderDTO } from '@cevicheria/shared';
 
@@ -92,11 +94,29 @@ describe('Kitchen Flow (Spec 004 KDS)', () => {
       recentOrderIds: []
     });
 
+    useShiftStore.setState({
+      isOpen: true,
+      currentShift: {
+        id: 'shift-1',
+        date: '2026-11-18',
+        label: 'Almuerzo',
+        status: 'ABIERTO',
+        openedAt: '2026-11-18T10:00:00.000Z'
+      },
+      isLoading: false,
+      error: null,
+      fetchCurrentShift: vi.fn().mockResolvedValue(undefined)
+    });
+
     (kitchenApi.getBoard as any).mockResolvedValue({
       pending: [order1, order2],
       ready: [order3],
       serverTime: '2026-11-18T12:06:00.000Z'
     });
+  });
+
+  afterEach(() => {
+    cleanup();
   });
 
   it('renders KDS board with pending/ready counters, dark header and connection status', async () => {
@@ -293,5 +313,36 @@ describe('Kitchen Flow (Spec 004 KDS)', () => {
 
     fireEvent.click(retryBtn);
     expect(kitchenApi.getBoard).toHaveBeenCalled();
+  });
+
+  it('renders ShiftClosedView and blocks kitchen operations when shift is closed', async () => {
+    useShiftStore.setState({
+      isOpen: false,
+      currentShift: {
+        id: 'shift-1',
+        date: '2026-11-18',
+        label: 'Almuerzo',
+        status: 'CERRADO',
+        openedAt: '2026-11-18T10:00:00.000Z'
+      },
+      isLoading: false,
+      error: null,
+      fetchCurrentShift: vi.fn().mockResolvedValue(undefined)
+    });
+
+    render(
+      <MemoryRouter>
+        <KitchenPage />
+      </MemoryRouter>
+    );
+
+    // Turno Finalizado debe ser visible
+    expect(screen.getAllByText(/Turno Finalizado/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/El administrador ha cerrado el turno de atención/i)).toBeInTheDocument();
+    expect(screen.getByText(/Operaciones bloqueadas/i)).toBeInTheDocument();
+
+    // No debe mostrar las columnas operativas de comandas
+    expect(screen.queryByText(/Pendientes en Cocina/i)).not.toBeInTheDocument();
+    expect(screen.queryByText('Mesa M-01')).not.toBeInTheDocument();
   });
 });

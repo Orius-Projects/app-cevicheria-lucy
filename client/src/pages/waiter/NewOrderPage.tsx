@@ -12,6 +12,7 @@ import { OrderCart } from '../../components/mozo/OrderCart';
 import { OrderSummary } from '../../components/mozo/OrderSummary';
 import { VariationSheet } from '../../components/mozo/VariationSheet';
 import { ConnectionBanner } from '../../components/common/ConnectionBanner';
+import { ShiftClosedView } from '../../components/common/ShiftClosedView';
 import { NotificationCenter } from '../../components/notifications/NotificationCenter';
 import { ToastContainer } from '../../components/notifications/ToastContainer';
 import { useOrderEvents } from '../../hooks/useOrderEvents';
@@ -21,7 +22,7 @@ import { TodayMenuItem } from '../../api/menu.api';
 export const NewOrderPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
-  const { isOpen: isShiftOpen, fetchCurrentShift } = useShiftStore();
+  const { isOpen: isShiftOpen, currentShift, fetchCurrentShift } = useShiftStore();
   const { todayMenu, loading: isMenuLoading, error: menuError, loadToday } = useMenuPublicStore();
   const { tables, fetchTables } = useTablesStore();
 
@@ -234,73 +235,79 @@ export const NewOrderPage: React.FC = () => {
 
       {/* Main Container: 2 columnas en Desktop (Carta a la izq, Carrito a la der) */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Columna Izquierda: Carta de Platos (8 cols) */}
-        <div className="lg:col-span-7 xl:col-span-8 space-y-4">
-          {/* Alertas críticas */}
-          {!isShiftOpen && (
-            <div className="p-4 bg-amber-50 border border-amber-300 rounded-2xl text-amber-900 text-xs">
-              <strong>Turno cerrado:</strong> No se pueden registrar comandas hasta que el encargado abra el turno de atención.
-            </div>
-          )}
-
-          {submissionError && (
-            <div className="p-4 bg-rose-50 border border-rose-300 rounded-2xl text-rose-800 text-xs font-medium" aria-live="assertive">
-              {submissionError}
-            </div>
-          )}
-
-          {menuError && (
-            <div className="p-4 bg-amber-50 border border-amber-300 rounded-2xl text-amber-800 text-xs">
-              {menuError}
-            </div>
-          )}
-
-          {/* Filtros de Secciones y Búsqueda */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-            <MenuSectionTabs
-              sections={sections}
-              activeSectionKey={activeSectionKey}
-              onSelectSection={setActiveSectionKey}
-              showAllOption={true}
-            />
-
-            <input
-              type="text"
-              placeholder="Buscar en carta..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="px-3 py-2 border border-slate-300 rounded-xl text-sm min-h-[44px] w-full sm:w-56 focus:outline-none focus:ring-2 focus:ring-brand-500"
+        {!isShiftOpen ? (
+          <div className="lg:col-span-12">
+            <ShiftClosedView
+              role="MOZO"
+              shiftLabel={currentShift?.label}
+              shiftDate={currentShift?.date}
+              onRefresh={fetchCurrentShift}
             />
           </div>
+        ) : (
+          <>
+            {/* Columna Izquierda: Carta de Platos (8 cols) */}
+            <div className="lg:col-span-7 xl:col-span-8 space-y-4">
+              {submissionError && (
+                <div className="p-4 bg-rose-50 border border-rose-300 rounded-2xl text-rose-800 text-xs font-medium" aria-live="assertive">
+                  {submissionError}
+                </div>
+              )}
 
-          {/* Grid de Platos */}
-          {isMenuLoading && allMenuItems.length === 0 ? (
-            <div className="text-center py-16 text-slate-400">Cargando carta del día...</div>
-          ) : filteredItems.length === 0 ? (
-            <div className="bg-white p-12 rounded-2xl border border-slate-200 text-center text-slate-500 text-sm">
-              No hay platos disponibles en este momento para la sección seleccionada.
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {filteredItems.map((item) => (
-                <DishCard
-                  key={item.id}
-                  item={item}
-                  showAddButton={true}
-                  onAdd={() => handleSelectItem(item)}
+              {menuError && (
+                <div className="p-4 bg-amber-50 border border-amber-300 rounded-2xl text-amber-800 text-xs">
+                  {menuError}
+                </div>
+              )}
+
+              {/* Filtros de Secciones y Búsqueda */}
+              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <MenuSectionTabs
+                  sections={sections}
+                  activeSectionKey={activeSectionKey}
+                  onSelectSection={setActiveSectionKey}
+                  showAllOption={true}
                 />
-              ))}
-            </div>
-          )}
-        </div>
 
-        {/* Columna Derecha: Carrito / Comanda actual (4 cols) */}
-        <div className="lg:col-span-5 xl:col-span-4 sticky top-20">
-          <OrderCart
-            onConfirmOrder={handleConfirmOrder}
-            isSubmitting={isSubmitting}
-          />
-        </div>
+                <input
+                  type="text"
+                  placeholder="Buscar en carta..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="px-3 py-2 border border-slate-300 rounded-xl text-sm min-h-[44px] w-full sm:w-56 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                />
+              </div>
+
+              {/* Grid de Platos */}
+              {isMenuLoading && allMenuItems.length === 0 ? (
+                <div className="text-center py-16 text-slate-400">Cargando carta del día...</div>
+              ) : filteredItems.length === 0 ? (
+                <div className="bg-white p-12 rounded-2xl border border-slate-200 text-center text-slate-500 text-sm">
+                  No hay platos disponibles en este momento para la sección seleccionada.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {filteredItems.map((item) => (
+                    <DishCard
+                      key={item.id}
+                      item={item}
+                      showAddButton={true}
+                      onAdd={() => handleSelectItem(item)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Columna Derecha: Carrito / Comanda actual (4 cols) */}
+            <div className="lg:col-span-5 xl:col-span-4 sticky top-20">
+              <OrderCart
+                onConfirmOrder={handleConfirmOrder}
+                isSubmitting={isSubmitting}
+              />
+            </div>
+          </>
+        )}
       </main>
 
       {/* Modal para selección de Variaciones */}

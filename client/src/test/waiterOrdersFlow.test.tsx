@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import '@testing-library/jest-dom/vitest';
+import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { NewOrderPage } from '../pages/waiter/NewOrderPage';
 import { ActiveOrdersPage } from '../pages/waiter/ActiveOrdersPage';
@@ -158,7 +159,8 @@ describe('Waiter Orders Flow (Spec 003 UI)', () => {
       },
       isOpen: true,
       isLoading: false,
-      error: null
+      error: null,
+      fetchCurrentShift: vi.fn().mockResolvedValue(undefined)
     });
 
     useTablesStore.setState({
@@ -188,6 +190,10 @@ describe('Waiter Orders Flow (Spec 003 UI)', () => {
 
     useOrderDraftStore.getState().clearDraft();
     (menuApi.getMenuToday as any).mockResolvedValue(mockMenu);
+  });
+
+  afterEach(() => {
+    cleanup();
   });
 
   it('NewOrderPage: arms draft with variations, displays exact total S/ 35.00, and sends order idempotently', async () => {
@@ -273,16 +279,11 @@ describe('Waiter Orders Flow (Spec 003 UI)', () => {
     });
   });
 
-  it('NewOrderPage (FR-008): blocks order confirmation when shift is closed', async () => {
-    useShiftStore.setState({ isOpen: false, currentShift: null });
-
-    // Arm draft in store
-    useOrderDraftStore.getState().setTable('tbl-1', 'M-01');
-    useOrderDraftStore.getState().addItem({
-      dishId: 'dish-ceviche-1',
-      dishName: 'Ceviche Mixto',
-      priceCents: 3500,
-      quantity: 1
+  it('NewOrderPage (FR-008): blocks order confirmation when shift is closed with ShiftClosedView', async () => {
+    useShiftStore.setState({
+      isOpen: false,
+      currentShift: null,
+      fetchCurrentShift: vi.fn().mockResolvedValue(undefined)
     });
 
     render(
@@ -293,18 +294,14 @@ describe('Waiter Orders Flow (Spec 003 UI)', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => {
-      expect(screen.getAllByText('Ceviche Mixto').length).toBeGreaterThan(0);
-    });
+    // Turno Finalizado debe ser visible
+    expect(screen.getAllByText(/Turno Finalizado/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/El administrador ha cerrado el turno de atención/i)).toBeInTheDocument();
+    expect(screen.getByText(/Operaciones bloqueadas/i)).toBeInTheDocument();
 
-    const reviewBtn = screen.getByRole('button', { name: /Enviar Comanda a Cocina/i });
-    fireEvent.click(reviewBtn);
-
-    // Modal should NOT open and error message must be shown
+    // No debe permitir interactuar con la carta ni enviar comanda
     expect(screen.queryByText(/Confirmar Envío a Cocina/i)).not.toBeInTheDocument();
-    expect(
-      screen.getByText('No hay turno abierto. Pide al encargado que abra el turno.')
-    ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Enviar Comanda a Cocina/i })).not.toBeInTheDocument();
   });
 
   it('NewOrderPage: blocks addition of AGOTADO dishes', async () => {
@@ -482,5 +479,38 @@ describe('Waiter Orders Flow (Spec 003 UI)', () => {
     await waitFor(() => {
       expect(screen.getByText(/\+ Tomar Pedido para Mesa M-01/i)).toBeInTheDocument();
     });
+  });
+
+  it('renders ShiftClosedView on WaiterDashboardPage and blocks operations when shift is closed', async () => {
+    useShiftStore.setState({
+      isOpen: false,
+      currentShift: {
+        id: 'shift-1',
+        date: '2026-11-18',
+        label: 'Turno Mañana',
+        status: 'CERRADO',
+        openedAt: '2026-11-18T08:00:00.000Z'
+      },
+      isLoading: false,
+      error: null,
+      fetchCurrentShift: vi.fn().mockResolvedValue(undefined)
+    });
+
+    render(
+      <MemoryRouter initialEntries={['/mozo']}>
+        <Routes>
+          <Route path="/mozo" element={<WaiterDashboardPage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    // Debe mostrar Turno Finalizado
+    expect(screen.getAllByText(/Turno Finalizado/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/El administrador ha cerrado el turno de atención/i)).toBeInTheDocument();
+    expect(screen.getByText(/Operaciones bloqueadas/i)).toBeInTheDocument();
+
+    // No debe mostrar la grilla operativa de mesas
+    expect(screen.queryByText('M-01')).not.toBeInTheDocument();
+    expect(screen.queryByText(/Estado de Mesas del Salón/i)).not.toBeInTheDocument();
   });
 });

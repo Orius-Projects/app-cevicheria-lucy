@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
 import { useOrdersStore } from '../../stores/ordersStore';
+import { useShiftStore } from '../../stores/shiftStore';
 import { useOrderEvents } from '../../hooks/useOrderEvents';
 import { OrderStatusBadge } from '../../components/mozo/OrderStatusBadge';
 import { CancelOrderModal } from '../../components/mozo/CancelOrderModal';
 import { ConnectionBanner } from '../../components/common/ConnectionBanner';
+import { ShiftClosedView } from '../../components/common/ShiftClosedView';
 import { NotificationCenter } from '../../components/notifications/NotificationCenter';
 import { ToastContainer } from '../../components/notifications/ToastContainer';
 import { formatLimaTime } from '../../utils/datetime';
@@ -15,8 +17,13 @@ import { OrderDTO } from '@cevicheria/shared';
 export const ActiveOrdersPage: React.FC = () => {
   const { user } = useAuthStore();
   const { active, deliverOrder, cancelOrder, refreshAll, loading, error, clearError } = useOrdersStore();
+  const { isOpen: isShiftOpen, currentShift, fetchCurrentShift } = useShiftStore();
 
   useOrderEvents({ pollingIntervalMs: 15000 });
+
+  useEffect(() => {
+    fetchCurrentShift();
+  }, [fetchCurrentShift]);
 
   const [activeFilter, setActiveFilter] = useState<'ALL' | 'ENVIADO' | 'LISTO'>('ALL');
   const [deliveringId, setDeliveringId] = useState<string | null>(null);
@@ -92,7 +99,16 @@ export const ActiveOrdersPage: React.FC = () => {
           </div>
         )}
 
-        {/* Filtros */}
+        {!isShiftOpen ? (
+          <ShiftClosedView
+            role="MOZO"
+            shiftLabel={currentShift?.label}
+            shiftDate={currentShift?.date}
+            onRefresh={fetchCurrentShift}
+          />
+        ) : (
+          <>
+            {/* Filtros */}
         <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-3">
           <button
             type="button"
@@ -246,6 +262,8 @@ export const ActiveOrdersPage: React.FC = () => {
               );
             })}
           </div>
+        )}
+          </>
         )}
       </main>
 

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useMemo } from 'react';
 import { useKitchenStore } from '../stores/kitchenStore';
+import { useShiftStore } from '../stores/shiftStore';
 import { useRealtimeStore } from '../stores/realtimeStore';
 import { useRealtimeConnection, useRealtimeEvents } from './useRealtimeConnection';
 import { getSocket } from '../api/socket';
@@ -64,6 +65,9 @@ export function useKitchenEvents(options: UseKitchenEventsOptions = {}) {
         if (order) {
           applyEvent({ event: 'order:cancelled', order });
         }
+      },
+      'shift:closed': () => {
+        useShiftStore.getState().markClosed();
       }
     }),
     [applyEvent]
