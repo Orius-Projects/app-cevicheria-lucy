@@ -20,8 +20,8 @@ export const KitchenConnectionBanner: React.FC<KitchenConnectionBannerProps> = (
       aria-live="assertive"
       className={`px-4 py-3 border-b flex flex-wrap justify-between items-center gap-3 transition-colors ${
         isReconnecting
-          ? 'bg-amber-950/90 border-amber-700 text-amber-200'
-          : 'bg-rose-950/95 border-rose-700 text-rose-200'
+          ? 'bg-amber-50 border-amber-200 text-amber-900'
+          : 'bg-rose-50 border-rose-200 text-rose-800'
       }`}
     >
       <div className="flex items-center space-x-2">
@@ -37,7 +37,7 @@ export const KitchenConnectionBanner: React.FC<KitchenConnectionBannerProps> = (
         <button
           type="button"
           onClick={onRetry}
-          className="px-4 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-bold min-h-[44px] transition-all border border-white/20 active:scale-95"
+          className="px-4 py-1.5 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs font-bold min-h-[44px] transition-all border border-slate-300 shadow-xs active:scale-95"
         >
           Reintentar conexión
         </button>

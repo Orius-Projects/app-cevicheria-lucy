@@ -15,19 +15,19 @@ export const KitchenItems: React.FC<KitchenItemsProps> = ({
       {items.map((item, idx) => (
         <div
           key={`${item.dishId}_${idx}`}
-          className="bg-slate-900/90 rounded-xl p-3 border border-slate-700/80 space-y-1.5 transition-all"
+          className="bg-sky-50/50 rounded-xl p-3 border border-sky-100 space-y-1.5 transition-all"
         >
           <div className="flex items-start justify-between gap-2">
             <div className="flex items-start space-x-2">
-              <span className="text-lg sm:text-xl font-black text-amber-400 leading-tight">
+              <span className="text-lg sm:text-xl font-black text-brand-700 leading-tight">
                 {item.quantity}×
               </span>
               <div>
-                <span className="text-sm sm:text-base font-bold text-slate-100 leading-tight block">
+                <span className="text-sm sm:text-base font-bold text-slate-900 leading-tight block">
                   {item.dishName}
                 </span>
                 {item.sectionName && (
-                  <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                  <span className="text-[10px] uppercase font-bold text-brand-600 tracking-wider">
                     {item.sectionName}
                   </span>
                 )}
@@ -41,19 +41,19 @@ export const KitchenItems: React.FC<KitchenItemsProps> = ({
               {item.variations.map((v) => (
                 <span
                   key={v.id}
-                  className="text-xs px-2.5 py-0.5 rounded-md bg-amber-950/90 text-amber-300 border border-amber-600/70 font-semibold flex items-center space-x-1"
+                  className="text-xs px-2.5 py-0.5 rounded-md bg-white text-brand-800 border border-sky-200 font-semibold flex items-center space-x-1 shadow-xs"
                 >
-                  <span className="text-[10px] text-amber-500">✦</span>
+                  <span className="text-[10px] text-brand-500">✦</span>
                   <span>{v.name}</span>
                 </span>
               ))}
             </div>
           )}
 
-          {/* Notas de ítem completas sin truncar */}
+          {/* Notas de preparación de ítem */}
           {item.notes && item.notes.trim() && (
-            <div className="mt-1.5 p-2 bg-yellow-950/40 border border-yellow-700/60 rounded-lg text-xs text-yellow-200 font-medium">
-              <span className="font-bold text-yellow-400 block text-[11px] uppercase tracking-wider">
+            <div className="mt-1.5 p-2 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900 font-medium">
+              <span className="font-bold text-amber-800 block text-[11px] uppercase tracking-wider">
                 Nota de preparación:
               </span>
               <span>"{item.notes}"</span>

@@ -12,12 +12,12 @@ export const KitchenEmptyState: React.FC<KitchenEmptyStateProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`bg-slate-900/60 border border-slate-800 rounded-2xl p-8 sm:p-12 text-center space-y-3 ${className}`}>
-      <div className="w-16 h-16 bg-slate-800 text-amber-400 text-3xl rounded-full flex items-center justify-center mx-auto border border-slate-700 shadow-inner">
+    <div className={`bg-white border-2 border-dashed border-sky-200 rounded-2xl p-8 sm:p-12 text-center space-y-3 shadow-xs ${className}`}>
+      <div className="w-16 h-16 bg-sky-50 text-brand-600 text-3xl rounded-full flex items-center justify-center mx-auto border border-sky-200 shadow-xs">
         👨‍🍳
       </div>
-      <h3 className="text-lg font-bold text-slate-100">{title}</h3>
-      <p className="text-xs sm:text-sm text-slate-400 max-w-sm mx-auto leading-relaxed">
+      <h3 className="text-lg font-bold text-slate-800">{title}</h3>
+      <p className="text-xs sm:text-sm text-slate-500 max-w-sm mx-auto leading-relaxed">
         {description}
       </p>
     </div>
