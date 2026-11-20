@@ -1,2 +1,2 @@
 // Application Layouts
-export {};
+export * from './AdminLayout';

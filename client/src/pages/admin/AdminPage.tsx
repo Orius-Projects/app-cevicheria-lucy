@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuthStore } from '../../stores/authStore';
 import { useShiftStore } from '../../stores/shiftStore';
-import { AdminNavigation } from '../../components/menu/AdminNavigation';
+import { AdminLayout } from '../../layouts/AdminLayout';
 
 export const AdminPage: React.FC = () => {
-  const { user, logout } = useAuthStore();
   const { currentShift, isOpen, isLoading, error, fetchCurrentShift, openShift, closeShift } =
     useShiftStore();
 
@@ -41,22 +39,8 @@ export const AdminPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center shadow-sm">
-        <div>
-          <h1 className="text-xl font-bold text-brand-700">Cevichería Lucy — Administración</h1>
-          <p className="text-xs text-slate-500">{user?.displayName} ({user?.role})</p>
-        </div>
-        <button
-          onClick={() => logout()}
-          className="text-xs px-3 py-2 min-h-[44px] text-slate-600 hover:text-slate-900 border border-slate-300 rounded-lg"
-        >
-          Cerrar sesión
-        </button>
-      </header>
-
-      <main className="flex-1 max-w-4xl w-full mx-auto p-6 space-y-6">
-        <AdminNavigation />
+    <AdminLayout maxWidth="max-w-4xl">
+      <div className="space-y-6">
         {feedback && (
           <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-sm">
             {feedback}
@@ -155,8 +139,8 @@ export const AdminPage: React.FC = () => {
             </form>
           )}
         </div>
-      </main>
-    </div>
+      </div>
+    </AdminLayout>
   );
 };
 

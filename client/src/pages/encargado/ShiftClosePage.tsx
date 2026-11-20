@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuthStore } from '../../stores/authStore';
 import { useShiftCloseStore } from '../../stores/shiftCloseStore';
-import { AdminNavigation } from '../../components/menu/AdminNavigation';
+import { AdminLayout } from '../../layouts/AdminLayout';
 import {
   OpenOrdersList,
   OpenTablesList,
@@ -22,7 +21,6 @@ import { formatLima } from '../../utils/datetime';
 import { formatSoles } from '../../utils/money';
 
 export const ShiftClosePage: React.FC = () => {
-  const { user, logout } = useAuthStore();
   const {
     shift,
     openOrders,
@@ -118,44 +116,24 @@ export const ShiftClosePage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      {/* Top Header */}
-      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-4 flex justify-between items-center shadow-sm">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold text-brand-700">
-              Cevichería Lucy — Cierre de Turno
-            </h1>
-            {shift && (
-              <span
-                className={`text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${
-                  isClosed
-                    ? 'bg-slate-200 text-slate-800 border border-slate-300'
-                    : 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                }`}
-              >
-                {shift.status}
-              </span>
-            )}
-          </div>
-          <p className="text-xs text-slate-500">
-            {user?.displayName} ({user?.role})
-          </p>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => logout()}
-          className="text-xs px-3 py-2 min-h-[44px] text-slate-600 hover:text-slate-900 border border-slate-300 rounded-lg transition-colors"
-        >
-          Cerrar sesión
-        </button>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6 space-y-6">
-        <AdminNavigation />
-
+    <AdminLayout
+      title="Cevichería Lucy — Cierre de Turno"
+      headerExtra={
+        shift && (
+          <span
+            className={`text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider ${
+              isClosed
+                ? 'bg-slate-200 text-slate-800 border border-slate-300'
+                : 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+            }`}
+          >
+            {shift.status}
+          </span>
+        )
+      }
+      maxWidth="max-w-5xl"
+    >
+      <div className="space-y-6">
         {/* Anchor Navigation Bar */}
         <nav aria-label="Navegación de secciones" className="bg-white rounded-xl border border-slate-200 p-2 shadow-sm flex gap-2 overflow-x-auto text-xs font-semibold">
           <a
@@ -496,7 +474,7 @@ export const ShiftClosePage: React.FC = () => {
             </section>
           </>
         )}
-      </main>
+      </div>
 
       {/* MODALS */}
       <ManualCloseModal
@@ -521,7 +499,7 @@ export const ShiftClosePage: React.FC = () => {
         onClose={() => setAdjustDishTarget(null)}
         onConfirm={handleAdjustRationsConfirm}
       />
-    </div>
+    </AdminLayout>
   );
 };
 

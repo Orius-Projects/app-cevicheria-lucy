@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useAuthStore } from '../../stores/authStore';
 import { useMenuAdminStore, getTodayLimaDate } from '../../stores/menuAdminStore';
-import { AdminNavigation } from '../../components/menu/AdminNavigation';
+import { AdminLayout } from '../../layouts/AdminLayout';
 import { AvailabilityBadge } from '../../components/menu/AvailabilityBadge';
 import { RationBadge } from '../../components/menu/RationBadge';
 import { ReplenishRationsModal } from '../../components/menu/ReplenishRationsModal';
@@ -13,7 +12,6 @@ import { deriveDishStatus } from '../../utils/dishState';
 import { Link } from 'react-router-dom';
 
 export const RationAdjustmentsPage: React.FC = () => {
-  const { user, logout } = useAuthStore();
   const {
     selectedDate,
     setSelectedDate,
@@ -67,25 +65,8 @@ export const RationAdjustmentsPage: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      {/* Header */}
-      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-4 flex justify-between items-center shadow-sm">
-        <div>
-          <h1 className="text-xl font-bold text-brand-700">Cevichería Lucy — Administración</h1>
-          <p className="text-xs text-slate-500">{user?.displayName} ({user?.role})</p>
-        </div>
-        <button
-          onClick={() => logout()}
-          className="text-xs px-3 py-2 min-h-[44px] text-slate-600 hover:text-slate-900 border border-slate-300 rounded-lg"
-        >
-          Cerrar sesión
-        </button>
-      </header>
-
-      {/* Main Container */}
-      <main className="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 space-y-4">
-        <AdminNavigation />
-
+    <AdminLayout maxWidth="max-w-6xl">
+      <div className="space-y-4">
         {/* Feedback messages */}
         {successMessage && (
           <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-sm flex justify-between items-center">
@@ -254,7 +235,7 @@ export const RationAdjustmentsPage: React.FC = () => {
             })}
           </div>
         )}
-      </main>
+      </div>
 
       {/* Modales */}
       {activeModal === 'replenish' && selectedItem && (
@@ -303,7 +284,7 @@ export const RationAdjustmentsPage: React.FC = () => {
           menuItem={selectedItem}
         />
       )}
-    </div>
+    </AdminLayout>
   );
 };
 
