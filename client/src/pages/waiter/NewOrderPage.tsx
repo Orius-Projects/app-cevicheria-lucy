@@ -13,6 +13,7 @@ import { OrderSummary } from '../../components/mozo/OrderSummary';
 import { VariationSheet } from '../../components/mozo/VariationSheet';
 import { ConnectionBanner } from '../../components/common/ConnectionBanner';
 import { ShiftClosedView } from '../../components/common/ShiftClosedView';
+import { UserMenuDropdown } from '../../components/common/UserMenuDropdown';
 import { NotificationCenter } from '../../components/notifications/NotificationCenter';
 import { ToastContainer } from '../../components/notifications/ToastContainer';
 import { useOrderEvents } from '../../hooks/useOrderEvents';
@@ -219,17 +220,21 @@ export const NewOrderPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center space-x-2">
-          <NotificationCenter />
-
+        <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => setIsTableModalOpen(true)}
-            className="px-3.5 py-2 min-h-[44px] bg-brand-50 hover:bg-brand-100 text-brand-800 border border-brand-200 rounded-xl text-xs font-bold flex items-center space-x-1.5"
+            className="px-3.5 py-2 min-h-[40px] bg-brand-50 hover:bg-brand-100 text-brand-800 border border-brand-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
           >
-            <span>🏷️</span>
+            <svg className="w-4 h-4 text-brand-700 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+              <line x1="7" y1="7" x2="7.01" y2="7" />
+            </svg>
             <span>{tableCode ? `Mesa: ${tableCode}` : 'Elegir Mesa'}</span>
           </button>
+
+          <NotificationCenter variant="light" />
+          <UserMenuDropdown />
         </div>
       </header>
 

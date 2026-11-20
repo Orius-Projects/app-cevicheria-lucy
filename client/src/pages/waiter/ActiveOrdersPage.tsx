@@ -8,6 +8,7 @@ import { OrderStatusBadge } from '../../components/mozo/OrderStatusBadge';
 import { CancelOrderModal } from '../../components/mozo/CancelOrderModal';
 import { ConnectionBanner } from '../../components/common/ConnectionBanner';
 import { ShiftClosedView } from '../../components/common/ShiftClosedView';
+import { UserMenuDropdown } from '../../components/common/UserMenuDropdown';
 import { NotificationCenter } from '../../components/notifications/NotificationCenter';
 import { ToastContainer } from '../../components/notifications/ToastContainer';
 import { formatLimaTime } from '../../utils/datetime';
@@ -68,24 +69,21 @@ export const ActiveOrdersPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center space-x-2">
-          <NotificationCenter />
-
-          <Link
-            to="/mozo/pedido/nuevo"
-            className="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold min-h-[44px] flex items-center shadow-sm"
-          >
-            + Nueva Comanda
-          </Link>
-
+        <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => refreshAll()}
             title="Refrescar lista"
-            className="p-2.5 border border-slate-300 rounded-xl hover:bg-slate-50 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-600 font-bold"
+            aria-label="Refrescar lista"
+            className="p-2 border border-slate-200 rounded-full hover:bg-slate-50 min-h-[40px] min-w-[40px] flex items-center justify-center text-slate-600 transition-colors shadow-xs cursor-pointer"
           >
-            ↻
+            <svg className="w-4 h-4 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3" />
+            </svg>
           </button>
+
+          <NotificationCenter variant="light" />
+          <UserMenuDropdown />
         </div>
       </header>
 

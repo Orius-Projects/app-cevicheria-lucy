@@ -38,10 +38,10 @@ describe('AdminLayout Component', () => {
     expect(screen.getByText('Raciones y Agotados')).toBeInTheDocument();
     expect(screen.getByText('Cierre de Turno')).toBeInTheDocument();
 
-    // Top action buttons
+    // Top action buttons (gear icon removed as it is redundant)
     expect(screen.getByLabelText('Notificaciones')).toBeInTheDocument();
     expect(screen.getByLabelText('Ayuda')).toBeInTheDocument();
-    expect(screen.getByLabelText('Configuración')).toBeInTheDocument();
+    expect(screen.queryByLabelText('Configuración')).not.toBeInTheDocument();
     expect(screen.getByLabelText('Menú de usuario')).toBeInTheDocument();
 
     // Dropdown is closed initially
@@ -79,11 +79,11 @@ describe('AdminLayout Component', () => {
     expect(screen.getByRole('menu')).toBeInTheDocument();
     expect(screen.getByText('sebastian.chicata@gmail.com')).toBeInTheDocument();
 
-    // Check all menu options in Image 4
+    // Check menu options
     expect(screen.getByRole('menuitem', { name: /Perfil/i })).toBeInTheDocument();
     expect(screen.getByRole('menuitem', { name: /Configuración de la cuenta/i })).toBeInTheDocument();
     expect(screen.getByRole('menuitem', { name: /Theme/i })).toBeInTheDocument();
-    expect(screen.getByRole('menuitem', { name: /Cambiar de cuenta/i })).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: /Cambiar de cuenta/i })).not.toBeInTheDocument();
     expect(screen.getByRole('menuitem', { name: /Cerrar sesión/i })).toBeInTheDocument();
 
     // "Mejora versión" must NOT be in the document
