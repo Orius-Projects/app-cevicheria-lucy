@@ -262,6 +262,24 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
     }
   };
 
+  // Agrupación de mesas del Primer y Segundo Piso
+  const primerPisoTables = safeTables.filter((t) => getTableZoneKey(t) === 'PRIMER_PISO');
+  const segundoPisoTables = safeTables.filter((t) => getTableZoneKey(t) === 'SEGUNDO_PISO');
+
+  // Para Afuera del Local: asegura que siempre se muestren las 4 mesas (M09 a M12)
+  // DEBE ejecutarse siempre antes de cualquier early return para respetar las reglas de hooks de React
+  const afueraTables = useMemo(() => {
+    const backendAfuera = safeTables.filter((t) => getTableZoneKey(t) === 'AFUERA');
+    if (backendAfuera.length >= 4) {
+      return backendAfuera.slice(0, 4);
+    }
+    const existingCodes = new Set(backendAfuera.map((t) => t?.code).filter(Boolean));
+    const missing = DEFAULT_AFUERA_TABLES.filter((t) => !existingCodes.has(t.code));
+    return [...backendAfuera, ...missing].slice(0, 4);
+  }, [safeTables]);
+
+  const totalTablesCount = primerPisoTables.length + segundoPisoTables.length + afueraTables.length;
+
   if (isLoading && safeTables.length === 0) {
     return (
       <div className="flex items-center justify-center p-8 text-slate-500">
@@ -285,23 +303,6 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
       </div>
     );
   }
-
-  // Agrupación de mesas del Primer y Segundo Piso
-  const primerPisoTables = safeTables.filter((t) => getTableZoneKey(t) === 'PRIMER_PISO');
-  const segundoPisoTables = safeTables.filter((t) => getTableZoneKey(t) === 'SEGUNDO_PISO');
-
-  // Para Afuera del Local: asegura que siempre se muestren las 4 mesas (M09 a M12)
-  const afueraTables = useMemo(() => {
-    const backendAfuera = safeTables.filter((t) => getTableZoneKey(t) === 'AFUERA');
-    if (backendAfuera.length >= 4) {
-      return backendAfuera.slice(0, 4);
-    }
-    const existingCodes = new Set(backendAfuera.map((t) => t?.code).filter(Boolean));
-    const missing = DEFAULT_AFUERA_TABLES.filter((t) => !existingCodes.has(t.code));
-    return [...backendAfuera, ...missing].slice(0, 4);
-  }, [safeTables]);
-
-  const totalTablesCount = primerPisoTables.length + segundoPisoTables.length + afueraTables.length;
 
   const renderTableCard = (table: TableItem) => {
     if (!table) return null;
