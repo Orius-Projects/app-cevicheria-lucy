@@ -34,7 +34,9 @@ export const useTablesStore = create<TablesState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await apiClient.get('/tables');
-      set({ tables: response.data.data, isLoading: false });
+      const raw = response.data?.data ?? response.data;
+      const safeTables = Array.isArray(raw) ? raw : [];
+      set({ tables: safeTables, isLoading: false });
     } catch (err: any) {
       const message =
         err.response?.data?.error?.message || 'Error al obtener la lista de mesas';

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { AppRoutes } from './routes';
 import { useAuthStore } from './stores/authStore';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
 
 export const App: React.FC = () => {
   const { checkAuth } = useAuthStore();
@@ -9,7 +10,11 @@ export const App: React.FC = () => {
     checkAuth();
   }, [checkAuth]);
 
-  return <AppRoutes />;
+  return (
+    <ErrorBoundary fallbackTitle="Error en la aplicación">
+      <AppRoutes />
+    </ErrorBoundary>
+  );
 };
 
 export default App;
