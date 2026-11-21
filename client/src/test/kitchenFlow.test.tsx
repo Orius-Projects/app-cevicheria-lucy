@@ -138,8 +138,8 @@ describe('Kitchen Flow (Spec 004 KDS)', () => {
     const readyCounter = screen.getByTestId('ready-counter');
     expect(readyCounter).toHaveTextContent('1');
 
-    // Nombre de usuario cocinero en cabecera
-    expect(screen.getByText(/Cocinero Pedro/i)).toBeInTheDocument();
+    // Título minimalista en cabecera
+    expect(screen.getByRole('heading', { name: /^Cocina$/i })).toBeInTheDocument();
 
     // Título de columnas
     expect(screen.getByText(/Pendientes en Cocina/i)).toBeInTheDocument();

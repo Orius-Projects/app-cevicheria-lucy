@@ -114,9 +114,22 @@ export const ShiftClosedView: React.FC<ShiftClosedViewProps> = ({
           {!isCocinero && (
             <Link
               to="/mozo/menu"
-              className="w-full py-2.5 px-4 bg-sky-50 hover:bg-sky-100 text-brand-700 border border-sky-200 rounded-xl font-semibold text-xs min-h-[44px] flex items-center justify-center transition-colors"
+              className="w-full py-2.5 px-4 bg-sky-50 hover:bg-sky-100 text-brand-700 border border-sky-200 rounded-xl font-semibold text-xs min-h-[44px] flex items-center justify-center gap-2 transition-colors"
             >
-              📋 Ver Carta y Menú del Día (Solo Consulta)
+              <svg
+                className="w-4 h-4 shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+              </svg>
+              <span>Ver Carta y Menú del Día (Solo Consulta)</span>
             </Link>
           )}
 

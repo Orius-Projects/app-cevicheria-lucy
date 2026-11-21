@@ -19,15 +19,15 @@ export const KitchenItems: React.FC<KitchenItemsProps> = ({
         >
           <div className="flex items-start justify-between gap-2">
             <div className="flex items-start space-x-2">
-              <span className="text-lg sm:text-xl font-black text-brand-700 leading-tight">
+              <span className="text-base sm:text-lg font-semibold text-brand-700 leading-tight">
                 {item.quantity}×
               </span>
               <div>
-                <span className="text-sm sm:text-base font-bold text-slate-900 leading-tight block">
+                <span className="text-sm sm:text-base font-medium text-slate-800 leading-tight block">
                   {item.dishName}
                 </span>
                 {item.sectionName && (
-                  <span className="text-[10px] uppercase font-bold text-brand-600 tracking-wider">
+                  <span className="text-[10px] uppercase font-medium text-brand-600 tracking-wider">
                     {item.sectionName}
                   </span>
                 )}
@@ -41,9 +41,20 @@ export const KitchenItems: React.FC<KitchenItemsProps> = ({
               {item.variations.map((v) => (
                 <span
                   key={v.id}
-                  className="text-xs px-2.5 py-0.5 rounded-md bg-white text-brand-800 border border-sky-200 font-semibold flex items-center space-x-1 shadow-xs"
+                  className="text-xs px-2.5 py-0.5 rounded-md bg-white text-brand-800 border border-sky-200 font-normal flex items-center gap-1 shadow-xs"
                 >
-                  <span className="text-[10px] text-brand-500">✦</span>
+                  <svg
+                    className="w-3 h-3 text-brand-500 shrink-0"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                   <span>{v.name}</span>
                 </span>
               ))}
@@ -52,8 +63,8 @@ export const KitchenItems: React.FC<KitchenItemsProps> = ({
 
           {/* Notas de preparación de ítem */}
           {item.notes && item.notes.trim() && (
-            <div className="mt-1.5 p-2 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900 font-medium">
-              <span className="font-bold text-amber-800 block text-[11px] uppercase tracking-wider">
+            <div className="mt-1.5 p-2 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900 font-normal">
+              <span className="font-medium text-amber-800 block text-[11px] uppercase tracking-wider">
                 Nota de preparación:
               </span>
               <span>"{item.notes}"</span>
