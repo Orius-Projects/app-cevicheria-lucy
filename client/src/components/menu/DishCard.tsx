@@ -112,7 +112,7 @@ export const DishCard: React.FC<DishCardProps> = ({
             onClick={() => onAdd && onAdd(item)}
             className={`w-full py-2.5 px-4 rounded-xl text-sm font-bold min-h-[44px] flex items-center justify-center space-x-2 transition-all ${
               isAvailable
-                ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-sm active:scale-[0.98]'
+                ? 'bg-brand-500 hover:bg-brand-400 text-brand-950 shadow-sm active:scale-[0.98]'
                 : 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed'
             }`}
           >

@@ -36,7 +36,7 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({
                 ? 'bg-emerald-50/95 border-emerald-200 text-emerald-900'
                 : isShiftClosed
                 ? 'bg-rose-50/95 border-rose-200 text-rose-900'
-                : 'bg-sky-50/95 border-sky-200 text-slate-800'
+                : 'bg-brand-50/95 border-brand-200 text-slate-800'
             }`}
           >
             <div className="flex items-start space-x-3">
@@ -46,7 +46,7 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({
                     ? 'bg-emerald-100/80 border-emerald-200 text-emerald-700'
                     : isShiftClosed
                     ? 'bg-rose-100/80 border-rose-200 text-rose-700'
-                    : 'bg-sky-100/80 border-sky-200 text-brand-700'
+                    : 'bg-brand-100/80 border-brand-200 text-brand-700'
                 }`}
               >
                 {isReady ? (
@@ -115,7 +115,7 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({
               type="button"
               onClick={() => hideFloating(toast.id)}
               aria-label="Cerrar aviso"
-              className={`p-1 rounded-lg min-w-[36px] min-h-[36px] flex items-center justify-center text-base transition-colors active:scale-90 cursor-pointer ${
+              className={`p-1 rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center text-base transition-colors active:scale-90 cursor-pointer ${
                 isReady
                   ? 'text-emerald-700/70 hover:text-emerald-900 hover:bg-emerald-100/60'
                   : 'text-slate-500 hover:text-slate-800 hover:bg-slate-200/50'

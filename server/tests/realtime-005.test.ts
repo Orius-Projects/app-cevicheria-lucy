@@ -236,7 +236,7 @@ describe('Spec 005 — Tiempo Real (Socket.IO Backend)', () => {
     ]);
 
     const table = await Table.findOne({ code: 'M01' });
-    const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+    const dish = await Dish.findOne({ name: 'Ceviche' });
 
     // Preparar listener para order:created
     const orderCreatedPromise = new Promise<any>((resolve) => {
@@ -285,7 +285,7 @@ describe('Spec 005 — Tiempo Real (Socket.IO Backend)', () => {
     await new Promise<void>((resolve) => cocineroSocket.on('connect', resolve));
 
     const table = await Table.findOne({ code: 'M02' });
-    const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+    const dish = await Dish.findOne({ name: 'Ceviche' });
 
     const orderCreatedPromise = new Promise<any>((resolve) => {
       cocineroSocket.on('order:created', resolve);

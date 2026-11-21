@@ -77,7 +77,7 @@ describe('Spec 006 — Cierre de Turno (Brief 008)', () => {
       });
 
       const dish1 = await Dish.create({
-        name: 'Ceviche Clásico',
+        name: 'Ceviche',
         priceCents: 3500,
         course: 'FONDO',
         active: true,
@@ -232,7 +232,7 @@ describe('Spec 006 — Cierre de Turno (Brief 008)', () => {
         shiftId: shift._id,
         tableCode: 'M05',
         items: [
-          { name: 'Ceviche Mixto', quantity: 1, amountCents: 4500 }
+          { name: 'Chaufa de marisco', quantity: 1, amountCents: 4500 }
         ],
         totalCents: 4500,
         notes: 'Atendido en libreta por corte de luz',
@@ -253,7 +253,7 @@ describe('Spec 006 — Cierre de Turno (Brief 008)', () => {
 
       // Platos vendidos de pedidos entregados
       expect(response.body.soldDishes).toHaveLength(1);
-      expect(response.body.soldDishes[0].dishName).toBe('Ceviche Clásico');
+      expect(response.body.soldDishes[0].dishName).toBe('Ceviche');
       expect(response.body.soldDishes[0].quantity).toBe(2);
       expect(response.body.soldDishes[0].amountCents).toBe(7000);
       expect(response.body.totalAmountCents).toBe(7000);
@@ -261,7 +261,7 @@ describe('Spec 006 — Cierre de Turno (Brief 008)', () => {
       // Raciones restantes
       expect(response.body.remainingRations).toContainEqual(
         expect.objectContaining({
-          dishName: 'Ceviche Clásico',
+          dishName: 'Ceviche',
           remainingRations: 8
         })
       );
@@ -579,7 +579,7 @@ describe('Spec 006 — Cierre de Turno (Brief 008)', () => {
       const payload = {
         tableCode: 'M06',
         items: [
-          { name: 'Ceviche Mixto', quantity: 2, amountCents: 7000 },
+          { name: 'Chaufa de marisco', quantity: 2, amountCents: 7000 },
           { name: 'Chicha Morada Jarra', quantity: 1, amountCents: 1500 }
         ],
         totalCents: 8500,

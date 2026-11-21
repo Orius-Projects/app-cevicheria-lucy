@@ -71,6 +71,7 @@ export async function getTodayMenu(dateOverride?: string): Promise<any> {
         id: item._id.toString(),
         dishId: item.dishId.toString(),
         dishName: item.dishName,
+        sectionKey: section.key,
         description: dish?.description || '',
         priceCents: item.priceCents,
         course: dish?.course || 'PLATO',
@@ -159,8 +160,8 @@ export async function updateMenuDay(
       dishId: string;
       active?: boolean;
       hasRationsLimit?: boolean;
-      totalRations?: number;
-      remainingRations?: number;
+      totalRations?: number | null;
+      remainingRations?: number | null;
       priceCents?: number;
     }>;
   }
@@ -204,6 +205,8 @@ export async function updateMenuDay(
         const totalRations = hasLimit ? itemInput.totalRations ?? 30 : null;
         const remainingRations = hasLimit ? itemInput.remainingRations ?? totalRations : null;
 
+        // Al editar un borrador no se debe reactivar por accidente un plato
+        // marcado como agotado; la reactivación es una acción explícita.
         await MenuItem.findOneAndUpdate(
           { menuDayId: menuDay._id, dishId: dish._id },
           {
@@ -216,8 +219,13 @@ export async function updateMenuDay(
               totalRations,
               remainingRations,
               lowStockThreshold: 5,
-              manuallySoldOut: false,
               updatedAt: new Date()
+            },
+            $setOnInsert: {
+              manuallySoldOut: false,
+              soldOutReason: null,
+              soldOutBy: null,
+              soldOutAt: null
             },
             $inc: { version: 1 }
           },

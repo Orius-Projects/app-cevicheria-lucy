@@ -384,7 +384,7 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
         <div
           role="tablist"
           aria-label="Filtrar por ambientes"
-          className="flex items-center gap-1.5 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/80 overflow-x-auto max-w-full"
+          className="flex items-center gap-1.5 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/80 overflow-x-auto max-w-full min-w-0 scrollbar-none snap-x"
         >
           {ZONES.map((zone) => {
             const isActive = activeZone === zone.key;
@@ -402,9 +402,9 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
                 aria-label={`Pestaña ${zone.label}`}
                 type="button"
                 onClick={() => setActiveZone(zone.key)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold min-h-[40px] flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer ${
+                className={`shrink-0 snap-start px-3.5 py-2 rounded-xl text-xs font-bold min-h-[44px] flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2 ${
                   isActive
-                    ? 'bg-brand-600 text-white shadow-xs'
+                    ? 'bg-brand-500 text-brand-950 shadow-xs'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
                 }`}
               >
@@ -412,7 +412,7 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
                 <span>{zone.label}</span>
                 <span
                   className={`text-[10px] px-1.5 py-0.5 rounded-full font-black ${
-                    isActive ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-700'
+                    isActive ? 'bg-brand-950/10 text-brand-950' : 'bg-slate-200 text-slate-700'
                   }`}
                 >
                   {countBadge}
@@ -426,7 +426,7 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
         <button
           type="button"
           onClick={() => fetchTables()}
-          className="text-xs font-bold text-brand-600 hover:text-brand-800 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl px-3.5 py-2 min-h-[40px] flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer ml-auto"
+          className="text-xs font-bold text-brand-700 hover:text-brand-800 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl px-3.5 py-2 min-h-[44px] flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer ml-auto"
         >
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <polyline points="23 4 23 10 17 10" />

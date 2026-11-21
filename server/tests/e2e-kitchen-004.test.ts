@@ -62,8 +62,8 @@ describe('E2E Spec 004: Cocina / Tablero KDS (Pendientes y Listos)', () => {
     const tableM02 = await Table.findOne({ code: 'M02' });
     const tableM03 = await Table.findOne({ code: 'M03' });
 
-    const dishClasico = await Dish.findOne({ name: 'Ceviche clásico' });
-    const dishMixto = await Dish.findOne({ name: 'Ceviche mixto' });
+    const dishClasico = await Dish.findOne({ name: 'Ceviche' });
+    const dishMixto = await Dish.findOne({ name: 'Chaufa de marisco' });
     const dishChicha = await Dish.findOne({ name: 'Chicha morada 1L' });
 
     // 2. Crear 3 pedidos distanciados cronológicamente
@@ -135,7 +135,7 @@ describe('E2E Spec 004: Cocina / Tablero KDS (Pendientes y Listos)', () => {
     const pendingItem2 = boardRes.body.pending[1];
     expect(pendingItem2.tableCode).toBe('M02');
     expect(pendingItem2.notes).toBe('Pedido 2 para mesa M02');
-    expect(pendingItem2.items[0].dishName).toBe('Ceviche mixto');
+    expect(pendingItem2.items[0].dishName).toBe('Chaufa de marisco');
     expect(pendingItem2.items[0].quantity).toBe(2);
     expect(pendingItem2.items[0].notes).toBe('Bien picante');
     expect(pendingItem2.items[0].variations[0].name).toBe('Con ají');
@@ -184,7 +184,7 @@ describe('E2E Spec 004: Cocina / Tablero KDS (Pendientes y Listos)', () => {
 
   it('casos borde y reglas de negocio: doble ready da 409, ready de cancelado da 409, cancelado no aparece en KDS y mozo recibe 403', async () => {
     const tableM01 = await Table.findOne({ code: 'M01' });
-    const dishClasico = await Dish.findOne({ name: 'Ceviche clásico' });
+    const dishClasico = await Dish.findOne({ name: 'Ceviche' });
 
     // Crear pedido A
     const orderARes = await request(app)

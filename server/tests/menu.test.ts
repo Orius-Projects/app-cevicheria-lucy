@@ -129,15 +129,18 @@ describe('Módulo de Menú y Raciones (T042–T052)', () => {
       expect(res.body.status).toBe('PUBLICADO');
       expect(Array.isArray(res.body.sections)).toBe(true);
 
-      // Buscar ítem limitado (Ceviche mixto)
+      // Buscar ítem limitado (Chaufa de marisco)
       let cevicheMixto: any = null;
       for (const section of res.body.sections) {
-        const found = section.items.find((i: any) => i.dishName === 'Ceviche mixto');
+        const found = section.items.find((i: any) => i.dishName === 'Chaufa de marisco');
         if (found) cevicheMixto = found;
       }
       expect(cevicheMixto).toBeDefined();
       expect(cevicheMixto.remainingRations).toBe(30);
       expect(cevicheMixto.status).toBe('DISPONIBLE');
+      // El menú del mozo necesita sectionKey para filtrar por categoría y
+      // mostrar el badge de sección en la tarjeta.
+      expect(cevicheMixto.sectionKey).toBe('MARINO');
 
       // Buscar ítem agotado por insumo (Arroz con mariscos)
       let arrozMariscos: any = null;
@@ -148,6 +151,7 @@ describe('Módulo de Menú y Raciones (T042–T052)', () => {
       expect(arrozMariscos).toBeDefined();
       expect(arrozMariscos.manuallySoldOut).toBe(true);
       expect(arrozMariscos.status).toBe('AGOTADO');
+      expect(arrozMariscos.sectionKey).toBe('MARINO');
     });
 
     it('debe rechazar la publicación de un menú sin ítems activos con 422', async () => {
@@ -278,7 +282,7 @@ describe('Módulo de Menú y Raciones (T042–T052)', () => {
 
   describe('Gestión y Auditoría de Raciones', () => {
     it('debe permitir reponer raciones (MOZO o ENCARGADO) y registrar la auditoría', async () => {
-      const item = await MenuItem.findOne({ dishName: 'Ceviche mixto' });
+      const item = await MenuItem.findOne({ dishName: 'Chaufa de marisco' });
       expect(item).toBeDefined();
 
       const res = await request(app)
@@ -299,7 +303,7 @@ describe('Módulo de Menú y Raciones (T042–T052)', () => {
     });
 
     it('debe permitir ajustar el conteo a un ENCARGADO y rechazar al MOZO', async () => {
-      const item = await MenuItem.findOne({ dishName: 'Ceviche mixto' });
+      const item = await MenuItem.findOne({ dishName: 'Chaufa de marisco' });
 
       // Mozo intenta ajustar -> 403
       const mozoRes = await request(app)
@@ -326,7 +330,7 @@ describe('Módulo de Menú y Raciones (T042–T052)', () => {
     });
 
     it('la reposición de raciones NO debe limpiar manuallySoldOut (requiere reactivación explícita)', async () => {
-      const item = await MenuItem.findOne({ dishName: 'Ceviche mixto' });
+      const item = await MenuItem.findOne({ dishName: 'Chaufa de marisco' });
 
       // 1. Marcar agotado manualmente por ENCARGADO
       const soldRes = await request(app)
@@ -393,7 +397,7 @@ describe('Módulo de Menú y Raciones (T042–T052)', () => {
 
   describe('Prueba de Regresión FINDINGS-01 (H4)', () => {
     it('H4: 10 reposiciones concurrentes de +1 deben aumentar remainingRations en exactamente 10 y registrar 10 auditorías REPLENISH sin perder ninguna', async () => {
-      const item = await MenuItem.findOne({ dishName: 'Ceviche mixto' });
+      const item = await MenuItem.findOne({ dishName: 'Chaufa de marisco' });
       expect(item).toBeDefined();
 
       // Configurar stock inicial exactamente en 5

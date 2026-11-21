@@ -135,28 +135,28 @@ export const ShiftClosePage: React.FC = () => {
     >
       <div className="space-y-6">
         {/* Anchor Navigation Bar */}
-        <nav aria-label="Navegación de secciones" className="bg-white rounded-xl border border-slate-200 p-2 shadow-sm flex gap-2 overflow-x-auto text-xs font-semibold">
+        <nav aria-label="Navegación de secciones" className="bg-white rounded-xl border border-slate-200 p-2 shadow-sm flex gap-2 overflow-x-auto w-full min-w-0 text-xs font-semibold scrollbar-none snap-x">
           <a
             href="#pendientes"
-            className="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors whitespace-nowrap min-h-[44px] flex items-center"
+            className="shrink-0 snap-start px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors whitespace-nowrap min-h-[44px] flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2"
           >
             1. Pendientes {hasPending && `(${openOrders.length + openTables.length})`}
           </a>
           <a
             href="#resumen"
-            className="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors whitespace-nowrap min-h-[44px] flex items-center"
+            className="shrink-0 snap-start px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors whitespace-nowrap min-h-[44px] flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2"
           >
             2. Resumen
           </a>
           <a
             href="#registros-manuales"
-            className="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors whitespace-nowrap min-h-[44px] flex items-center"
+            className="shrink-0 snap-start px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors whitespace-nowrap min-h-[44px] flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2"
           >
             3. Registros Manuales ({summary?.manualRecords?.length || 0})
           </a>
           <a
             href="#cierre"
-            className="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors whitespace-nowrap min-h-[44px] flex items-center"
+            className="shrink-0 snap-start px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors whitespace-nowrap min-h-[44px] flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2"
           >
             4. Cierre
           </a>
@@ -198,8 +198,8 @@ export const ShiftClosePage: React.FC = () => {
               Para realizar operaciones o visualizar el cierre de turno, primero debes iniciar un turno en el módulo de turnos.
             </p>
             <Link
-              to="/encargado"
-              className="inline-block min-h-[44px] px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm rounded-xl transition-colors"
+              to="/encargado/turnos"
+              className="inline-block min-h-[44px] px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-brand-950 font-bold text-sm rounded-xl transition-colors"
             >
               Ir al Control de Turnos
             </Link>

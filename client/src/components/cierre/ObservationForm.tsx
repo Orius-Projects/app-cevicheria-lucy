@@ -41,7 +41,7 @@ export const ObservationForm: React.FC<ObservationFormProps> = ({
         onChange={handleChange}
         disabled={disabled}
         placeholder="Anota incidencias, notas operativas o detalles relevantes del turno..."
-        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 disabled:bg-slate-100 disabled:text-slate-600 transition-colors"
+        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-brand-500 disabled:bg-slate-100 disabled:text-slate-600 transition-colors"
       />
     </div>
   );

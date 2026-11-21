@@ -19,6 +19,12 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   const { user } = useAuthStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // La marca se muestra completa en móvil; el sufijo de sección pasa a subtítulo.
+  const [brandTitle, ...titleRest] = title.split('—');
+  const brandName = brandTitle.trim() || 'Cevichería Lucy';
+  const sectionTitle = titleRest.join('—').trim();
+  const userLabel = `${user?.displayName || 'Encargado Demo'} (${user?.role || 'ENCARGADO'})`;
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
       {/* Mobile Backdrop */}
@@ -39,7 +45,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         {/* Brand Header */}
         <div className="p-5 border-b border-slate-100 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-50 border border-brand-100 flex items-center justify-center text-brand-600 shadow-xs">
+            <div className="w-10 h-10 rounded-xl bg-brand-50 border border-brand-100 flex items-center justify-center text-brand-700 shadow-xs">
               {/* Fish / Restaurant Icon */}
               <svg
                 className="w-6 h-6"
@@ -130,13 +136,21 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
             <div className="min-w-0">
               <div className="flex items-center gap-2.5 flex-wrap">
-                <h1 className="text-lg sm:text-xl font-bold text-brand-700 leading-tight truncate">
-                  {title}
+                <h1 className="text-lg sm:text-xl font-bold text-brand-700 leading-tight whitespace-nowrap">
+                  {brandName}
+                  {sectionTitle && <span className="hidden sm:inline"> — {sectionTitle}</span>}
                 </h1>
                 {headerExtra}
               </div>
-              <p className="text-xs text-slate-500 hidden sm:block">
-                {user?.displayName || 'Encargado Demo'} ({user?.role || 'ENCARGADO'})
+              <p className="text-xs text-slate-500 truncate">
+                {sectionTitle ? (
+                  <>
+                    <span className="sm:hidden">{sectionTitle}</span>
+                    <span className="hidden sm:inline">{userLabel}</span>
+                  </>
+                ) : (
+                  <span className="hidden sm:inline">{userLabel}</span>
+                )}
               </p>
             </div>
           </div>
@@ -146,7 +160,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             {/* 1. Notifications Bell */}
             <button
               type="button"
-              className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center"
+              className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
               aria-label="Notificaciones"
               title="Notificaciones"
             >
@@ -168,7 +182,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             {/* 2. Help / Question Mark */}
             <button
               type="button"
-              className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center"
+              className="hidden sm:flex p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors min-h-[44px] min-w-[44px] items-center justify-center"
               aria-label="Ayuda"
               title="Ayuda"
             >

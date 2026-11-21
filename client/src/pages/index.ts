@@ -6,3 +6,4 @@ export * from './waiter/ActiveOrdersPage';
 export * from './waiter/OrderDetailPage';
 export * from './kitchen/KitchenPage';
 export * from './admin/AdminPage';
+export * from './encargado/DishManagementPage';

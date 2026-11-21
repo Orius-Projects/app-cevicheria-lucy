@@ -55,7 +55,7 @@ export const PendingColumn: React.FC<PendingColumnProps> = ({
       {orders.length === 0 ? (
         <KitchenEmptyState title="Sin pedidos pendientes" />
       ) : (
-        <div className="space-y-4 max-h-[calc(100vh-170px)] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-sky-200">
+        <div className="space-y-4 max-h-[calc(100vh-170px)] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-brand-200">
           {orders.map((order) => (
             <KitchenOrderCard
               key={order.id}

@@ -98,32 +98,20 @@ export const ShiftCloseIcon: React.FC<{ className?: string }> = ({ className = '
 export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
   {
     to: '/encargado',
-    label: 'Turnos',
+    label: 'Platos y raciones',
     exact: true,
+    icon: DailyMenuIcon,
+    description: 'Menú del día, disponibilidad y raciones'
+  },
+  {
+    to: '/encargado/turnos',
+    label: 'Turno',
     icon: ShiftClockIcon,
     description: 'Apertura y estado del turno'
   },
   {
-    to: '/encargado/menu',
-    label: 'Menú del Día',
-    icon: DailyMenuIcon,
-    description: 'Publicación de carta y platos'
-  },
-  {
-    to: '/encargado/platos',
-    label: 'Platos Maestros',
-    icon: MasterDishesIcon,
-    description: 'Catálogo de recetas y categorías'
-  },
-  {
-    to: '/encargado/raciones',
-    label: 'Raciones y Agotados',
-    icon: RationsStockIcon,
-    description: 'Control de stock y raciones'
-  },
-  {
     to: '/encargado/cierre',
-    label: 'Cierre de Turno',
+    label: 'Cierre de turno',
     icon: ShiftCloseIcon,
     description: 'Cuadre final y consolidación'
   }
@@ -155,12 +143,12 @@ export const AdminNavigation: React.FC<AdminNavigationProps> = ({ onItemClick, c
             <>
               <tab.icon
                 className={`w-5 h-5 flex-shrink-0 transition-colors ${
-                  isActive ? 'text-brand-600' : 'text-slate-400 group-hover:text-slate-600'
+                  isActive ? 'text-brand-700' : 'text-slate-400 group-hover:text-slate-600'
                 }`}
               />
               <span className="truncate flex-1 text-left">{tab.label}</span>
               {isActive && (
-                <span className="w-1.5 h-5 bg-brand-600 rounded-full flex-shrink-0" aria-hidden="true" />
+                <span className="w-1.5 h-5 bg-brand-500 rounded-full flex-shrink-0" aria-hidden="true" />
               )}
             </>
           )}

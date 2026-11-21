@@ -26,14 +26,14 @@ export const WaiterPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between shadow-sm">
-        <div>
-          <h1 className="text-lg font-bold text-brand-700">Cevichería Lucy — Salón</h1>
-          <p className="text-xs text-slate-500">
+      <header className="bg-white border-b border-slate-200 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-sm">
+        <div className="min-w-0">
+          <h1 className="text-lg font-bold text-brand-700 leading-tight truncate">Cevichería Lucy — Salón</h1>
+          <p className="text-xs text-slate-500 truncate">
             {user?.displayName} ({user?.role})
           </p>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Link
             to="/mozo/menu"
             className="text-xs px-3 py-2 min-h-[44px] bg-brand-50 text-brand-700 hover:bg-brand-100 rounded-lg font-semibold flex items-center border border-brand-200"

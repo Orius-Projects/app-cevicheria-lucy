@@ -67,7 +67,7 @@ export const AdjustRationsModal: React.FC<AdjustRationsModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200 my-8">
+      <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200 my-8 max-h-[90dvh] overflow-y-auto">
         <div className="flex justify-between items-center border-b border-slate-100 pb-3">
           <div>
             <h2 className="text-base font-bold text-slate-900">
@@ -122,7 +122,7 @@ export const AdjustRationsModal: React.FC<AdjustRationsModalProps> = ({
               onChange={(e) =>
                 setNewRemaining(parseInt(e.target.value, 10) || 0)
               }
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] focus:outline-none focus:ring-1 focus:ring-brand-600"
             />
           </div>
 
@@ -140,7 +140,7 @@ export const AdjustRationsModal: React.FC<AdjustRationsModalProps> = ({
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="Ej. Conteo físico de porciones en cocina"
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-brand-600"
             />
           </div>
 
@@ -156,7 +156,7 @@ export const AdjustRationsModal: React.FC<AdjustRationsModalProps> = ({
             <button
               type="submit"
               disabled={loading}
-              className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-sm transition-colors disabled:opacity-50"
+              className="min-h-[44px] px-4 py-2 text-xs font-bold text-brand-950 bg-brand-500 hover:bg-brand-400 rounded-lg shadow-sm transition-colors disabled:opacity-50"
             >
               {loading ? 'Guardando...' : 'Guardar ajuste'}
             </button>

@@ -21,8 +21,8 @@ const updateMenuDaySchema = z.object({
         dishId: z.string().min(1, 'dishId es obligatorio'),
         active: z.boolean().optional(),
         hasRationsLimit: z.boolean().optional(),
-        totalRations: z.number().int().min(0).optional(),
-        remainingRations: z.number().int().min(0).optional(),
+        totalRations: z.number().int().min(0).nullable().optional(),
+        remainingRations: z.number().int().min(0).nullable().optional(),
         priceCents: z.number().int().min(0).optional()
       })
     )

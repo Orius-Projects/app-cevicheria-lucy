@@ -53,29 +53,29 @@ export const ActiveOrdersPage: React.FC = () => {
       <ConnectionBanner />
 
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex justify-between items-center shadow-sm sticky top-0 z-40">
-        <div className="flex items-center space-x-3">
+      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex flex-wrap justify-between items-center gap-2 shadow-sm sticky top-0 z-40">
+        <div className="flex items-center space-x-3 min-w-0">
           <Link
             to="/mozo"
-            className="text-xs px-3 py-2 min-h-[44px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center border border-slate-200"
+            className="text-xs px-3 py-2 min-h-[44px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center border border-slate-200 shrink-0"
           >
             ← Salón
           </Link>
-          <div>
-            <h1 className="text-lg font-black text-slate-900">Comandas Activas</h1>
-            <p className="text-xs text-slate-500">
+          <div className="min-w-0">
+            <h1 className="text-lg font-black text-slate-900 truncate">Comandas Activas</h1>
+            <p className="text-xs text-slate-500 truncate">
               {user?.displayName} • Todos los pedidos en preparación o listos
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             type="button"
             onClick={() => refreshAll()}
             title="Refrescar lista"
             aria-label="Refrescar lista"
-            className="p-2 border border-slate-200 rounded-full hover:bg-slate-50 min-h-[40px] min-w-[40px] flex items-center justify-center text-slate-600 transition-colors shadow-xs cursor-pointer"
+            className="p-2 border border-slate-200 rounded-full hover:bg-slate-50 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-600 transition-colors shadow-xs cursor-pointer"
           >
             <svg className="w-4 h-4 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3" />
@@ -113,7 +113,7 @@ export const ActiveOrdersPage: React.FC = () => {
             onClick={() => setActiveFilter('ALL')}
             className={`px-4 py-2 rounded-xl text-xs font-bold min-h-[44px] transition-all ${
               activeFilter === 'ALL'
-                ? 'bg-brand-600 text-white shadow-sm'
+                ? 'bg-brand-500 text-brand-950 shadow-sm'
                 : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
             }`}
           >
@@ -125,7 +125,7 @@ export const ActiveOrdersPage: React.FC = () => {
             onClick={() => setActiveFilter('LISTO')}
             className={`px-4 py-2 rounded-xl text-xs font-bold min-h-[44px] transition-all flex items-center space-x-1.5 ${
               activeFilter === 'LISTO'
-                ? 'bg-emerald-600 text-white shadow-sm'
+                ? 'bg-emerald-700 text-white shadow-sm'
                 : 'bg-white text-emerald-800 border border-emerald-300 hover:bg-emerald-50'
             }`}
           >
@@ -140,8 +140,8 @@ export const ActiveOrdersPage: React.FC = () => {
             onClick={() => setActiveFilter('ENVIADO')}
             className={`px-4 py-2 rounded-xl text-xs font-bold min-h-[44px] transition-all ${
               activeFilter === 'ENVIADO'
-                ? 'bg-blue-600 text-white shadow-sm'
-                : 'bg-white text-blue-800 border border-blue-200 hover:bg-blue-50'
+                ? 'bg-brand-500 text-brand-950 shadow-sm'
+                : 'bg-white text-brand-800 border border-brand-200 hover:bg-brand-50'
             }`}
           >
             En Cocina ({active.filter((o) => o.status === 'ENVIADO').length})
@@ -242,7 +242,7 @@ export const ActiveOrdersPage: React.FC = () => {
                           type="button"
                           onClick={() => handleDeliver(order)}
                           disabled={isDelivering}
-                          className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black min-h-[44px] shadow-sm disabled:opacity-50 flex items-center space-x-1.5"
+                          className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-black min-h-[44px] shadow-sm disabled:opacity-50 flex items-center space-x-1.5"
                         >
                           <span>{isDelivering ? 'Entregando...' : '✓ Entregar a Mesa'}</span>
                         </button>

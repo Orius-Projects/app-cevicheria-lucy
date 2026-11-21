@@ -12,10 +12,10 @@ export const KitchenEmptyState: React.FC<KitchenEmptyStateProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`bg-white border-2 border-dashed border-sky-200 rounded-2xl p-8 sm:p-12 text-center space-y-3 shadow-xs ${className}`}>
-      <div className="w-16 h-16 bg-sky-50 text-brand-600 rounded-full flex items-center justify-center mx-auto border border-sky-200 shadow-xs">
+    <div className={`bg-white border-2 border-dashed border-brand-200 rounded-2xl p-8 sm:p-12 text-center space-y-3 shadow-xs ${className}`}>
+      <div className="w-16 h-16 bg-brand-50 text-brand-700 rounded-full flex items-center justify-center mx-auto border border-brand-200 shadow-xs">
         <svg
-          className="w-8 h-8 text-brand-600"
+          className="w-8 h-8 text-brand-700"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"

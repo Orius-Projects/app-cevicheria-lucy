@@ -45,7 +45,7 @@ export const AdjustmentHistory: React.FC<AdjustmentHistoryProps> = ({
         );
       case 'ADJUSTMENT':
         return (
-          <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[11px] font-bold">
+          <span className="px-2 py-0.5 rounded bg-brand-100 text-brand-800 text-[11px] font-bold">
             Ajuste Físico
           </span>
         );
@@ -66,7 +66,7 @@ export const AdjustmentHistory: React.FC<AdjustmentHistoryProps> = ({
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-xl w-full p-6 space-y-4 shadow-xl border border-slate-200 my-8">
+      <div className="bg-white rounded-2xl max-w-xl w-full p-6 space-y-4 shadow-xl border border-slate-200 my-8 max-h-[90dvh] overflow-y-auto">
         <div className="flex justify-between items-center border-b border-slate-100 pb-3">
           <div>
             <h2 className="text-lg font-bold text-slate-900">Historial de Ajustes de Raciones</h2>

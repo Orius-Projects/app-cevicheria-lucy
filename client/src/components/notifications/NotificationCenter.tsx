@@ -57,7 +57,7 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
         aria-expanded={isOpen}
         className={`relative transition-all active:scale-95 flex items-center justify-center cursor-pointer ${
           variant === 'light'
-            ? 'p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full min-w-[40px] min-h-[40px]'
+            ? 'p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full min-w-[44px] min-h-[44px]'
             : 'p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 min-w-[44px] min-h-[44px]'
         }`}
       >
@@ -130,7 +130,7 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
                   type="button"
                   onClick={toggleSound}
                   title={soundEnabled ? 'Silenciar sonido' : 'Activar sonido'}
-                  className={`px-2.5 py-1 text-[11px] font-bold rounded-lg border min-h-[36px] ${
+                  className={`px-2.5 py-1 text-[11px] font-bold rounded-lg border min-h-[44px] ${
                     variant === 'light'
                       ? 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
                       : 'border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300'
@@ -144,7 +144,7 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
                 <button
                   type="button"
                   onClick={markAllRead}
-                  className="px-2.5 py-1 text-[11px] font-semibold text-brand-600 hover:text-brand-800 rounded min-h-[36px]"
+                  className="px-2.5 py-1 text-[11px] font-semibold text-brand-700 hover:text-brand-800 rounded min-h-[44px]"
                 >
                   Marcar leídos
                 </button>
@@ -193,7 +193,7 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
                           <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                         </svg>
                       ) : (
-                        <svg className="w-4 h-4 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <svg className="w-4 h-4 text-brand-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                           <circle cx="12" cy="12" r="10" />
                           <line x1="12" y1="16" x2="12" y2="12" />
                           <line x1="12" y1="8" x2="12.01" y2="8" />
@@ -222,7 +222,7 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
                     type="button"
                     onClick={() => dismiss(toast.id)}
                     aria-label="Eliminar aviso"
-                    className="text-slate-400 hover:text-slate-600 p-1 min-h-[36px] min-w-[36px] flex items-center justify-center font-bold"
+                    className="text-slate-400 hover:text-slate-600 p-1 min-h-[44px] min-w-[44px] flex items-center justify-center font-bold"
                   >
                     ×
                   </button>

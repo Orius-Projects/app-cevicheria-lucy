@@ -81,7 +81,7 @@ export const ReadyOrderCard: React.FC<ReadyOrderCardProps> = ({
           type="button"
           onClick={() => onDeliver(order)}
           disabled={isDelivering}
-          className="flex-1 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white rounded-xl text-sm font-black min-h-[44px] shadow-md flex items-center justify-center space-x-2 transition-all disabled:opacity-50"
+          className="flex-1 px-5 py-3 bg-emerald-700 hover:bg-emerald-800 active:scale-[0.98] text-white rounded-xl text-sm font-black min-h-[44px] shadow-md flex items-center justify-center space-x-2 transition-all disabled:opacity-50"
         >
           <span>{isDelivering ? 'Entregando...' : '✓ Entregar a Mesa'}</span>
         </button>

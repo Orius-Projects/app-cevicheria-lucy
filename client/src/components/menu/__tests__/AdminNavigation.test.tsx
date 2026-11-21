@@ -9,21 +9,23 @@ import { AdminNavigation } from '../AdminNavigation';
 afterEach(cleanup);
 
 describe('AdminNavigation Component', () => {
-  it('renders all 5 navigation options with their labels and icons', () => {
+  it('renders the three main navigation options with their labels and icons', () => {
     render(
       <MemoryRouter initialEntries={['/encargado']}>
         <AdminNavigation />
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Turnos')).toBeInTheDocument();
-    expect(screen.getByText('Menú del Día')).toBeInTheDocument();
-    expect(screen.getByText('Platos Maestros')).toBeInTheDocument();
-    expect(screen.getByText('Raciones y Agotados')).toBeInTheDocument();
-    expect(screen.getByText('Cierre de Turno')).toBeInTheDocument();
+    expect(screen.getByText('Platos y raciones')).toBeInTheDocument();
+    expect(screen.getByText('Turno')).toBeInTheDocument();
+    expect(screen.getByText('Cierre de turno')).toBeInTheDocument();
+
+    expect(screen.queryByText('Menú del Día')).not.toBeInTheDocument();
+    expect(screen.queryByText('Platos Maestros')).not.toBeInTheDocument();
+    expect(screen.queryByText('Raciones y Agotados')).not.toBeInTheDocument();
 
     const links = screen.getAllByRole('link');
-    expect(links).toHaveLength(5);
+    expect(links).toHaveLength(3);
 
     // Each link must have an SVG icon
     links.forEach((link) => {
@@ -32,18 +34,25 @@ describe('AdminNavigation Component', () => {
     });
   });
 
-  it('contains correct href targets for all modules', () => {
+  it('contains the simplified navigation targets', () => {
     render(
       <MemoryRouter initialEntries={['/encargado']}>
         <AdminNavigation />
       </MemoryRouter>
     );
 
-    expect(screen.getByRole('link', { name: /Turnos/i })).toHaveAttribute('href', '/encargado');
-    expect(screen.getByRole('link', { name: /Menú del Día/i })).toHaveAttribute('href', '/encargado/menu');
-    expect(screen.getByRole('link', { name: /Platos Maestros/i })).toHaveAttribute('href', '/encargado/platos');
-    expect(screen.getByRole('link', { name: /Raciones y Agotados/i })).toHaveAttribute('href', '/encargado/raciones');
-    expect(screen.getByRole('link', { name: /Cierre de Turno/i })).toHaveAttribute('href', '/encargado/cierre');
+    expect(screen.getByRole('link', { name: /Platos y raciones/i })).toHaveAttribute(
+      'href',
+      '/encargado'
+    );
+    expect(screen.getByRole('link', { name: /^Turno$/i })).toHaveAttribute(
+      'href',
+      '/encargado/turnos'
+    );
+    expect(screen.getByRole('link', { name: /Cierre de turno/i })).toHaveAttribute(
+      'href',
+      '/encargado/cierre'
+    );
   });
 
   it('calls onItemClick when an item is clicked', () => {
@@ -54,7 +63,7 @@ describe('AdminNavigation Component', () => {
       </MemoryRouter>
     );
 
-    fireEvent.click(screen.getByText('Menú del Día'));
+    fireEvent.click(screen.getByText('Turno'));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 });

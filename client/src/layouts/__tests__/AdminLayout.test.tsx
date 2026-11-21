@@ -2,7 +2,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/vitest';
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { AdminLayout } from '../AdminLayout';
 import { useAuthStore } from '../../stores/authStore';
@@ -30,13 +30,14 @@ describe('AdminLayout Component', () => {
     );
 
     // Sidebar Branding & Navigation
-    expect(screen.getByText('Cevichería Lucy')).toBeInTheDocument();
+    expect(within(screen.getByRole('complementary')).getByText('Cevichería Lucy')).toBeInTheDocument();
     expect(screen.getByText('Módulos de Gestión')).toBeInTheDocument();
-    expect(screen.getByText('Turnos')).toBeInTheDocument();
-    expect(screen.getByText('Menú del Día')).toBeInTheDocument();
-    expect(screen.getByText('Platos Maestros')).toBeInTheDocument();
-    expect(screen.getByText('Raciones y Agotados')).toBeInTheDocument();
-    expect(screen.getByText('Cierre de Turno')).toBeInTheDocument();
+    expect(screen.getByText('Platos y raciones')).toBeInTheDocument();
+    expect(screen.getByText('Turno')).toBeInTheDocument();
+    expect(screen.getByText('Cierre de turno')).toBeInTheDocument();
+    expect(screen.queryByText('Menú del Día')).not.toBeInTheDocument();
+    expect(screen.queryByText('Platos Maestros')).not.toBeInTheDocument();
+    expect(screen.queryByText('Raciones y Agotados')).not.toBeInTheDocument();
 
     // Top action buttons (gear icon removed as it is redundant)
     expect(screen.getByLabelText('Notificaciones')).toBeInTheDocument();

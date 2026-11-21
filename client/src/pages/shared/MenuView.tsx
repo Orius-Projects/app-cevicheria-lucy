@@ -59,20 +59,24 @@ export const MenuView: React.FC<MenuViewProps> = ({
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-4 flex justify-between items-center shadow-sm">
-        <div>
-          <div className="flex items-center space-x-2">
-            <h1 className="text-xl font-bold text-brand-700">Cevichería Lucy — Menú del Día</h1>
-            <span className="text-xs px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-full">
+      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 shadow-sm">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2 min-w-0">
+            <h1 className="text-lg sm:text-xl font-bold text-brand-700 whitespace-nowrap">
+              Cevichería Lucy
+              <span className="hidden sm:inline"> — Menú del Día</span>
+            </h1>
+            <span className="shrink-0 text-xs px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-full">
               En Vivo
             </span>
           </div>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-500 truncate">
+            <span className="sm:hidden">Menú del Día · </span>
             {user?.displayName} ({user?.role}) {todayMenu?.date && `• ${todayMenu.date}`}
           </p>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
           {user?.role === 'MOZO' && (
             <Link
               to="/mozo"
@@ -84,7 +88,7 @@ export const MenuView: React.FC<MenuViewProps> = ({
 
           {user?.role === 'ENCARGADO' && (
             <Link
-              to="/encargado/menu"
+              to="/encargado"
               className="text-xs px-3 py-2 min-h-[44px] bg-brand-50 text-brand-700 hover:bg-brand-100 rounded-lg font-semibold flex items-center border border-brand-200"
             >
               ← Administración
@@ -130,7 +134,7 @@ export const MenuView: React.FC<MenuViewProps> = ({
             <span>{error}</span>
             <button
               onClick={() => loadToday()}
-              className="text-xs underline font-bold px-2 py-1 min-h-[36px]"
+              className="text-xs underline font-bold px-2 py-1 min-h-[44px]"
             >
               Reintentar
             </button>
@@ -138,7 +142,7 @@ export const MenuView: React.FC<MenuViewProps> = ({
         )}
 
         {/* Barra de Filtros y Búsqueda */}
-        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 min-w-0">
           <MenuSectionTabs
             sections={sections}
             activeSectionKey={activeSectionKey}
@@ -146,13 +150,13 @@ export const MenuView: React.FC<MenuViewProps> = ({
             showAllOption={true}
           />
 
-          <div className="flex items-center space-x-2 w-full sm:w-auto">
+          <div className="flex items-center space-x-2 w-full sm:w-auto shrink-0">
             <input
               type="text"
               placeholder="Buscar plato..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] w-full sm:w-60 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] w-full sm:w-60 focus:outline-none focus:ring-1 focus:ring-brand-600"
             />
 
             <button
@@ -197,7 +201,7 @@ export const MenuView: React.FC<MenuViewProps> = ({
                     <button
                       type="button"
                       onClick={() => setReplenishItem(item)}
-                      className="text-xs text-brand-600 hover:text-brand-800 font-semibold px-2 py-1 min-h-[36px]"
+                      className="text-xs text-brand-700 hover:text-brand-800 font-semibold px-2 py-1 min-h-[44px]"
                     >
                       + Reponer raciones
                     </button>

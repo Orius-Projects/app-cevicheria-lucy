@@ -73,7 +73,7 @@ export const CloseShiftButton: React.FC<CloseShiftButtonProps> = ({
       {/* Modal de confirmación explícita */}
       {showConfirmModal && (
         <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200 max-h-[90dvh] overflow-y-auto">
             <h3 className="text-lg font-bold text-slate-900">
               ¿Cerrar el turno? No se podrán crear pedidos nuevos.
             </h3>

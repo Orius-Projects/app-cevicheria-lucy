@@ -205,6 +205,7 @@ export interface UpdateMenuDayItemInput {
   hasRationsLimit?: boolean;
   totalRations?: number | null;
   remainingRations?: number | null;
+  priceCents?: number;
 }
 
 export interface UpdateMenuDayInput {

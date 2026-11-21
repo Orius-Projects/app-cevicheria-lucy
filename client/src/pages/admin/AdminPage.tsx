@@ -39,7 +39,7 @@ export const AdminPage: React.FC = () => {
   };
 
   return (
-    <AdminLayout maxWidth="max-w-4xl">
+    <AdminLayout title="Cevichería Lucy — Turno" maxWidth="max-w-4xl">
       <div className="space-y-6">
         {feedback && (
           <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-sm">
@@ -84,7 +84,7 @@ export const AdminPage: React.FC = () => {
               <div className="pt-2 flex flex-col sm:flex-row gap-3">
                 <Link
                   to="/encargado/cierre"
-                  className="flex-1 py-3 px-4 bg-brand-600 hover:bg-brand-700 text-white text-center rounded-xl font-bold text-sm min-h-[44px] flex items-center justify-center transition-colors shadow-sm"
+                  className="flex-1 py-3 px-4 bg-brand-500 hover:bg-brand-400 text-brand-950 text-center rounded-xl font-bold text-sm min-h-[44px] flex items-center justify-center transition-colors shadow-sm"
                 >
                   Ir a Cierre de Turno
                 </Link>
@@ -132,7 +132,7 @@ export const AdminPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 px-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold min-h-[44px] disabled:opacity-50"
+                className="w-full py-3 px-4 bg-brand-500 hover:bg-brand-400 text-brand-950 rounded-xl font-bold min-h-[44px] disabled:opacity-50"
               >
                 {isLoading ? 'Abriendo turno...' : 'Abrir Turno'}
               </button>

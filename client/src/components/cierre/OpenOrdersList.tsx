@@ -55,7 +55,7 @@ export const OpenOrdersList: React.FC<OpenOrdersListProps> = ({
                   className={`text-xs px-2 py-0.5 rounded-full font-bold uppercase ${
                     order.status === 'LISTO'
                       ? 'bg-amber-100 text-amber-800 border border-amber-300'
-                      : 'bg-sky-100 text-sky-800 border border-sky-300'
+                      : 'bg-brand-100 text-brand-800 border border-brand-300'
                   }`}
                 >
                   {order.status}

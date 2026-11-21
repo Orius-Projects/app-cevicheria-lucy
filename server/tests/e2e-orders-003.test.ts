@@ -68,7 +68,7 @@ describe('E2E Spec 003: Toma de Pedidos — Ciclo Completo Mozo / Cocina / Encar
     const tableM01 = await Table.findOne({ code: 'M01' });
     expect(tableM01).toBeDefined();
 
-    const dishMixto = await Dish.findOne({ name: 'Ceviche mixto' });
+    const dishMixto = await Dish.findOne({ name: 'Chaufa de marisco' });
     expect(dishMixto).toBeDefined();
     expect(dishMixto?.priceCents).toBe(3200);
 
@@ -113,7 +113,7 @@ describe('E2E Spec 003: Toma de Pedidos — Ciclo Completo Mozo / Cocina / Encar
     expect(order.totalCents).toBe(7600);
     expect(order.items.length).toBe(2);
 
-    // Raciones de Ceviche mixto descontadas exactamente en 2 unidades
+    // Raciones de Chaufa de marisco descontadas exactamente en 2 unidades
     const menuItemMixtoAfter = await MenuItem.findOne({ dishId: dishMixto!._id });
     expect(menuItemMixtoAfter?.remainingRations).toBe(initialRations - 2);
 
@@ -183,7 +183,7 @@ describe('E2E Spec 003: Toma de Pedidos — Ciclo Completo Mozo / Cocina / Encar
 
   it('ciclo de vida de mesa: mesa con pedido activo rechaza cierre (409), tras entregar se cierra y queda LIBRE, y nuevo pedido abre sesión nueva', async () => {
     const tableM02 = await Table.findOne({ code: 'M02' });
-    const dishClasico = await Dish.findOne({ name: 'Ceviche clásico' });
+    const dishClasico = await Dish.findOne({ name: 'Ceviche' });
 
     // 7a. Crear pedido en mesa M02
     const orderRes = await request(app)
@@ -283,7 +283,7 @@ describe('E2E Spec 003: Toma de Pedidos — Ciclo Completo Mozo / Cocina / Encar
 
   it('reglas de cancelación: ENVIADO repone raciones, LISTO no repone raciones, y terminal falla con 409', async () => {
     const tableM03 = await Table.findOne({ code: 'M03' });
-    const dishMixto = await Dish.findOne({ name: 'Ceviche mixto' });
+    const dishMixto = await Dish.findOne({ name: 'Chaufa de marisco' });
 
     // --- Caso 9a: Cancelar ENVIADO repone raciones y audita CANCELLATION_REVERSAL ---
     const initialItem = await MenuItem.findOne({ dishId: dishMixto!._id });
@@ -405,7 +405,7 @@ describe('E2E Spec 003: Toma de Pedidos — Ciclo Completo Mozo / Cocina / Encar
 
   it('idempotencia por clientRequestId: doble POST crea un solo pedido (201 luego 200) y descuenta raciones una sola vez', async () => {
     const tableM04 = await Table.findOne({ code: 'M04' });
-    const dishMixto = await Dish.findOne({ name: 'Ceviche mixto' });
+    const dishMixto = await Dish.findOne({ name: 'Chaufa de marisco' });
 
     const initialStockItem = await MenuItem.findOne({ dishId: dishMixto!._id });
     const initialRations = initialStockItem?.remainingRations ?? 30;

@@ -4,6 +4,7 @@ import {
   DishDTO,
   CreateDishInput,
   UpdateDishInput,
+  MenuItemDTO,
   RationAdjustmentDTO
 } from '@cevicheria/shared';
 import {
@@ -36,15 +37,16 @@ interface MenuAdminState {
   loadDishesAndSections: () => Promise<void>;
   loadDay: (date?: string) => Promise<void>;
   createDay: (date: string, notes?: string) => Promise<void>;
-  updateDay: (data: UpdateMenuDayData) => Promise<void>;
+  updateDay: (data: UpdateMenuDayData) => Promise<MenuDayDetailResponse>;
   publish: () => Promise<void>;
   createDish: (data: CreateDishInput) => Promise<DishDTO>;
   updateDish: (id: string, data: UpdateDishInput) => Promise<DishDTO>;
   deactivateDish: (id: string) => Promise<void>;
-  replenish: (menuItemId: string, quantity: number, reason: string) => Promise<void>;
-  adjust: (menuItemId: string, remainingRations: number, reason: string) => Promise<void>;
-  soldOut: (menuItemId: string, reason: string) => Promise<void>;
-  reactivate: (menuItemId: string, reason?: string) => Promise<void>;
+  applyMenuItem: (updatedItem: MenuItemDTO) => void;
+  replenish: (menuItemId: string, quantity: number, reason: string) => Promise<MenuItemDTO>;
+  adjust: (menuItemId: string, remainingRations: number, reason: string) => Promise<MenuItemDTO>;
+  soldOut: (menuItemId: string, reason: string) => Promise<MenuItemDTO>;
+  reactivate: (menuItemId: string, reason?: string) => Promise<MenuItemDTO>;
   loadAdjustments: (menuItemId: string) => Promise<RationAdjustmentDTO[]>;
   clearError: () => void;
 }
@@ -60,7 +62,6 @@ export const useMenuAdminStore = create<MenuAdminState>((set, get) => ({
 
   setSelectedDate: (date: string) => {
     set({ selectedDate: date });
-    get().loadDay(date);
   },
 
   loadDishesAndSections: async () => {
@@ -118,6 +119,9 @@ export const useMenuAdminStore = create<MenuAdminState>((set, get) => ({
     try {
       await menuApi.updateMenuDay(menuDay.id, data);
       await get().loadDay(menuDay.date);
+      const refreshed = get().menuDay;
+      if (!refreshed) throw new Error('No se pudo recargar el menú del día');
+      return refreshed;
     } catch (err: any) {
       set({
         error: err.response?.data?.error?.message || err.message || 'Error al actualizar el menú del día',
@@ -188,19 +192,22 @@ export const useMenuAdminStore = create<MenuAdminState>((set, get) => ({
     }
   },
 
+  applyMenuItem: (updatedItem: MenuItemDTO) => {
+    const { menuDay } = get();
+    if (!menuDay) return;
+    const nextItems = menuDay.items.map((item) =>
+      item.id === updatedItem.id ? { ...item, ...updatedItem } : item
+    );
+    set({ menuDay: { ...menuDay, items: nextItems } });
+  },
+
   replenish: async (menuItemId: string, quantity: number, reason: string) => {
     set({ loading: true, error: null });
     try {
       const updatedItem = await menuApi.replenishRations(menuItemId, quantity, reason);
-      const { menuDay } = get();
-      if (menuDay) {
-        const nextItems = menuDay.items.map((item) =>
-          item.id === menuItemId ? { ...item, ...updatedItem } : item
-        );
-        set({ menuDay: { ...menuDay, items: nextItems }, loading: false });
-      } else {
-        set({ loading: false });
-      }
+      get().applyMenuItem(updatedItem);
+      set({ loading: false });
+      return updatedItem;
     } catch (err: any) {
       set({
         error: err.response?.data?.error?.message || err.message || 'Error al reponer raciones',
@@ -214,15 +221,9 @@ export const useMenuAdminStore = create<MenuAdminState>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const updatedItem = await menuApi.adjustRations(menuItemId, remainingRations, reason);
-      const { menuDay } = get();
-      if (menuDay) {
-        const nextItems = menuDay.items.map((item) =>
-          item.id === menuItemId ? { ...item, ...updatedItem } : item
-        );
-        set({ menuDay: { ...menuDay, items: nextItems }, loading: false });
-      } else {
-        set({ loading: false });
-      }
+      get().applyMenuItem(updatedItem);
+      set({ loading: false });
+      return updatedItem;
     } catch (err: any) {
       set({
         error: err.response?.data?.error?.message || err.message || 'Error al ajustar raciones',
@@ -236,15 +237,9 @@ export const useMenuAdminStore = create<MenuAdminState>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const updatedItem = await menuApi.markSoldOut(menuItemId, reason);
-      const { menuDay } = get();
-      if (menuDay) {
-        const nextItems = menuDay.items.map((item) =>
-          item.id === menuItemId ? { ...item, ...updatedItem } : item
-        );
-        set({ menuDay: { ...menuDay, items: nextItems }, loading: false });
-      } else {
-        set({ loading: false });
-      }
+      get().applyMenuItem(updatedItem);
+      set({ loading: false });
+      return updatedItem;
     } catch (err: any) {
       set({
         error: err.response?.data?.error?.message || err.message || 'Error al marcar agotado',
@@ -258,15 +253,9 @@ export const useMenuAdminStore = create<MenuAdminState>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const updatedItem = await menuApi.reactivateDish(menuItemId, reason);
-      const { menuDay } = get();
-      if (menuDay) {
-        const nextItems = menuDay.items.map((item) =>
-          item.id === menuItemId ? { ...item, ...updatedItem } : item
-        );
-        set({ menuDay: { ...menuDay, items: nextItems }, loading: false });
-      } else {
-        set({ loading: false });
-      }
+      get().applyMenuItem(updatedItem);
+      set({ loading: false });
+      return updatedItem;
     } catch (err: any) {
       set({
         error: err.response?.data?.error?.message || err.message || 'Error al reactivar plato',

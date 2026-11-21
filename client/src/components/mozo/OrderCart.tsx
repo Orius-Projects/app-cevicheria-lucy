@@ -77,7 +77,7 @@ export const OrderCart: React.FC<OrderCartProps> = ({
                     type="button"
                     onClick={() => removeItem(idx)}
                     aria-label={`Eliminar ${item.dishName}`}
-                    className="text-slate-400 hover:text-rose-600 font-bold text-lg min-h-[36px] min-w-[36px] flex items-center justify-center"
+                    className="text-slate-400 hover:text-rose-600 font-bold text-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
                   >
                     ×
                   </button>
@@ -100,7 +100,7 @@ export const OrderCart: React.FC<OrderCartProps> = ({
                     <button
                       type="button"
                       onClick={() => setEditingNotesIndex(idx)}
-                      className="text-[11px] text-slate-600 hover:text-brand-700 font-semibold underline min-h-[36px] flex items-center"
+                      className="text-[11px] text-slate-600 hover:text-brand-700 font-semibold underline min-h-[44px] flex items-center"
                     >
                       {item.notes ? 'Editar nota' : '+ Nota'}
                     </button>
@@ -144,7 +144,7 @@ export const OrderCart: React.FC<OrderCartProps> = ({
           type="button"
           onClick={onConfirmOrder}
           disabled={!hasItems || !tableCode || isSubmitting}
-          className="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-bold min-h-[48px] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 transition-all active:scale-[0.99]"
+          className="w-full py-3 bg-brand-500 hover:bg-brand-400 text-brand-950 rounded-xl text-sm font-bold min-h-[48px] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 transition-all active:scale-[0.99]"
         >
           <span>{isSubmitting ? 'Enviando comanda...' : 'Enviar Comanda a Cocina'}</span>
         </button>

@@ -110,11 +110,11 @@ export const WaiterDashboardPage: React.FC = () => {
           </h1>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-2.5">
+        <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-2.5 min-w-0">
           {isShiftOpen && (
             <Link
               to="/mozo/pedidos"
-              className="inline-flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 rounded-xl text-xs font-bold min-h-[40px] shadow-xs transition-all active:scale-95"
+              className="inline-flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 rounded-xl text-xs font-bold min-h-[44px] shadow-xs transition-all active:scale-95"
             >
               <svg
                 className="w-4 h-4 text-slate-500 shrink-0"
@@ -141,7 +141,7 @@ export const WaiterDashboardPage: React.FC = () => {
 
           <Link
             to="/mozo/menu"
-            className="inline-flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 rounded-xl text-xs font-bold min-h-[40px] shadow-xs transition-all active:scale-95"
+            className="inline-flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 rounded-xl text-xs font-bold min-h-[44px] shadow-xs transition-all active:scale-95"
           >
             <svg
               className="w-4 h-4 text-slate-500 shrink-0"
@@ -169,7 +169,7 @@ export const WaiterDashboardPage: React.FC = () => {
           {/* Ayuda */}
           <button
             type="button"
-            className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center cursor-pointer"
+            className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
             aria-label="Ayuda"
             title="Ayuda"
           >
@@ -271,7 +271,7 @@ export const WaiterDashboardPage: React.FC = () => {
           role="presentation"
         >
           <div
-            className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-5"
+            className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-5 max-h-[90dvh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -303,7 +303,7 @@ export const WaiterDashboardPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSelectedTable(null)}
-                className="bg-slate-100 hover:bg-slate-200/80 text-slate-500 hover:text-slate-700 rounded-full p-1.5 transition-colors min-h-[36px] min-w-[36px] flex items-center justify-center font-normal text-base cursor-pointer"
+                className="bg-slate-100 hover:bg-slate-200/80 text-slate-500 hover:text-slate-700 rounded-full p-1.5 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center font-normal text-base cursor-pointer"
                 aria-label="Cerrar modal"
               >
                 ✕
@@ -322,7 +322,7 @@ export const WaiterDashboardPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleStartOrderForTable(selectedTable)}
-                className="w-full py-3.5 px-4 bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white rounded-2xl text-sm font-medium min-h-[48px] shadow-sm flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer"
+                className="w-full py-3.5 px-4 bg-brand-500 hover:bg-brand-400 active:bg-brand-300 text-brand-950 rounded-2xl text-sm font-medium min-h-[48px] shadow-sm flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer"
               >
                 <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <line x1="12" y1="5" x2="12" y2="19" />
@@ -346,13 +346,13 @@ export const WaiterDashboardPage: React.FC = () => {
                         </div>
                         <div className="flex items-center space-x-2">
                           <span className={`text-[10px] font-normal px-2 py-0.5 rounded ${
-                            ord.status === 'LISTO' ? 'bg-emerald-100 text-emerald-800' : 'bg-blue-100 text-blue-800'
+                            ord.status === 'LISTO' ? 'bg-emerald-100 text-emerald-800' : 'bg-brand-100 text-brand-800'
                           }`}>
                             {ord.status}
                           </span>
                           <Link
                             to={`/mozo/pedidos/${ord.id}`}
-                            className="text-brand-600 hover:text-brand-800 font-medium underline px-1 py-1 min-h-[36px] flex items-center"
+                            className="text-brand-700 hover:text-brand-800 font-medium underline px-1 py-1 min-h-[44px] flex items-center"
                           >
                             Ver →
                           </Link>
@@ -393,7 +393,7 @@ export const WaiterDashboardPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSelectedTable(null)}
-                className="w-full py-2.5 text-xs font-normal text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200/80 rounded-xl transition-colors min-h-[42px] cursor-pointer"
+                className="w-full py-2.5 text-xs font-normal text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200/80 rounded-xl transition-colors min-h-[44px] cursor-pointer"
               >
                 Cancelar
               </button>

@@ -148,7 +148,7 @@ describe('Auditoría Spec 003 — Toma de Pedidos Mozo (Brief 005 - agy-be)', ()
   describe('2. Idempotencia estricta por clientRequestId', () => {
     it('mismo clientRequestId debe retornar 200 con el pedido original y NO descontar raciones dos veces', async () => {
       const table = await Table.findOne({ code: 'M01' });
-      const dish = await Dish.findOne({ name: 'Ceviche mixto' }); // Plato con límite de raciones
+      const dish = await Dish.findOne({ name: 'Chaufa de marisco' }); // Plato con límite de raciones
 
       const menuItemBefore = await MenuItem.findOne({ dishId: dish!._id });
       const initialRations = menuItemBefore!.remainingRations!;
@@ -192,7 +192,7 @@ describe('Auditoría Spec 003 — Toma de Pedidos Mozo (Brief 005 - agy-be)', ()
   describe('3. Transición deliver (solo LISTO, concurrencia y deliveredBy)', () => {
     it('deliver debe fallar desde ENVIADO (409), fallar con versión desactualizada (409), y registrar deliveredBy', async () => {
       const table = await Table.findOne({ code: 'M02' });
-      const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+      const dish = await Dish.findOne({ name: 'Ceviche' });
 
       // Mozo 1 crea el pedido
       const createRes = await request(app)
@@ -254,7 +254,7 @@ describe('Auditoría Spec 003 — Toma de Pedidos Mozo (Brief 005 - agy-be)', ()
   describe('4. Cancelación con motivo obligatorio y reglas de reposición', () => {
     it('cancelar sin motivo debe responder 422; cancelar pedido terminal debe responder 409', async () => {
       const table = await Table.findOne({ code: 'M03' });
-      const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+      const dish = await Dish.findOne({ name: 'Ceviche' });
 
       const createRes = await request(app)
         .post('/api/orders')
@@ -293,7 +293,7 @@ describe('Auditoría Spec 003 — Toma de Pedidos Mozo (Brief 005 - agy-be)', ()
   describe('5. Cierre de mesa y sesiones (bloqueo con pedidos activos, LIBRE y reapertura)', () => {
     it('cerrar mesa con pedidos activos responde 409; al cerrar queda LIBRE y el nuevo pedido abre sesión nueva', async () => {
       const table = await Table.findOne({ code: 'M05' });
-      const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+      const dish = await Dish.findOne({ name: 'Ceviche' });
 
       // 1. Crear pedido en M05
       const createRes = await request(app)
@@ -393,7 +393,7 @@ describe('Auditoría Spec 003 — Toma de Pedidos Mozo (Brief 005 - agy-be)', ()
   describe('6. Validaciones de variaciones ajenas, platos agotados y sin raciones', () => {
     it('variationIds ajenos al plato debe responder 422 VALIDATION_ERROR', async () => {
       const table = await Table.findOne({ code: 'M01' });
-      const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+      const dish = await Dish.findOne({ name: 'Ceviche' });
 
       // Enviar variación inexistente
       const resInvalid = await request(app)
@@ -414,7 +414,7 @@ describe('Auditoría Spec 003 — Toma de Pedidos Mozo (Brief 005 - agy-be)', ()
       expect(resInvalid.body.error.code).toBe('VALIDATION_ERROR');
 
       // Enviar variación que pertenece a OTRO plato
-      const dishOtro = await Dish.findOne({ name: 'Ceviche mixto' });
+      const dishOtro = await Dish.findOne({ name: 'Chaufa de marisco' });
       const variationOtro = dishOtro!.variations[0].id;
 
       const resOtro = await request(app)
@@ -451,7 +451,7 @@ describe('Auditoría Spec 003 — Toma de Pedidos Mozo (Brief 005 - agy-be)', ()
       expect(resAgotado.body.error.code).toBe('DISH_UNAVAILABLE');
 
       // 2. Plato con raciones insuficientes
-      const dishLimitado = await Dish.findOne({ name: 'Ceviche mixto' });
+      const dishLimitado = await Dish.findOne({ name: 'Chaufa de marisco' });
       await MenuItem.findOneAndUpdate(
         { dishId: dishLimitado!._id },
         { $set: { hasRationsLimit: true, totalRations: 10, remainingRations: 2 } }
@@ -472,7 +472,7 @@ describe('Auditoría Spec 003 — Toma de Pedidos Mozo (Brief 005 - agy-be)', ()
   describe('7. Seguridad y no exposición de passwordHash ni datos internos', () => {
     it('GET /api/orders y GET /api/orders/:id no deben exponer passwordHash, password ni __v', async () => {
       const table = await Table.findOne({ code: 'M01' });
-      const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+      const dish = await Dish.findOne({ name: 'Ceviche' });
 
       const createRes = await request(app)
         .post('/api/orders')

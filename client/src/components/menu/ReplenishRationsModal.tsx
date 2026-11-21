@@ -53,7 +53,7 @@ export const ReplenishRationsModal: React.FC<ReplenishRationsModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200 my-8">
+      <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200 my-8 max-h-[90dvh] overflow-y-auto">
         <div className="flex justify-between items-center border-b border-slate-100 pb-3">
           <div>
             <h2 className="text-lg font-bold text-slate-900">Reponer Raciones</h2>
@@ -111,7 +111,7 @@ export const ReplenishRationsModal: React.FC<ReplenishRationsModalProps> = ({
               required
               value={quantity}
               onChange={(e) => setQuantity(parseInt(e.target.value, 10) || 0)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] focus:outline-none focus:ring-1 focus:ring-brand-600"
             />
           </div>
 
@@ -129,7 +129,7 @@ export const ReplenishRationsModal: React.FC<ReplenishRationsModalProps> = ({
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="Ej. Sobraron porciones preparadas; confirmado con cocinero de turno."
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-brand-600"
             />
             <p className="text-[11px] text-slate-400 mt-0.5">
               Requerido por auditoría para el balance de cocina.
@@ -147,7 +147,7 @@ export const ReplenishRationsModal: React.FC<ReplenishRationsModalProps> = ({
             <button
               type="submit"
               disabled={loading}
-              className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-semibold min-h-[44px] disabled:opacity-50 shadow-sm"
+              className="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-sm font-semibold min-h-[44px] disabled:opacity-50 shadow-sm"
             >
               {loading ? 'Guardando...' : 'Confirmar Reposición'}
             </button>

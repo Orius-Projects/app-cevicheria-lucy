@@ -89,3 +89,9 @@ Para instrucciones detalladas sobre despliegue en red local (LAN) para tablets/m
 | `COCINERO` | `cocinero1` | `cocina123` |
 
 Para más detalles, ejemplos cURL y arquitectura de datos, consulta [quickstart.md](./quickstart.md).
+
+## 6. Documentación de producto
+
+- Índice de especificaciones SDD: [`../specs-cevicheria-lucy/specs/README.md`](../specs-cevicheria-lucy/specs/README.md)
+- Gestión de platos y raciones (spec 008): [`../specs-cevicheria-lucy/specs/008-gestion-platos-raciones/spec.md`](../specs-cevicheria-lucy/specs/008-gestion-platos-raciones/spec.md)
+- Design system y reglas responsive: [`../specs-cevicheria-lucy/docs/design-system.md`](../specs-cevicheria-lucy/docs/design-system.md)

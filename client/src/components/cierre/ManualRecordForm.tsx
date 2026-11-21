@@ -127,7 +127,7 @@ export const ManualRecordForm: React.FC<ManualRecordFormProps> = ({
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl border border-slate-200 my-8">
+      <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl border border-slate-200 my-8 max-h-[90dvh] overflow-y-auto">
         <div className="flex justify-between items-center border-b border-slate-100 pb-3">
           <div>
             <h3 className="text-base font-bold text-slate-900">
@@ -173,7 +173,7 @@ export const ManualRecordForm: React.FC<ManualRecordFormProps> = ({
               onChange={(e) => setTableCode(e.target.value)}
               placeholder="Ej. Mesa 03 o Barra 1"
               required
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl min-h-[44px] focus:outline-none focus:ring-2 focus:ring-brand-500"
+              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl min-h-[44px] focus:outline-none focus:ring-2 focus:ring-brand-600"
             />
           </div>
 
@@ -205,7 +205,7 @@ export const ManualRecordForm: React.FC<ManualRecordFormProps> = ({
                     }
                     placeholder="Nombre del plato"
                     required
-                    className="flex-1 px-3 py-2 text-sm border border-slate-300 rounded-lg min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-500"
+                    className="flex-1 px-3 py-2 text-sm border border-slate-300 rounded-lg min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-600"
                   />
                   <div className="flex items-center gap-2">
                     <input
@@ -222,7 +222,7 @@ export const ManualRecordForm: React.FC<ManualRecordFormProps> = ({
                       }
                       placeholder="Cant."
                       required
-                      className="w-20 px-2 py-2 text-sm text-center border border-slate-300 rounded-lg min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-500"
+                      className="w-20 px-2 py-2 text-sm text-center border border-slate-300 rounded-lg min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-600"
                     />
                     <div className="relative flex-1 sm:w-28">
                       <span className="absolute left-2.5 top-3 text-xs text-slate-400 font-semibold">
@@ -238,7 +238,7 @@ export const ManualRecordForm: React.FC<ManualRecordFormProps> = ({
                         }
                         placeholder="00.00"
                         required
-                        className="w-full pl-7 pr-2 py-2 text-sm text-right border border-slate-300 rounded-lg min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-500"
+                        className="w-full pl-7 pr-2 py-2 text-sm text-right border border-slate-300 rounded-lg min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-600"
                       />
                     </div>
                     {items.length > 1 && (
@@ -279,7 +279,7 @@ export const ManualRecordForm: React.FC<ManualRecordFormProps> = ({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Ej. Atendido por libreta durante corte"
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl min-h-[44px] focus:outline-none focus:ring-2 focus:ring-brand-500"
+              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl min-h-[44px] focus:outline-none focus:ring-2 focus:ring-brand-600"
             />
           </div>
 
@@ -295,7 +295,7 @@ export const ManualRecordForm: React.FC<ManualRecordFormProps> = ({
             <button
               type="submit"
               disabled={submitting}
-              className="min-h-[44px] px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-colors disabled:opacity-50"
+              className="min-h-[44px] px-4 py-2 bg-brand-500 hover:bg-brand-400 text-brand-950 rounded-xl text-xs font-bold transition-colors disabled:opacity-50"
             >
               {submitting ? 'Guardando...' : 'Registrar consumo'}
             </button>

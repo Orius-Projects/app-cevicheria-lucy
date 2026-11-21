@@ -51,7 +51,7 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
       await Shift.updateMany({}, { status: 'CERRADO', closedAt: new Date() });
 
       const table = await Table.findOne({ code: 'M01' });
-      const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+      const dish = await Dish.findOne({ name: 'Ceviche' });
 
       const res = await request(app)
         .post('/api/orders')
@@ -70,7 +70,7 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
       await MenuDay.updateMany({}, { status: 'BORRADOR' });
 
       const table = await Table.findOne({ code: 'M01' });
-      const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+      const dish = await Dish.findOne({ name: 'Ceviche' });
 
       const res = await request(app)
         .post('/api/orders')
@@ -86,7 +86,7 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
 
     it('debe crear un pedido exitosamente con snapshots, version 0 y totalCents sin impuestos', async () => {
       const table = await Table.findOne({ code: 'M01' });
-      const dishClasico = await Dish.findOne({ name: 'Ceviche clásico' });
+      const dishClasico = await Dish.findOne({ name: 'Ceviche' });
       const dishChicha = await Dish.findOne({ name: 'Chicha morada 1L' });
 
       const res = await request(app)
@@ -120,14 +120,14 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
       expect(order.takenByName).toBe('Mozo 1');
       expect(order.items.length).toBe(2);
 
-      // Ceviche clásico 2800 * 2 = 5600; Chicha 1200 * 1 = 1200; Total = 6800
+      // Ceviche 2800 * 2 = 5600; Chicha 1200 * 1 = 1200; Total = 6800
       expect(order.items[0].lineTotalCents).toBe(5600);
       expect(order.items[1].lineTotalCents).toBe(1200);
       expect(order.totalCents).toBe(6800);
       expect(order.currency).toBe('PEN');
 
       // Snapshots
-      expect(order.items[0].dishName).toBe('Ceviche clásico');
+      expect(order.items[0].dishName).toBe('Ceviche');
       expect(order.items[0].variations[0].name).toBe('Picante medio');
 
       // Status history
@@ -178,7 +178,7 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
 
     beforeEach(async () => {
       const table = await Table.findOne({ code: 'M01' });
-      const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+      const dish = await Dish.findOne({ name: 'Ceviche' });
 
       const res = await request(app)
         .post('/api/orders')
@@ -254,7 +254,7 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
   describe('Cancelación y Reposición de Raciones (T062–T063)', () => {
     it('al cancelar un pedido ENVIADO, debe reponer raciones y registrar CANCELLATION_REVERSAL', async () => {
       const table = await Table.findOne({ code: 'M03' });
-      const dishLimitado = await Dish.findOne({ name: 'Ceviche mixto' }); // tiene límite de 30 raciones
+      const dishLimitado = await Dish.findOne({ name: 'Chaufa de marisco' }); // tiene límite de 30 raciones
 
       // Crear pedido de 3 raciones
       const createRes = await request(app)
@@ -299,7 +299,7 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
 
     it('al cancelar un pedido LISTO, NO debe reponer raciones', async () => {
       const table = await Table.findOne({ code: 'M03' });
-      const dishLimitado = await Dish.findOne({ name: 'Ceviche mixto' });
+      const dishLimitado = await Dish.findOne({ name: 'Chaufa de marisco' });
 
       // Crear pedido de 2 raciones
       const createRes = await request(app)
@@ -340,7 +340,7 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
   describe('Cierre Manual P2 y Tablero Cocina FIFO (T061, T064)', () => {
     it('debe permitir a ENCARGADO realizar cierre manual de pedido con motivo', async () => {
       const table = await Table.findOne({ code: 'M04' });
-      const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+      const dish = await Dish.findOne({ name: 'Ceviche' });
 
       const createRes = await request(app)
         .post('/api/orders')
@@ -391,7 +391,7 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
   describe('Prueba de Concurrencia Extrema: 200 Envíos sobre 1 Ración (T077)', () => {
     it('debe procesar 200 envíos simultáneos sobre un plato con 1 ración: exactamente 1 éxito (201), 199 rechazos (409) y 0 sobreventa', async () => {
       const table = await Table.findOne({ code: 'M05' });
-      const dish = await Dish.findOne({ name: 'Ceviche mixto' });
+      const dish = await Dish.findOne({ name: 'Chaufa de marisco' });
 
       // Fijar remainingRations exactamente en 1
       await MenuItem.findOneAndUpdate(
@@ -459,8 +459,8 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
   describe('Pruebas de Regresión FINDINGS-01 (H1, H2, H3)', () => {
     it('H1: creación con 2 platos con límite donde el 2do falla no debe duplicar la compensación en el 1ero', async () => {
       const table = await Table.findOne({ code: 'M01' });
-      const dish1 = await Dish.findOne({ name: 'Ceviche clásico' });
-      const dish2 = await Dish.findOne({ name: 'Ceviche mixto' });
+      const dish1 = await Dish.findOne({ name: 'Ceviche' });
+      const dish2 = await Dish.findOne({ name: 'Chaufa de marisco' });
 
       // Configurar plato 1 con 5 raciones y plato 2 con 0 raciones
       await MenuItem.findOneAndUpdate(
@@ -493,7 +493,7 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
 
     it('H2: dos cancelaciones concurrentes sobre el mismo pedido ENVIADO solo reponen raciones una vez', async () => {
       const table = await Table.findOne({ code: 'M02' });
-      const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+      const dish = await Dish.findOne({ name: 'Ceviche' });
 
       // Fijar raciones iniciales en 5
       await MenuItem.findOneAndUpdate(
@@ -551,7 +551,7 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
 
     it('H3: el mismo plato en dos menuDays solo repone raciones al menuDay específico del pedido al cancelar', async () => {
       const table = await Table.findOne({ code: 'M03' });
-      const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+      const dish = await Dish.findOne({ name: 'Ceviche' });
 
       // Menú A es el del turno actual
       const shift = await Shift.findOne({ status: 'ABIERTO' });

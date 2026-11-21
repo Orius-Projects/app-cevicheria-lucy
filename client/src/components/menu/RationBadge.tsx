@@ -25,7 +25,7 @@ export const RationBadge: React.FC<RationBadgeProps> = ({
   const isZero = remaining === 0;
   const isLowStock = !isZero && remaining <= lowStockThreshold;
 
-  let colorClasses = 'bg-blue-50 text-blue-700 border-blue-200';
+  let colorClasses = 'bg-brand-50 text-brand-700 border-brand-200';
   if (isZero) {
     colorClasses = 'bg-rose-50 text-rose-700 border-rose-300 font-semibold';
   } else if (isLowStock) {

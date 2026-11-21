@@ -161,7 +161,7 @@ export const DishesPage: React.FC = () => {
   });
 
   return (
-    <AdminLayout maxWidth="max-w-6xl">
+    <AdminLayout title="Cevichería Lucy — Catálogo maestro" maxWidth="max-w-6xl">
       <div className="space-y-4">
         {/* Feedback messages */}
         {successMessage && (
@@ -184,7 +184,7 @@ export const DishesPage: React.FC = () => {
             <select
               value={selectedSection}
               onChange={(e) => setSelectedSection(e.target.value)}
-              className="px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-600"
             >
               <option value="all">Todas las secciones ({dishes.length})</option>
               {sections.map((s) => (
@@ -199,13 +199,13 @@ export const DishesPage: React.FC = () => {
               placeholder="Buscar plato por nombre..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] flex-1 sm:w-64 focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] flex-1 sm:w-64 focus:outline-none focus:ring-1 focus:ring-brand-600"
             />
           </div>
 
           <button
             onClick={openCreateModal}
-            className="w-full sm:w-auto px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-sm font-semibold min-h-[44px] shadow-sm flex items-center justify-center space-x-1"
+            className="w-full sm:w-auto px-5 py-2.5 bg-brand-500 hover:bg-brand-400 text-brand-950 rounded-lg text-sm font-semibold min-h-[44px] shadow-sm flex items-center justify-center space-x-1"
           >
             <span>+ Nuevo Plato</span>
           </button>
@@ -278,21 +278,21 @@ export const DishesPage: React.FC = () => {
                   <div className="pt-4 border-t border-slate-100 mt-3 flex justify-end space-x-2">
                     <button
                       onClick={() => openEditModal(dish)}
-                      className="px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded min-h-[38px]"
+                      className="px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded min-h-[44px]"
                     >
                       Editar
                     </button>
                     {dish.active ? (
                       <button
                         onClick={() => handleDeactivate(dish)}
-                        className="px-3 py-1.5 text-xs font-medium text-rose-600 hover:bg-rose-50 border border-rose-200 rounded min-h-[38px]"
+                        className="px-3 py-1.5 text-xs font-medium text-rose-600 hover:bg-rose-50 border border-rose-200 rounded min-h-[44px]"
                       >
                         Dar de baja
                       </button>
                     ) : (
                       <button
                         onClick={() => handleReactivate(dish)}
-                        className="px-3 py-1.5 text-xs font-medium text-emerald-600 hover:bg-emerald-50 border border-emerald-200 rounded min-h-[38px]"
+                        className="px-3 py-1.5 text-xs font-medium text-emerald-600 hover:bg-emerald-50 border border-emerald-200 rounded min-h-[44px]"
                       >
                         Reactivar
                       </button>
@@ -308,7 +308,7 @@ export const DishesPage: React.FC = () => {
       {/* Modal Alta / Edición de Plato */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl border border-slate-200 my-8">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl border border-slate-200 my-8 max-h-[90dvh] overflow-y-auto">
             <div className="flex justify-between items-center border-b border-slate-100 pb-3">
               <h2 className="text-lg font-bold text-slate-900">
                 {editingDish ? 'Editar Plato Maestro' : 'Nuevo Plato Maestro'}
@@ -338,7 +338,7 @@ export const DishesPage: React.FC = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Ej. Ceviche mixto"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] focus:outline-none focus:ring-1 focus:ring-brand-600"
                 />
               </div>
 
@@ -350,7 +350,7 @@ export const DishesPage: React.FC = () => {
                   <select
                     value={sectionId}
                     onChange={(e) => setSectionId(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-500"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-600"
                   >
                     {sections.map((s) => (
                       <option key={s.id} value={s.id}>
@@ -372,7 +372,7 @@ export const DishesPage: React.FC = () => {
                     value={priceSoles}
                     onChange={(e) => setPriceSoles(e.target.value)}
                     placeholder="25.00"
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] focus:outline-none focus:ring-1 focus:ring-brand-500"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] focus:outline-none focus:ring-1 focus:ring-brand-600"
                   />
                   <p className="text-[11px] text-slate-400 mt-0.5">Precio final al cliente en soles.</p>
                 </div>
@@ -387,7 +387,7 @@ export const DishesPage: React.FC = () => {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Ingredientes principales, acompañamientos..."
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-brand-600"
                 />
               </div>
 
@@ -399,7 +399,7 @@ export const DishesPage: React.FC = () => {
                   <select
                     value={course}
                     onChange={(e) => setCourse(e.target.value as DishCourse)}
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-500"
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-600"
                   >
                     {COURSES.map((c) => (
                       <option key={c.value} value={c.value}>
@@ -415,7 +415,7 @@ export const DishesPage: React.FC = () => {
                       type="checkbox"
                       checked={isFixed}
                       onChange={(e) => setIsFixed(e.target.checked)}
-                      className="rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+                      className="rounded border-slate-300 text-brand-700 focus:ring-brand-600"
                     />
                     <span>Fijo de carta</span>
                   </label>
@@ -425,7 +425,7 @@ export const DishesPage: React.FC = () => {
                       type="checkbox"
                       checked={isRotating}
                       onChange={(e) => setIsRotating(e.target.checked)}
-                      className="rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+                      className="rounded border-slate-300 text-brand-700 focus:ring-brand-600"
                     />
                     <span>Rotativo del día</span>
                   </label>
@@ -451,7 +451,7 @@ export const DishesPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-sm font-semibold min-h-[44px] disabled:opacity-50"
+                  className="px-5 py-2 bg-brand-500 hover:bg-brand-400 text-brand-950 rounded-lg text-sm font-semibold min-h-[44px] disabled:opacity-50"
                 >
                   {loading ? 'Guardando...' : editingDish ? 'Actualizar Plato' : 'Crear Plato'}
                 </button>

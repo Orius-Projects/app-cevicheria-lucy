@@ -7,6 +7,7 @@ interface DishPickerProps {
   dishes: DishDTO[];
   sections: MenuSectionDTO[];
   alreadyAddedDishIds: string[];
+  initialSectionId?: string;
   onSelectDish: (dish: DishDTO) => void;
 }
 
@@ -16,9 +17,10 @@ export const DishPicker: React.FC<DishPickerProps> = ({
   dishes,
   sections,
   alreadyAddedDishIds,
+  initialSectionId,
   onSelectDish
 }) => {
-  const [filterSectionId, setFilterSectionId] = useState<string>('ALL');
+  const [filterSectionId, setFilterSectionId] = useState<string>(initialSectionId || 'ALL');
   const [searchTerm, setSearchTerm] = useState('');
 
   if (!isOpen) return null;
@@ -35,11 +37,13 @@ export const DishPicker: React.FC<DishPickerProps> = ({
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl border border-slate-200 my-8">
+      <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl border border-slate-200 my-8 max-h-[90dvh] overflow-y-auto">
         <div className="flex justify-between items-center border-b border-slate-100 pb-3">
           <div>
-            <h2 className="text-lg font-bold text-slate-900">Agregar Plato al Menú del Día</h2>
-            <p className="text-xs text-slate-500">Selecciona del catálogo maestro de platos activos.</p>
+            <h2 className="text-lg font-bold text-slate-900">Agregar platos al menú del día</h2>
+            <p className="text-xs text-slate-500">
+              Solo se muestran platos activos del catálogo que aún no están en el menú.
+            </p>
           </div>
           <button
             onClick={onClose}
@@ -110,10 +114,10 @@ export const DishPicker: React.FC<DishPickerProps> = ({
                       onSelectDish(dish);
                       onClose();
                     }}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold min-h-[38px] transition-colors ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold min-h-[44px] transition-colors ${
                       isAdded
                         ? 'bg-slate-200 text-slate-500 cursor-not-allowed'
-                        : 'bg-brand-600 hover:bg-brand-700 text-white shadow-sm'
+                        : 'bg-brand-500 hover:bg-brand-400 text-brand-950 shadow-sm'
                     }`}
                   >
                     {isAdded ? 'Ya agregado' : 'Seleccionar'}

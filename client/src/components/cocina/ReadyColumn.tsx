@@ -44,7 +44,7 @@ export const ReadyColumn: React.FC<ReadyColumnProps> = ({
       </div>
 
       {orders.length === 0 ? (
-        <div className="bg-white border border-sky-100 rounded-2xl p-8 text-center space-y-2 shadow-xs">
+        <div className="bg-white border border-brand-100 rounded-2xl p-8 text-center space-y-2 shadow-xs">
           <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center mx-auto">
             <svg
               className="w-4 h-4"
@@ -64,7 +64,7 @@ export const ReadyColumn: React.FC<ReadyColumnProps> = ({
           </p>
         </div>
       ) : (
-        <div className="space-y-4 max-h-[calc(100vh-170px)] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-sky-200">
+        <div className="space-y-4 max-h-[calc(100vh-170px)] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-brand-200">
           {orders.map((order) => (
             <KitchenOrderCard
               key={order.id}

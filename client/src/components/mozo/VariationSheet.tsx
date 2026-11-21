@@ -42,7 +42,7 @@ export const VariationSheet: React.FC<VariationSheetProps> = ({
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 animate-fade-in">
-      <div className="bg-white rounded-t-3xl sm:rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-200">
+      <div className="bg-white rounded-t-3xl sm:rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-200 max-h-[90dvh] overflow-y-auto">
         <div className="flex justify-between items-center border-b border-slate-100 pb-3">
           <div>
             <h2 className="text-lg font-bold text-slate-900">Personalizar Plato</h2>
@@ -83,7 +83,7 @@ export const VariationSheet: React.FC<VariationSheetProps> = ({
                     <span>{v.name}</span>
                     <span
                       className={`w-5 h-5 rounded-md flex items-center justify-center text-xs font-bold ${
-                        isSelected ? 'bg-brand-600 text-white' : 'border border-slate-300 bg-white'
+                        isSelected ? 'bg-brand-500 text-brand-950' : 'border border-slate-300 bg-white'
                       }`}
                     >
                       {isSelected ? '✓' : ''}
@@ -106,7 +106,7 @@ export const VariationSheet: React.FC<VariationSheetProps> = ({
           <button
             type="button"
             onClick={handleConfirm}
-            className="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-bold min-h-[44px] shadow-sm"
+            className="px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-brand-950 rounded-xl text-sm font-bold min-h-[44px] shadow-sm"
           >
             Confirmar
           </button>

@@ -48,7 +48,7 @@ export const ManualCloseModal: React.FC<ManualCloseModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200">
+      <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200 max-h-[90dvh] overflow-y-auto">
         <div className="flex justify-between items-center border-b border-slate-100 pb-3">
           <div>
             <h3 className="text-base font-bold text-slate-900">
@@ -96,7 +96,7 @@ export const ManualCloseModal: React.FC<ManualCloseModalProps> = ({
               onChange={(e) => setReason(e.target.value)}
               placeholder="Indica el motivo (mínimo 3 caracteres)..."
               required
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500"
+              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-600"
             />
           </div>
 
@@ -112,7 +112,7 @@ export const ManualCloseModal: React.FC<ManualCloseModalProps> = ({
             <button
               type="submit"
               disabled={submitting}
-              className="min-h-[44px] px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition-colors disabled:opacity-50"
+              className="min-h-[44px] px-4 py-2 bg-amber-700 hover:bg-amber-800 text-white rounded-xl text-xs font-bold transition-colors disabled:opacity-50"
             >
               {submitting ? 'Confirmando...' : 'Confirmar cierre manual'}
             </button>

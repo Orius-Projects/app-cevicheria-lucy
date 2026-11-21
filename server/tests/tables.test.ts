@@ -104,7 +104,7 @@ describe('Fase 3: Mesas y Sesiones (T029–T035)', () => {
         items: [
           {
             dishId: new mongoose.Types.ObjectId(),
-            dishName: 'Ceviche Clásico',
+            dishName: 'Ceviche',
             sectionName: 'Marino',
             unitPriceCents: 3500,
             quantity: 1,

@@ -15,7 +15,7 @@ export const KitchenItems: React.FC<KitchenItemsProps> = ({
       {items.map((item, idx) => (
         <div
           key={`${item.dishId}_${idx}`}
-          className="bg-sky-50/50 rounded-xl p-3 border border-sky-100 space-y-1.5 transition-all"
+          className="bg-brand-50/50 rounded-xl p-3 border border-brand-100 space-y-1.5 transition-all"
         >
           <div className="flex items-start justify-between gap-2">
             <div className="flex items-start space-x-2">
@@ -27,7 +27,7 @@ export const KitchenItems: React.FC<KitchenItemsProps> = ({
                   {item.dishName}
                 </span>
                 {item.sectionName && (
-                  <span className="text-[10px] uppercase font-medium text-brand-600 tracking-wider">
+                  <span className="text-[10px] uppercase font-medium text-brand-700 tracking-wider">
                     {item.sectionName}
                   </span>
                 )}
@@ -41,10 +41,10 @@ export const KitchenItems: React.FC<KitchenItemsProps> = ({
               {item.variations.map((v) => (
                 <span
                   key={v.id}
-                  className="text-xs px-2.5 py-0.5 rounded-md bg-white text-brand-800 border border-sky-200 font-normal flex items-center gap-1 shadow-xs"
+                  className="text-xs px-2.5 py-0.5 rounded-md bg-white text-brand-800 border border-brand-200 font-normal flex items-center gap-1 shadow-xs"
                 >
                   <svg
-                    className="w-3 h-3 text-brand-500 shrink-0"
+                    className="w-3 h-3 text-brand-700 shrink-0"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"

@@ -68,10 +68,10 @@ export const KitchenOrderCard: React.FC<KitchenOrderCardProps> = ({
       aria-labelledby={`order-title-${order.id}`}
       className={`bg-white rounded-2xl border-2 p-4 sm:p-5 shadow-xs space-y-4 transition-all duration-300 flex flex-col justify-between ${
         isHighlighted
-          ? 'ring-4 ring-brand-300 border-brand-500 bg-sky-50/20 scale-[1.01]'
+          ? 'ring-4 ring-brand-300 border-brand-500 bg-brand-50/20 scale-[1.01]'
           : isReady
           ? 'border-emerald-300 bg-emerald-50/25'
-          : 'border-sky-200 hover:border-brand-400'
+          : 'border-brand-200 hover:border-brand-400'
       } ${className}`}
     >
       <div className="space-y-3.5">
@@ -96,10 +96,10 @@ export const KitchenOrderCard: React.FC<KitchenOrderCardProps> = ({
               <span>•</span>
               <span
                 data-testid="order-elapsed-timer"
-                className="inline-flex items-center gap-1 text-brand-700 font-medium bg-sky-50 px-2 py-0.5 rounded-md border border-sky-200"
+                className="inline-flex items-center gap-1 text-brand-700 font-medium bg-brand-50 px-2 py-0.5 rounded-md border border-brand-200"
               >
                 <svg
-                  className="w-3.5 h-3.5 text-brand-600 shrink-0"
+                  className="w-3.5 h-3.5 text-brand-700 shrink-0"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -118,7 +118,7 @@ export const KitchenOrderCard: React.FC<KitchenOrderCardProps> = ({
 
           <div>
             {isPending && (
-              <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-sky-100 text-sky-800 border border-sky-200 uppercase tracking-wider">
+              <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-brand-100 text-brand-800 border border-brand-200 uppercase tracking-wider">
                 ENVIADO
               </span>
             )}
@@ -151,7 +151,7 @@ export const KitchenOrderCard: React.FC<KitchenOrderCardProps> = ({
             type="button"
             disabled={isMarking}
             onClick={() => onMarkReady && onMarkReady(order)}
-            className="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white rounded-xl text-sm font-medium min-h-[48px] shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
+            className="w-full py-3 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-800 text-white rounded-xl text-sm font-medium min-h-[48px] shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
           >
             {!isMarking && (
               <svg

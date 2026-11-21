@@ -8,7 +8,7 @@ export interface UserMenuDropdownProps {
 
 export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
   className = '',
-  avatarBg = 'bg-emerald-700 hover:bg-emerald-800'
+  avatarBg = 'bg-brand-700 hover:bg-brand-800'
 }) => {
   const { user, logout } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
@@ -47,8 +47,8 @@ export const UserMenuDropdown: React.FC<UserMenuDropdownProps> = ({
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`w-9 h-9 rounded-full ${avatarBg} text-white font-bold text-sm flex items-center justify-center transition-all cursor-pointer shadow-xs ${
-          isOpen ? 'ring-2 ring-emerald-500 ring-offset-2' : ''
+        className={`w-11 h-11 rounded-full ${avatarBg} text-white font-bold text-sm flex items-center justify-center transition-all cursor-pointer shadow-xs ${
+          isOpen ? 'ring-2 ring-brand-700 ring-offset-2' : ''
         }`}
         aria-expanded={isOpen}
         aria-haspopup="true"

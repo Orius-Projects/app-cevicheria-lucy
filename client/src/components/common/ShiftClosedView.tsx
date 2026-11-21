@@ -22,9 +22,9 @@ export const ShiftClosedView: React.FC<ShiftClosedViewProps> = ({
 
   return (
     <div className="w-full flex items-center justify-center py-8 px-4 sm:px-6">
-      <div className="bg-white rounded-3xl border border-sky-100 p-6 sm:p-10 max-w-lg w-full text-center space-y-6 shadow-sm">
+      <div className="bg-white rounded-3xl border border-brand-100 p-6 sm:p-10 max-w-lg w-full text-center space-y-6 shadow-sm">
         {/* Ícono Ilustrativo Celeste */}
-        <div className="relative mx-auto w-20 h-20 rounded-3xl bg-sky-50 border-2 border-sky-200 flex items-center justify-center text-brand-600 shadow-xs">
+        <div className="relative mx-auto w-20 h-20 rounded-3xl bg-brand-50 border-2 border-brand-200 flex items-center justify-center text-brand-700 shadow-xs">
           <svg
             className="w-10 h-10"
             viewBox="0 0 24 24"
@@ -60,7 +60,7 @@ export const ShiftClosedView: React.FC<ShiftClosedViewProps> = ({
         </div>
 
         {/* Ficha de Detalles del Turno Cerrado */}
-        <div className="bg-sky-50/60 border border-sky-100 rounded-2xl p-4 text-xs text-slate-600 space-y-2">
+        <div className="bg-brand-50/60 border border-brand-100 rounded-2xl p-4 text-xs text-slate-600 space-y-2">
           <div className="flex justify-between items-center">
             <span className="font-semibold text-slate-500">Módulo:</span>
             <span className="font-bold text-slate-800">
@@ -79,7 +79,7 @@ export const ShiftClosedView: React.FC<ShiftClosedViewProps> = ({
               <span className="font-bold text-slate-800">{shiftDate}</span>
             </div>
           )}
-          <div className="flex justify-between items-center pt-1 border-t border-sky-100">
+          <div className="flex justify-between items-center pt-1 border-t border-brand-100">
             <span className="font-semibold text-slate-500">Estado operativo:</span>
             <span className="font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
               Operaciones bloqueadas
@@ -94,7 +94,7 @@ export const ShiftClosedView: React.FC<ShiftClosedViewProps> = ({
               type="button"
               onClick={onRefresh}
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold text-sm min-h-[44px] flex items-center justify-center gap-2 shadow-sm transition-all disabled:opacity-50"
+              className="w-full py-3 px-4 bg-brand-500 hover:bg-brand-400 text-brand-950 rounded-xl font-bold text-sm min-h-[44px] flex items-center justify-center gap-2 shadow-sm transition-all disabled:opacity-50"
             >
               <svg
                 className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`}
@@ -114,7 +114,7 @@ export const ShiftClosedView: React.FC<ShiftClosedViewProps> = ({
           {!isCocinero && (
             <Link
               to="/mozo/menu"
-              className="w-full py-2.5 px-4 bg-sky-50 hover:bg-sky-100 text-brand-700 border border-sky-200 rounded-xl font-semibold text-xs min-h-[44px] flex items-center justify-center gap-2 transition-colors"
+              className="w-full py-2.5 px-4 bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 rounded-xl font-semibold text-xs min-h-[44px] flex items-center justify-center gap-2 transition-colors"
             >
               <svg
                 className="w-4 h-4 shrink-0"

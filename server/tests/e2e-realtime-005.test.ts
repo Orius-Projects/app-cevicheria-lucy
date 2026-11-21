@@ -113,7 +113,7 @@ describe('Spec 005 E2E — Realtime (Socket.IO Backend & Clientes)', () => {
     ]);
 
     const table = await Table.findOne({ code: 'M01' });
-    const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+    const dish = await Dish.findOne({ name: 'Ceviche' });
     expect(table).toBeDefined();
     expect(dish).toBeDefined();
 
@@ -169,7 +169,7 @@ describe('Spec 005 E2E — Realtime (Socket.IO Backend & Clientes)', () => {
     ]);
 
     const table = await Table.findOne({ code: 'M02' });
-    const dish = await Dish.findOne({ name: 'Ceviche mixto' });
+    const dish = await Dish.findOne({ name: 'Chaufa de marisco' });
     expect(table).toBeDefined();
     expect(dish).toBeDefined();
 
@@ -236,7 +236,7 @@ describe('Spec 005 E2E — Realtime (Socket.IO Backend & Clientes)', () => {
     ]);
 
     const table = await Table.findOne({ code: 'M03' });
-    const dish = await Dish.findOne({ name: 'Ceviche clásico' });
+    const dish = await Dish.findOne({ name: 'Ceviche' });
 
     // Crear y preparar orden 1
     const createRes1 = await request(app)

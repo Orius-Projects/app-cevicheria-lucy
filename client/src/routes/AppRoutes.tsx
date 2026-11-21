@@ -9,8 +9,7 @@ import { OrderDetailPage } from '../pages/waiter/OrderDetailPage';
 import { KitchenPage } from '../pages/kitchen/KitchenPage';
 import { AdminPage } from '../pages/admin/AdminPage';
 import { DishesPage } from '../pages/encargado/DishesPage';
-import { MenuDayPage } from '../pages/encargado/MenuDayPage';
-import { RationAdjustmentsPage } from '../pages/encargado/RationAdjustmentsPage';
+import { DishManagementPage } from '../pages/encargado/DishManagementPage';
 import { ShiftClosePage } from '../pages/encargado/ShiftClosePage';
 import { MenuView } from '../pages/shared/MenuView';
 import { ProtectedRoute } from './ProtectedRoute';
@@ -110,17 +109,17 @@ export const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute>
               <RoleGuard allowedRoles={['ENCARGADO']}>
-                <AdminPage />
+                <DishManagementPage />
               </RoleGuard>
             </ProtectedRoute>
           }
         />
         <Route
-          path="/encargado/menu"
+          path="/encargado/turnos"
           element={
             <ProtectedRoute>
               <RoleGuard allowedRoles={['ENCARGADO']}>
-                <MenuDayPage />
+                <AdminPage />
               </RoleGuard>
             </ProtectedRoute>
           }
@@ -135,16 +134,9 @@ export const AppRoutes: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/encargado/raciones"
-          element={
-            <ProtectedRoute>
-              <RoleGuard allowedRoles={['ENCARGADO']}>
-                <RationAdjustmentsPage />
-              </RoleGuard>
-            </ProtectedRoute>
-          }
-        />
+        {/* Rutas antiguas: redirigen a la nueva pantalla principal. */}
+        <Route path="/encargado/menu" element={<Navigate to="/encargado" replace />} />
+        <Route path="/encargado/raciones" element={<Navigate to="/encargado" replace />} />
         <Route
           path="/encargado/cierre"
           element={

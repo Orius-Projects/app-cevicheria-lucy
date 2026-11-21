@@ -18,7 +18,7 @@ export const KitchenHeader: React.FC<KitchenHeaderProps> = ({
   onRefresh
 }) => {
   return (
-    <header className="bg-white border-b border-sky-100 px-4 sm:px-6 py-3 flex justify-between items-center gap-2 sticky top-0 z-40 shadow-xs">
+    <header className="bg-white border-b border-brand-100 px-4 sm:px-6 py-3 flex justify-between items-center gap-2 sticky top-0 z-40 shadow-xs">
       <div className="flex items-center min-w-0">
         <h1 className="text-xl font-semibold text-brand-700 tracking-tight truncate">
           Cocina
@@ -29,7 +29,7 @@ export const KitchenHeader: React.FC<KitchenHeaderProps> = ({
       <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
         <div
           title={`Estado de conexión: ${connection}`}
-          className="hidden md:flex items-center space-x-1.5 text-xs text-slate-600 px-2.5 py-1.5 bg-slate-100 rounded-xl border border-slate-200 min-h-[36px]"
+          className="hidden md:flex items-center space-x-1.5 text-xs text-slate-600 px-2.5 py-1.5 bg-slate-100 rounded-xl border border-slate-200 min-h-[44px]"
         >
           <span
             className={`w-2 h-2 rounded-full ${
@@ -54,7 +54,7 @@ export const KitchenHeader: React.FC<KitchenHeaderProps> = ({
           onClick={onRefresh}
           title="Refrescar tablero"
           aria-label="Refrescar tablero"
-          className="inline-flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 rounded-xl text-xs font-medium min-h-[40px] min-w-[40px] shadow-xs transition-all active:scale-95 cursor-pointer"
+          className="inline-flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 rounded-xl text-xs font-medium min-h-[44px] min-w-[44px] shadow-xs transition-all active:scale-95 cursor-pointer"
         >
           <svg
             className="w-4 h-4 text-slate-500 shrink-0"
@@ -80,7 +80,7 @@ export const KitchenHeader: React.FC<KitchenHeaderProps> = ({
         {/* Ayuda */}
         <button
           type="button"
-          className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center cursor-pointer"
+          className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
           aria-label="Ayuda"
           title="Ayuda"
         >

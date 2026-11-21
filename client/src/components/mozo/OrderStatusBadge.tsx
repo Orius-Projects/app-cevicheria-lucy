@@ -13,10 +13,10 @@ export const OrderStatusBadge: React.FC<OrderStatusBadgeProps> = ({ status, clas
   > = {
     ENVIADO: {
       label: 'Enviado a cocina',
-      bg: 'bg-blue-50',
-      text: 'text-blue-700',
-      border: 'border-blue-200',
-      dot: 'bg-blue-500'
+      bg: 'bg-brand-50',
+      text: 'text-brand-700',
+      border: 'border-brand-200',
+      dot: 'bg-brand-500'
     },
     LISTO: {
       label: 'Listo para recoger',

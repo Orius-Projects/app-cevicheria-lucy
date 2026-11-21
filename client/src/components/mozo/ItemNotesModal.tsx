@@ -28,7 +28,7 @@ export const ItemNotesModal: React.FC<ItemNotesModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 animate-fade-in">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200">
+      <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200 max-h-[90dvh] overflow-y-auto">
         <div className="flex justify-between items-center border-b border-slate-100 pb-3">
           <h2 className="text-lg font-bold text-slate-900">{title}</h2>
           <button
@@ -55,7 +55,7 @@ export const ItemNotesModal: React.FC<ItemNotesModalProps> = ({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Ej. Poco picante, sin cebolla, etc."
-            className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+            className="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-600"
           />
           <div className="flex justify-between text-[11px] text-slate-400 pt-1">
             <span>Máximo {maxLength} caracteres</span>
@@ -76,7 +76,7 @@ export const ItemNotesModal: React.FC<ItemNotesModalProps> = ({
           <button
             type="button"
             onClick={handleSave}
-            className="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-bold min-h-[44px] shadow-sm"
+            className="px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-brand-950 rounded-xl text-sm font-bold min-h-[44px] shadow-sm"
           >
             Guardar Nota
           </button>

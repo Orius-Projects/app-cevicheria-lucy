@@ -51,7 +51,7 @@ export class ErrorBoundary extends Component<Props, State> {
                   this.setState({ hasError: false, error: null, errorInfo: null });
                   window.location.reload();
                 }}
-                className="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer min-h-[44px]"
+                className="px-5 py-2.5 bg-brand-500 hover:bg-brand-400 text-brand-950 rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer min-h-[44px]"
               >
                 Recargar Página
               </button>

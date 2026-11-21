@@ -62,7 +62,7 @@ export const OrderDetailPage: React.FC = () => {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 space-y-4">
         <p className="text-slate-600 font-bold">No se encontró el pedido solicitado.</p>
-        <Link to="/mozo/pedidos" className="text-brand-600 underline text-sm font-semibold">
+        <Link to="/mozo/pedidos" className="text-brand-700 underline text-sm font-semibold">
           ← Volver a Comandas Activas
         </Link>
       </div>
@@ -78,23 +78,23 @@ export const OrderDetailPage: React.FC = () => {
       <ConnectionBanner />
 
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex justify-between items-center shadow-sm">
-        <div className="flex items-center space-x-3">
+      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex flex-wrap justify-between items-center gap-2 shadow-sm">
+        <div className="flex items-center space-x-3 min-w-0">
           <Link
             to="/mozo/pedidos"
-            className="text-xs px-3 py-2 min-h-[44px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center border border-slate-200"
+            className="text-xs px-3 py-2 min-h-[44px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center border border-slate-200 shrink-0"
           >
             ← Comandas
           </Link>
-          <div>
-            <h1 className="text-lg font-black text-slate-900">
+          <div className="min-w-0">
+            <h1 className="text-lg font-black text-slate-900 truncate">
               Pedido #{order.orderNumber} • Mesa {order.tableCode}
             </h1>
-            <p className="text-xs text-slate-500">{user?.displayName} ({user?.role})</p>
+            <p className="text-xs text-slate-500 truncate">{user?.displayName} ({user?.role})</p>
           </div>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 shrink-0">
           <NotificationCenter />
           <OrderStatusBadge status={order.status} />
         </div>
@@ -168,7 +168,7 @@ export const OrderDetailPage: React.FC = () => {
           <div className="space-y-3">
             {/* Enviado */}
             <div className="flex items-start space-x-3 text-xs">
-              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 mt-1" />
+              <span className="w-2.5 h-2.5 rounded-full bg-brand-500 mt-1" />
               <div>
                 <p className="font-bold text-slate-900">Enviado a cocina</p>
                 <p className="text-slate-500">
@@ -239,7 +239,7 @@ export const OrderDetailPage: React.FC = () => {
                 type="button"
                 onClick={handleDeliver}
                 disabled={isDelivering}
-                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-black min-h-[44px] shadow-sm disabled:opacity-50"
+                className="px-6 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-sm font-black min-h-[44px] shadow-sm disabled:opacity-50"
               >
                 {isDelivering ? 'Entregando...' : '✓ Entregar a Mesa'}
               </button>

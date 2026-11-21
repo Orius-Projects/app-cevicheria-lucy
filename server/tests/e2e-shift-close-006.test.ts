@@ -78,27 +78,27 @@ describe('Spec 006 E2E — Cierre de Turno y Resumen Inmutable', () => {
 
     let cevicheClasicoDishId = '';
     let cevicheMixtoDishId = '';
-    let jaleaMenuItemId = '';
+    let arrozMariscosMenuItemId = '';
 
     for (const sec of menuRes.body.sections) {
       for (const item of sec.items) {
-        if (item.dishName === 'Ceviche clásico') {
+        if (item.dishName === 'Ceviche') {
           cevicheClasicoDishId = item.dishId;
         }
-        if (item.dishName === 'Ceviche mixto') {
+        if (item.dishName === 'Chaufa de marisco') {
           cevicheMixtoDishId = item.dishId;
         }
-        if (item.dishName === 'Jalea mixta') {
-          jaleaMenuItemId = item.id;
+        if (item.dishName === 'Arroz con mariscos') {
+          arrozMariscosMenuItemId = item.id;
         }
       }
     }
     expect(cevicheClasicoDishId).toBeTruthy();
     expect(cevicheMixtoDishId).toBeTruthy();
-    expect(jaleaMenuItemId).toBeTruthy();
+    expect(arrozMariscosMenuItemId).toBeTruthy();
 
     // 4. Crear pedido 1 en Mesa M01 y completar ciclo hasta ENTREGADO
-    // 2 Ceviche clásico (2 * 2800 = 5600) + 1 Ceviche mixto (1 * 3200 = 3200) -> Total = 8800 centavos
+    // 2 Ceviche (2 * 2800 = 5600) + 1 Chaufa de marisco (1 * 3200 = 3200) -> Total = 8800 centavos
     const order1Res = await request(app)
       .post('/api/orders')
       .set('Authorization', `Bearer ${mozoToken}`)
@@ -153,7 +153,7 @@ describe('Spec 006 E2E — Cierre de Turno y Resumen Inmutable', () => {
 
     // 6. Encargado marca plato agotado con motivo
     const soldOutRes = await request(app)
-      .post(`/api/menu-items/${jaleaMenuItemId}/sold-out`)
+      .post(`/api/menu-items/${arrozMariscosMenuItemId}/sold-out`)
       .set('Authorization', `Bearer ${encargadoToken}`)
       .send({ reason: 'Falta de mariscos frescos del día' });
     expect(soldOutRes.status).toBe(200);
@@ -206,12 +206,12 @@ describe('Spec 006 E2E — Cierre de Turno y Resumen Inmutable', () => {
 
     // Platos vendidos (solo pedidos entregados, separados de manualRecords)
     expect(liveSummary.soldDishes).toHaveLength(2);
-    const soldClasico = liveSummary.soldDishes.find((d: any) => d.dishName === 'Ceviche clásico');
+    const soldClasico = liveSummary.soldDishes.find((d: any) => d.dishName === 'Ceviche');
     expect(soldClasico).toBeDefined();
     expect(soldClasico.quantity).toBe(2);
     expect(soldClasico.amountCents).toBe(5600);
 
-    const soldMixto = liveSummary.soldDishes.find((d: any) => d.dishName === 'Ceviche mixto');
+    const soldMixto = liveSummary.soldDishes.find((d: any) => d.dishName === 'Chaufa de marisco');
     expect(soldMixto).toBeDefined();
     expect(soldMixto.quantity).toBe(1);
     expect(soldMixto.amountCents).toBe(3200);
@@ -231,12 +231,14 @@ describe('Spec 006 E2E — Cierre de Turno y Resumen Inmutable', () => {
     expect(liveSummary.cancellations[0].reason).toBe('Comensal tuvo una urgencia imprevista');
 
     // Platos agotados con su motivo correspondiente
-    const soldOutJalea = liveSummary.soldOutDishes.find((d: any) => d.dishName === 'Jalea mixta');
-    expect(soldOutJalea).toBeDefined();
-    expect(soldOutJalea.reason).toBe('Falta de mariscos frescos del día');
+    const soldOutArrozMariscos = liveSummary.soldOutDishes.find(
+      (d: any) => d.dishName === 'Arroz con mariscos'
+    );
+    expect(soldOutArrozMariscos).toBeDefined();
+    expect(soldOutArrozMariscos.reason).toBe('Falta de mariscos frescos del día');
 
-    // Raciones restantes (Ceviche mixto: 30 inicial - 1 consumido = 29)
-    const rationsMixto = liveSummary.remainingRations.find((d: any) => d.dishName === 'Ceviche mixto');
+    // Raciones restantes (Chaufa de marisco: 30 inicial - 1 consumido = 29)
+    const rationsMixto = liveSummary.remainingRations.find((d: any) => d.dishName === 'Chaufa de marisco');
     expect(rationsMixto).toBeDefined();
     expect(rationsMixto.remainingRations).toBe(29);
 
@@ -338,7 +340,7 @@ describe('Spec 006 E2E — Cierre de Turno y Resumen Inmutable', () => {
       .set('Authorization', `Bearer ${mozoToken}`)
       .send({
         tableCode: 'M01',
-        items: [{ name: 'Ceviche clásico', quantity: 1, amountCents: 2800 }]
+        items: [{ name: 'Ceviche', quantity: 1, amountCents: 2800 }]
       });
     expect(mozoManual.status).toBe(403);
 
@@ -354,7 +356,7 @@ describe('Spec 006 E2E — Cierre de Turno y Resumen Inmutable', () => {
       .set('Authorization', `Bearer ${encargadoToken}`)
       .send({
         tableCode: 'M01',
-        items: [{ name: 'Ceviche clásico', quantity: 1, amountCents: 2800 }]
+        items: [{ name: 'Ceviche', quantity: 1, amountCents: 2800 }]
       });
     expect(manualOnClosed.status).toBe(409);
   });

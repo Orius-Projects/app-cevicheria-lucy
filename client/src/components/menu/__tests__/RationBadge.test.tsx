@@ -23,7 +23,7 @@ describe('RationBadge', () => {
     render(<RationBadge hasRationsLimit={true} remainingRations={12} totalRations={20} />);
     const badge = screen.getByTestId('ration-badge');
     expect(badge).toHaveTextContent('Quedan 12');
-    expect(badge.className).toContain('text-blue-700');
+    expect(badge.className).toContain('text-brand-700');
   });
 
   it('renders "N / M raciones" when showTotal is true', () => {

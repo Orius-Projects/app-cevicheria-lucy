@@ -204,27 +204,27 @@ export const NewOrderPage: React.FC = () => {
       <ConnectionBanner />
 
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex justify-between items-center shadow-sm sticky top-0 z-40">
-        <div className="flex items-center space-x-3">
+      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex flex-wrap justify-between items-center gap-2 shadow-sm sticky top-0 z-40">
+        <div className="flex items-center space-x-3 min-w-0">
           <Link
             to="/mozo"
-            className="text-xs px-3 py-2 min-h-[44px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center border border-slate-200"
+            className="text-xs px-3 py-2 min-h-[44px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center border border-slate-200 shrink-0"
           >
             ← Salón
           </Link>
-          <div>
-            <h1 className="text-lg font-black text-slate-900">Nueva Comanda</h1>
-            <p className="text-xs text-slate-500">
+          <div className="min-w-0">
+            <h1 className="text-lg font-black text-slate-900 truncate">Nueva Comanda</h1>
+            <p className="text-xs text-slate-500 truncate">
               {user?.displayName} • {tableCode ? `Mesa ${tableCode}` : 'Sin mesa asignada'}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
           <button
             type="button"
             onClick={() => setIsTableModalOpen(true)}
-            className="px-3.5 py-2 min-h-[40px] bg-brand-50 hover:bg-brand-100 text-brand-800 border border-brand-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+            className="px-3.5 py-2 min-h-[44px] bg-brand-50 hover:bg-brand-100 text-brand-800 border border-brand-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
           >
             <svg className="w-4 h-4 text-brand-700 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
@@ -279,7 +279,7 @@ export const NewOrderPage: React.FC = () => {
                   placeholder="Buscar en carta..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="px-3 py-2 border border-slate-300 rounded-xl text-sm min-h-[44px] w-full sm:w-56 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  className="px-3 py-2 border border-slate-300 rounded-xl text-sm min-h-[44px] w-full sm:w-56 focus:outline-none focus:ring-2 focus:ring-brand-600"
                 />
               </div>
 
@@ -344,7 +344,7 @@ export const NewOrderPage: React.FC = () => {
       {/* Modal Selector de Mesa */}
       {isTableModalOpen && (
         <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200 max-h-[85vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200 max-h-[85dvh] overflow-y-auto">
             <div className="flex justify-between items-center border-b border-slate-100 pb-3">
               <h2 className="text-lg font-bold text-slate-900">Seleccionar Mesa para Comanda</h2>
               <button
@@ -386,7 +386,7 @@ export const NewOrderPage: React.FC = () => {
       {/* Modal de Confirmación y Resumen Pre-Envío */}
       {isConfirmModalOpen && (
         <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-slate-200 max-h-[90dvh] overflow-y-auto">
             <div className="flex justify-between items-center border-b border-slate-100 pb-3">
               <h2 className="text-lg font-bold text-slate-900">Confirmar Envío a Cocina</h2>
               <button
@@ -421,7 +421,7 @@ export const NewOrderPage: React.FC = () => {
                 type="button"
                 onClick={handleSendOrder}
                 disabled={isSubmitting || !isShiftOpen || !todayMenu}
-                className="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-black min-h-[44px] shadow-sm disabled:opacity-50"
+                className="px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-brand-950 rounded-xl text-sm font-black min-h-[44px] shadow-sm disabled:opacity-50"
               >
                 {isSubmitting ? 'Enviando comanda...' : '✓ Enviar a Cocina'}
               </button>
@@ -459,7 +459,7 @@ export const NewOrderPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => navigate('/mozo/pedidos')}
-                className="flex-1 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs min-h-[44px] shadow-sm"
+                className="flex-1 py-3 bg-brand-500 hover:bg-brand-400 text-brand-950 font-bold rounded-xl text-xs min-h-[44px] shadow-sm"
               >
                 Ver Activos →
               </button>

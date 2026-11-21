@@ -31,7 +31,7 @@ export const SummaryCards: React.FC<SummaryCardsProps> = ({ summary }) => {
         <p className="text-xl font-extrabold text-brand-900 mt-2">
           {formatSoles(summary.totalAmountCents)}
         </p>
-        <span className="text-[10px] text-brand-600 mt-1">
+        <span className="text-[10px] text-brand-700 mt-1">
           Referencial del turno
         </span>
       </div>

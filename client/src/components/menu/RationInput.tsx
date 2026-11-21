@@ -72,7 +72,7 @@ export const RationInput: React.FC<RationInputProps> = ({
                 }
               }
             }}
-            className="w-4 h-4 rounded text-brand-600 focus:ring-brand-500 border-slate-300"
+            className="w-4 h-4 rounded text-brand-700 focus:ring-brand-600 border-slate-300"
           />
           <span>Controlar límite de raciones para este plato</span>
         </label>
@@ -95,7 +95,7 @@ export const RationInput: React.FC<RationInputProps> = ({
               value={totalRations ?? ''}
               onChange={handleTotalChange}
               placeholder="Ej. 30"
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-600"
             />
             <p className="text-[11px] text-slate-400 mt-0.5">Producción inicial de cocina.</p>
           </div>
@@ -116,7 +116,7 @@ export const RationInput: React.FC<RationInputProps> = ({
               value={remainingRations ?? ''}
               onChange={handleRemainingChange}
               placeholder="Ej. 30"
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] bg-white focus:outline-none focus:ring-1 focus:ring-brand-600"
             />
             <p className="text-[11px] text-slate-400 mt-0.5">Disponibles para venta al abrir.</p>
             {exceededWarning && (

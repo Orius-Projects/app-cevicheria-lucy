@@ -90,14 +90,14 @@ export const VariationEditor: React.FC<VariationEditorProps> = ({
                 <button
                   type="button"
                   onClick={() => handleToggleActive(idx)}
-                  className="text-xs px-2.5 py-1.5 rounded border border-slate-300 hover:bg-slate-50 text-slate-600 min-h-[36px]"
+                  className="text-xs px-2.5 py-1.5 rounded border border-slate-300 hover:bg-slate-50 text-slate-600 min-h-[44px]"
                 >
                   {v.active ? 'Desactivar' : 'Activar'}
                 </button>
                 <button
                   type="button"
                   onClick={() => handleRemove(idx)}
-                  className="text-xs px-2.5 py-1.5 rounded text-rose-600 hover:bg-rose-50 border border-rose-200 min-h-[36px]"
+                  className="text-xs px-2.5 py-1.5 rounded text-rose-600 hover:bg-rose-50 border border-rose-200 min-h-[44px]"
                 >
                   Eliminar
                 </button>
@@ -121,7 +121,7 @@ export const VariationEditor: React.FC<VariationEditorProps> = ({
             setLocalError(null);
           }}
           placeholder="Ej. Sin arroz, Papa extra, Poco picante"
-          className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] focus:outline-none focus:ring-1 focus:ring-brand-500"
+          className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] focus:outline-none focus:ring-1 focus:ring-brand-600"
         />
         <button
           type="button"

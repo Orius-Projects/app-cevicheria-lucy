@@ -112,8 +112,6 @@ export async function seedData() {
     { code: 'M12', zone: 'Afuera (Terraza)', seats: 4 }
   ];
 
-  await Table.deleteMany({ code: { $in: ['M13', 'M14', 'M15', 'M16'] } });
-
   for (const t of tables) {
     await Table.findOneAndUpdate(
       { code: t.code },
@@ -122,12 +120,15 @@ export async function seedData() {
     );
   }
 
-  // 5. Secciones de Menú
+  // 5. Secciones de menú.
+  // A_LA_CARTA se conserva como registro histórico, pero queda inactiva:
+  // no aparece en la navegación del menú del día ni recibe nuevos ítems.
   const sections = [
     { key: 'CRIOLLO', name: 'Criollo', sortOrder: 1, active: true },
-    { key: 'MARINO', name: 'Marino', sortOrder: 2, active: true },
-    { key: 'A_LA_CARTA', name: 'A la carta', sortOrder: 3, active: true },
-    { key: 'BEBIDAS', name: 'Bebidas', sortOrder: 4, active: true }
+    { key: 'ENTRADA', name: 'Entrada', sortOrder: 2, active: true },
+    { key: 'MARINO', name: 'Marino', sortOrder: 3, active: true },
+    { key: 'BEBIDAS', name: 'Bebidas', sortOrder: 4, active: true },
+    { key: 'A_LA_CARTA', name: 'A la carta', sortOrder: 9, active: false }
   ];
 
   const sectionMap: Record<string, any> = {};
@@ -140,19 +141,158 @@ export async function seedData() {
     sectionMap[s.key] = secDoc;
   }
 
-  // 6. Platos Maestros (12 platos con precios y variaciones sin costo)
-  const dishes = [
+  // 6. Platos maestros: catálogo real del restaurante.
+  // Los precios son provisionales, editables desde la UI y están documentados
+  // como supuesto en specs/008-gestion-platos-raciones/spec.md.
+  const dishCatalog = [
+    // ── CRIOLLO fijos (incluyen arroz + papa frita) ──
     {
-      name: 'Ceviche clásico',
-      sectionId: sectionMap['MARINO']._id,
-      sectionKey: 'MARINO',
-      description: 'Pescado fresco del día marinado en zumo de limón con cebolla y ají limo',
-      priceCents: 2800,
+      name: 'Chicharrón de pollo',
+      sectionKey: 'CRIOLLO',
+      description: 'Trozos de pollo crocantes acompañados de arroz y papa frita.',
+      priceCents: 2200,
       course: 'FONDO',
       isFixed: true,
       isRotating: false,
       sortOrder: 1,
-      active: true,
+      variations: []
+    },
+    {
+      name: 'Milanesa de pollo',
+      sectionKey: 'CRIOLLO',
+      description: 'Milanesa de pollo dorada, servida con arroz y papa frita.',
+      priceCents: 2200,
+      course: 'FONDO',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 2,
+      variations: []
+    },
+    {
+      name: 'Filete de pollo',
+      sectionKey: 'CRIOLLO',
+      description: 'Filete de pollo a la plancha con arroz y papa frita.',
+      priceCents: 2300,
+      course: 'FONDO',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 3,
+      variations: []
+    },
+    // ── CRIOLLO fijos premium (con papa frita) ──
+    {
+      name: 'Bisteck con papa frita',
+      sectionKey: 'CRIOLLO',
+      description: 'Bisteck de res a la plancha acompañado de papa frita.',
+      priceCents: 2800,
+      course: 'FONDO',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 4,
+      variations: [
+        { id: 'v_termino_medio', name: 'Término medio', sortOrder: 1, active: true },
+        { id: 'v_bien_cocido', name: 'Bien cocido', sortOrder: 2, active: true }
+      ]
+    },
+    {
+      name: 'Chuleta de cerdo con papa frita',
+      sectionKey: 'CRIOLLO',
+      description: 'Chuleta de cerdo dorada acompañada de papa frita.',
+      priceCents: 2800,
+      course: 'FONDO',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 5,
+      variations: []
+    },
+    {
+      name: 'Trucha frita con papa frita',
+      sectionKey: 'CRIOLLO',
+      description: 'Trucha fresca frita, servida con papa frita.',
+      priceCents: 3000,
+      course: 'FONDO',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 6,
+      variations: []
+    },
+    {
+      name: 'Chaufa de cecina',
+      sectionKey: 'CRIOLLO',
+      description: 'Arroz chaufa salteado al wok con cecina de cerdo.',
+      priceCents: 2600,
+      course: 'FONDO',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 7,
+      variations: []
+    },
+    // ── CRIOLLO rotativos de ejemplo ──
+    {
+      name: 'Ají de gallina',
+      sectionKey: 'CRIOLLO',
+      description: 'Pollo deshilachado en crema de ají amarillo con arroz y papa.',
+      priceCents: 2400,
+      course: 'FONDO',
+      isFixed: false,
+      isRotating: true,
+      sortOrder: 8,
+      variations: []
+    },
+    {
+      name: 'Arroz con pollo',
+      sectionKey: 'CRIOLLO',
+      description: 'Arroz verde con pollo guisado y papa a la huancaína.',
+      priceCents: 2400,
+      course: 'FONDO',
+      isFixed: false,
+      isRotating: true,
+      sortOrder: 9,
+      variations: []
+    },
+    {
+      name: 'Seco de res',
+      sectionKey: 'CRIOLLO',
+      description: 'Estofado de res en salsa de culantro con arroz y frijoles.',
+      priceCents: 2600,
+      course: 'FONDO',
+      isFixed: false,
+      isRotating: true,
+      sortOrder: 10,
+      variations: []
+    },
+    {
+      name: 'Tallarín saltado',
+      sectionKey: 'CRIOLLO',
+      description: 'Tallarines salteados al wok con verduras y carne de res.',
+      priceCents: 2500,
+      course: 'FONDO',
+      isFixed: false,
+      isRotating: true,
+      sortOrder: 11,
+      variations: []
+    },
+    // ── ENTRADAS ──
+    {
+      name: 'Caldo de pollo',
+      sectionKey: 'ENTRADA',
+      description: 'Caldo casero de pollo con verduras.',
+      priceCents: 1200,
+      course: 'ENTRADA',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 12,
+      variations: []
+    },
+    {
+      name: 'Ceviche',
+      sectionKey: 'ENTRADA',
+      description: 'Pescado fresco del día marinado en limón con cebolla y ají limo.',
+      priceCents: 2800,
+      course: 'ENTRADA',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 13,
       variations: [
         { id: 'v_pic_bajo', name: 'Poco picante', sortOrder: 1, active: true },
         { id: 'v_pic_med', name: 'Picante medio', sortOrder: 2, active: true },
@@ -160,173 +300,197 @@ export async function seedData() {
       ]
     },
     {
-      name: 'Ceviche mixto',
-      sectionId: sectionMap['MARINO']._id,
-      sectionKey: 'MARINO',
-      description: 'Pescado y mariscos seleccionados al limón con camote y choclo',
-      priceCents: 3200,
-      course: 'FONDO',
+      name: 'Papa rellena',
+      sectionKey: 'ENTRADA',
+      description: 'Papa rellena de carne, empanizada y frita.',
+      priceCents: 1000,
+      course: 'ENTRADA',
       isFixed: true,
       isRotating: false,
-      sortOrder: 2,
-      active: true,
-      variations: [
-        { id: 'v_sin_aji', name: 'Sin ají', sortOrder: 1, active: true },
-        { id: 'v_con_aji', name: 'Con ají', sortOrder: 2, active: true }
-      ]
+      sortOrder: 14,
+      variations: []
     },
     {
+      name: 'Causa de atún',
+      sectionKey: 'ENTRADA',
+      description: 'Papa amarilla prensada con ají amarillo y relleno de atún.',
+      priceCents: 1800,
+      course: 'ENTRADA',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 15,
+      variations: []
+    },
+    {
+      name: 'Alita broster',
+      sectionKey: 'ENTRADA',
+      description: 'Alitas de pollo broster crocantes con salsa de la casa.',
+      priceCents: 1500,
+      course: 'ENTRADA',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 16,
+      variations: []
+    },
+    {
+      name: 'Chilcano',
+      sectionKey: 'ENTRADA',
+      description: 'Sopa de pescado con ají, limón y culantro.',
+      priceCents: 1500,
+      course: 'ENTRADA',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 17,
+      variations: []
+    },
+    {
+      name: 'Combinado',
+      sectionKey: 'ENTRADA',
+      description: 'Combinado criollo con arroz, papa, carne y ensalada.',
+      priceCents: 2000,
+      course: 'ENTRADA',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 18,
+      variations: []
+    },
+    {
+      name: 'Ensalada con palta',
+      sectionKey: 'ENTRADA',
+      description: 'Ensalada fresca de verduras con palta.',
+      priceCents: 1400,
+      course: 'ENTRADA',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 19,
+      variations: []
+    },
+    {
+      name: 'Tequeños',
+      sectionKey: 'ENTRADA',
+      description: 'Tequeños de queso fritos con salsa de la casa.',
+      priceCents: 1200,
+      course: 'ENTRADA',
+      isFixed: true,
+      isRotating: false,
+      sortOrder: 20,
+      variations: []
+    },
+    // ── MARINO ──
+    {
       name: 'Arroz con mariscos',
-      sectionId: sectionMap['MARINO']._id,
       sectionKey: 'MARINO',
-      description: 'Arroz criollo con mixtura de mariscos y aroma de culantro',
+      description: 'Arroz criollo con mixtura de mariscos y aroma de culantro.',
       priceCents: 3000,
       course: 'FONDO',
       isFixed: true,
       isRotating: false,
-      sortOrder: 3,
-      active: true,
+      sortOrder: 21,
       variations: [
         { id: 'v_sin_culantro', name: 'Sin culantro', sortOrder: 1, active: true }
       ]
     },
     {
-      name: 'Jalea mixta',
-      sectionId: sectionMap['MARINO']._id,
+      name: 'Sudado de pescado',
       sectionKey: 'MARINO',
-      description: 'Chicharrón de mariscos y pescado crocante con yuca y sarza criolla',
-      priceCents: 3500,
+      description: 'Pescado sudado en salsa de tomate y ají.',
+      priceCents: 2800,
       course: 'FONDO',
       isFixed: true,
       isRotating: false,
-      sortOrder: 4,
-      active: true,
-      variations: [
-        { id: 'v_tartara_extra', name: 'Con salsa tártara extra', sortOrder: 1, active: true }
-      ]
-    },
-    {
-      name: 'Causa de atún',
-      sectionId: sectionMap['MARINO']._id,
-      sectionKey: 'MARINO',
-      description: 'Papa amarilla prensada con ají amarillo y relleno de atún',
-      priceCents: 1800,
-      course: 'ENTRADA',
-      isFixed: true,
-      isRotating: false,
-      sortOrder: 5,
-      active: true,
+      sortOrder: 22,
       variations: []
     },
     {
-      name: 'Chicharrón de calamar',
-      sectionId: sectionMap['MARINO']._id,
+      name: 'Chicharrón de pescado',
       sectionKey: 'MARINO',
-      description: 'Aros de calamar crocantes con tártara y chifle',
+      description: 'Trozos de pescado crocantes con yuca y sarza criolla.',
       priceCents: 2600,
       course: 'FONDO',
       isFixed: true,
       isRotating: false,
-      sortOrder: 6,
-      active: true,
+      sortOrder: 23,
       variations: []
     },
     {
-      name: 'Lomo saltado',
-      sectionId: sectionMap['CRIOLLO']._id,
-      sectionKey: 'CRIOLLO',
-      description: 'Tiras de lomo salteadas al wok con cebolla, tomate y papas fritas',
+      name: 'Chaufa de marisco',
+      sectionKey: 'MARINO',
+      description: 'Arroz chaufa salteado al wok con pescado y mariscos.',
       priceCents: 3200,
       course: 'FONDO',
       isFixed: true,
       isRotating: false,
-      sortOrder: 7,
-      active: true,
+      sortOrder: 24,
       variations: [
-        { id: 'v_termino_medio', name: 'Término medio', sortOrder: 1, active: true },
-        { id: 'v_bien_cocido', name: 'Bien cocido', sortOrder: 2, active: true }
+        { id: 'v_sin_aji', name: 'Sin ají', sortOrder: 1, active: true },
+        { id: 'v_con_aji', name: 'Con ají', sortOrder: 2, active: true }
       ]
     },
-    {
-      name: 'Chicharrón de pollo',
-      sectionId: sectionMap['CRIOLLO']._id,
-      sectionKey: 'CRIOLLO',
-      description: 'Trozos de pechuga crocantes acompañados de papas doradas',
-      priceCents: 2200,
-      course: 'FONDO',
-      isFixed: true,
-      isRotating: false,
-      sortOrder: 8,
-      active: true,
-      variations: [
-        { id: 'v_papas_fritas', name: 'Con papas fritas', sortOrder: 1, active: true }
-      ]
-    },
-    {
-      name: 'Ají de gallina',
-      sectionId: sectionMap['CRIOLLO']._id,
-      sectionKey: 'CRIOLLO',
-      description: 'Pollo deshilachado en crema de ají amarillo con arroz blanco',
-      priceCents: 2400,
-      course: 'FONDO',
-      isFixed: true,
-      isRotating: false,
-      sortOrder: 9,
-      active: true,
-      variations: []
-    },
-    {
-      name: 'Parihuela especial',
-      sectionId: sectionMap['A_LA_CARTA']._id,
-      sectionKey: 'A_LA_CARTA',
-      description: 'Sopa concentrada marina con cangrejo y frutos del mar',
-      priceCents: 3800,
-      course: 'FONDO',
-      isFixed: false,
-      isRotating: true,
-      sortOrder: 10,
-      active: true,
-      variations: []
-    },
+    // ── BEBIDAS ──
     {
       name: 'Chicha morada 1L',
-      sectionId: sectionMap['BEBIDAS']._id,
       sectionKey: 'BEBIDAS',
-      description: 'Elaborada artesanalmente con maíz morado, piña y canela',
+      description: 'Elaborada artesanalmente con maíz morado, piña y canela.',
       priceCents: 1200,
       course: 'BEBIDA',
       isFixed: true,
       isRotating: false,
-      sortOrder: 11,
-      active: true,
+      sortOrder: 25,
       variations: []
     },
     {
       name: 'Limonada frozen 1L',
-      sectionId: sectionMap['BEBIDAS']._id,
       sectionKey: 'BEBIDAS',
-      description: 'Refrescante limonada batida con hielo frappé',
+      description: 'Refrescante limonada batida con hielo frappé.',
       priceCents: 1400,
       course: 'BEBIDA',
       isFixed: true,
       isRotating: false,
-      sortOrder: 12,
-      active: true,
+      sortOrder: 26,
       variations: []
     }
   ];
 
   const dishMap: Record<string, any> = {};
-  for (const d of dishes) {
+  for (const dish of dishCatalog) {
+    const { sectionKey, ...fields } = dish;
     const dishDoc = await Dish.findOneAndUpdate(
-      { name: d.name },
-      { $set: d },
+      { name: dish.name },
+      {
+        $set: {
+          ...fields,
+          sectionId: sectionMap[sectionKey]._id,
+          active: true
+        }
+      },
       { upsert: true, new: true }
     );
-    dishMap[d.name] = dishDoc;
+    dishMap[dish.name] = dishDoc;
   }
 
-  // 7. Menú del día publicado
+  // Platos del seed anterior que ya no forman parte del menú real.
+  // No se eliminan: se desactivan para conservar pedidos e historial.
+  const legacyDishNames = [
+    'Ceviche clásico',
+    'Ceviche mixto',
+    'Jalea mixta',
+    'Chicharrón de calamar',
+    'Lomo saltado',
+    'Parihuela especial'
+  ];
+  const legacyDishes = await Dish.find({ name: { $in: legacyDishNames } });
+
+  await Dish.updateMany(
+    {
+      $or: [
+        { name: { $in: legacyDishNames } },
+        { sectionId: sectionMap['A_LA_CARTA']._id }
+      ]
+    },
+    { $set: { active: false } }
+  );
+
+  // 7. Menú del día publicado (idempotente)
   const menuDay = await MenuDay.findOneAndUpdate(
     { date: today },
     {
@@ -335,107 +499,103 @@ export async function seedData() {
         status: 'PUBLICADO',
         publishedBy: userMap['encargado1']._id,
         publishedAt: new Date(),
-        notes: 'Menú especial de temporada'
+        notes: 'Menú real de temporada: criollo, entradas, marino y bebidas.'
       }
     },
     { upsert: true, new: true }
   );
 
-  // Items del menú del día:
-  // - un plato limitado a 30 raciones (Ceviche mixto)
-  // - un plato agotado por insumo (manuallySoldOut: true, Arroz con mariscos)
-  // - otros platos sin límite de raciones
-  const menuItems = [
+  // Limpia únicamente los ítems de hoy que pertenecen al catálogo anterior o
+  // a la sección inactiva A_LA_CARTA. No toca pedidos ni menús históricos.
+  const legacyDishIds = legacyDishes.map((dish) => dish._id);
+  await MenuItem.deleteMany({
+    menuDayId: menuDay._id,
+    $or: [{ dishId: { $in: legacyDishIds } }, { sectionKey: 'A_LA_CARTA' }]
+  });
+
+  // Ítems del menú de hoy con estados variados para la demo:
+  // - varios platos con límite de raciones
+  // - uno en últimas raciones (Ají de gallina: 4/15)
+  // - uno agotado por insumo (Arroz con mariscos)
+  interface MenuItemSeed {
+    name: string;
+    hasRationsLimit: boolean;
+    totalRations?: number;
+    remainingRations?: number;
+    manuallySoldOut?: boolean;
+    soldOutReason?: string;
+  }
+
+  const menuItems: MenuItemSeed[] = [
+    // CRIOLLO fijos (7)
+    { name: 'Chicharrón de pollo', hasRationsLimit: true, totalRations: 25, remainingRations: 25 },
+    { name: 'Milanesa de pollo', hasRationsLimit: true, totalRations: 20, remainingRations: 20 },
+    { name: 'Filete de pollo', hasRationsLimit: true, totalRations: 15, remainingRations: 15 },
+    { name: 'Bisteck con papa frita', hasRationsLimit: true, totalRations: 15, remainingRations: 15 },
     {
-      dish: dishMap['Ceviche clásico'],
-      sectionKey: 'MARINO',
-      hasRationsLimit: false,
-      totalRations: null,
-      remainingRations: null,
-      manuallySoldOut: false
-    },
-    {
-      dish: dishMap['Ceviche mixto'],
-      sectionKey: 'MARINO',
+      name: 'Chuleta de cerdo con papa frita',
       hasRationsLimit: true,
-      totalRations: 30,
-      remainingRations: 30,
-      manuallySoldOut: false
+      totalRations: 12,
+      remainingRations: 12
     },
     {
-      dish: dishMap['Arroz con mariscos'],
-      sectionKey: 'MARINO',
+      name: 'Trucha frita con papa frita',
+      hasRationsLimit: true,
+      totalRations: 10,
+      remainingRations: 10
+    },
+    { name: 'Chaufa de cecina', hasRationsLimit: true, totalRations: 12, remainingRations: 12 },
+    // CRIOLLO rotativos de ejemplo (4)
+    { name: 'Ají de gallina', hasRationsLimit: true, totalRations: 15, remainingRations: 4 },
+    { name: 'Arroz con pollo', hasRationsLimit: true, totalRations: 20, remainingRations: 20 },
+    { name: 'Seco de res', hasRationsLimit: false },
+    { name: 'Tallarín saltado', hasRationsLimit: false },
+    // ENTRADAS (9)
+    { name: 'Caldo de pollo', hasRationsLimit: false },
+    { name: 'Ceviche', hasRationsLimit: true, totalRations: 30, remainingRations: 30 },
+    { name: 'Papa rellena', hasRationsLimit: true, totalRations: 12, remainingRations: 12 },
+    { name: 'Causa de atún', hasRationsLimit: false },
+    { name: 'Alita broster', hasRationsLimit: false },
+    { name: 'Chilcano', hasRationsLimit: false },
+    { name: 'Combinado', hasRationsLimit: false },
+    { name: 'Ensalada con palta', hasRationsLimit: false },
+    { name: 'Tequeños', hasRationsLimit: false },
+    // MARINO (4)
+    {
+      name: 'Arroz con mariscos',
       hasRationsLimit: false,
-      totalRations: null,
-      remainingRations: null,
       manuallySoldOut: true,
       soldOutReason: 'Agotado por falta de insumos frescos'
     },
-    {
-      dish: dishMap['Jalea mixta'],
-      sectionKey: 'MARINO',
-      hasRationsLimit: false,
-      totalRations: null,
-      remainingRations: null,
-      manuallySoldOut: false
-    },
-    {
-      dish: dishMap['Causa de atún'],
-      sectionKey: 'MARINO',
-      hasRationsLimit: false,
-      totalRations: null,
-      remainingRations: null,
-      manuallySoldOut: false
-    },
-    {
-      dish: dishMap['Chicharrón de pollo'],
-      sectionKey: 'CRIOLLO',
-      hasRationsLimit: false,
-      totalRations: null,
-      remainingRations: null,
-      manuallySoldOut: false
-    },
-    {
-      dish: dishMap['Lomo saltado'],
-      sectionKey: 'CRIOLLO',
-      hasRationsLimit: false,
-      totalRations: null,
-      remainingRations: null,
-      manuallySoldOut: false
-    },
-    {
-      dish: dishMap['Chicha morada 1L'],
-      sectionKey: 'BEBIDAS',
-      hasRationsLimit: false,
-      totalRations: null,
-      remainingRations: null,
-      manuallySoldOut: false
-    },
-    {
-      dish: dishMap['Limonada frozen 1L'],
-      sectionKey: 'BEBIDAS',
-      hasRationsLimit: false,
-      totalRations: null,
-      remainingRations: null,
-      manuallySoldOut: false
-    }
+    { name: 'Sudado de pescado', hasRationsLimit: false },
+    { name: 'Chicharrón de pescado', hasRationsLimit: false },
+    { name: 'Chaufa de marisco', hasRationsLimit: true, totalRations: 30, remainingRations: 30 },
+    // BEBIDAS (2)
+    { name: 'Chicha morada 1L', hasRationsLimit: false },
+    { name: 'Limonada frozen 1L', hasRationsLimit: false }
   ];
 
   for (const item of menuItems) {
+    const dish = dishMap[item.name];
+    const sectionKey = dishCatalog.find((d) => d.name === item.name)!.sectionKey;
     await MenuItem.findOneAndUpdate(
-      { menuDayId: menuDay._id, dishId: item.dish._id },
+      { menuDayId: menuDay._id, dishId: dish._id },
       {
         $set: {
-          dishName: item.dish.name,
-          sectionKey: item.sectionKey,
-          priceCents: item.dish.priceCents,
+          dishName: dish.name,
+          sectionKey,
+          priceCents: dish.priceCents,
           active: true,
           hasRationsLimit: item.hasRationsLimit,
-          totalRations: item.totalRations,
-          remainingRations: item.remainingRations,
+          totalRations: item.hasRationsLimit ? item.totalRations ?? 30 : null,
+          remainingRations: item.hasRationsLimit
+            ? item.remainingRations ?? item.totalRations ?? 30
+            : null,
           lowStockThreshold: 5,
-          manuallySoldOut: item.manuallySoldOut,
-          soldOutReason: item.soldOutReason || null,
+          manuallySoldOut: item.manuallySoldOut ?? false,
+          soldOutReason: item.soldOutReason ?? null,
+          soldOutBy: null,
+          soldOutAt: null,
           version: 0
         }
       },
@@ -443,11 +603,12 @@ export async function seedData() {
     );
   }
 
-  // 8. Turno abierto 'Almuerzo' para la fecha actual
+  // 8. Turno abierto 'Almuerzo' para la fecha actual.
+  // Se crea solo si no existe: si el encargado ya lo abrió o cerró, se respeta.
   await Shift.findOneAndUpdate(
     { date: today, label: 'Almuerzo' },
     {
-      $set: {
+      $setOnInsert: {
         date: today,
         label: 'Almuerzo',
         status: 'ABIERTO',
@@ -463,7 +624,7 @@ export async function seedData() {
     usersCount: Object.keys(userMap).length,
     tablesCount: tables.length,
     sectionsCount: sections.length,
-    dishesCount: dishes.length,
+    dishesCount: dishCatalog.length,
     menuItemsCount: menuItems.length
   };
 }
