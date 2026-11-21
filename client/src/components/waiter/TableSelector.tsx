@@ -310,25 +310,18 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
     const config = statusColors[stateKey] || statusColors.LIBRE;
     const isSelected = selectedTableId === table.id;
     const isOccupied = stateKey !== 'LIBRE';
-    const zoneKey = getTableZoneKey(table);
-    const zoneLabel =
-      zoneKey === 'PRIMER_PISO'
-        ? 'Primer Piso'
-        : zoneKey === 'SEGUNDO_PISO'
-        ? 'Segundo Piso'
-        : 'Afuera (Terraza)';
 
     return (
       <button
         key={table.id}
         type="button"
         onClick={() => handleSelect(table)}
-        className={`relative min-h-[96px] p-4 rounded-2xl border-2 transition-all flex flex-col justify-between items-start text-left shadow-xs hover:shadow-md cursor-pointer active:scale-[0.98] ${config.bg} ${config.border} ${
+        className={`relative p-4 rounded-2xl border-2 transition-all flex items-center justify-between text-left shadow-xs hover:shadow-md cursor-pointer active:scale-[0.98] ${config.bg} ${config.border} ${
           isSelected ? 'ring-2 ring-brand-600 ring-offset-2 border-brand-500' : ''
         }`}
       >
         {/* Cabecera de la mesa: Código + Ícono (Mesa si libre, Banderita si ocupada) */}
-        <div className="w-full flex justify-between items-start">
+        <div className="w-full flex justify-between items-center gap-2">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-white/80 border border-slate-200/60 flex items-center justify-center shrink-0 shadow-xs">
               {isOccupied ? (
@@ -337,32 +330,17 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
                 <TableIcon className="w-5 h-5 text-emerald-600" />
               )}
             </div>
-            <div>
-              <span className="text-xl font-black text-slate-900 tracking-tight leading-none block">
-                {table.code}
-              </span>
-              <span className="text-[11px] text-slate-500 font-medium">
-                {table.seats || 4} sillas
-              </span>
-            </div>
+            <span className="text-lg font-normal text-slate-800 tracking-tight leading-none block">
+              {table.code}
+            </span>
           </div>
 
           {/* Badge de estado */}
           <span
-            className={`text-xs px-2.5 py-0.5 rounded-full font-bold border flex items-center gap-1 ${config.bg} ${config.text} ${config.border}`}
+            className={`text-xs px-2.5 py-0.5 rounded-full font-normal border flex items-center gap-1 shrink-0 ${config.bg} ${config.text} ${config.border}`}
           >
             {isOccupied && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />}
             {config.label}
-          </span>
-        </div>
-
-        {/* Pie de tarjeta: Indicador contextual de zona y acción */}
-        <div className="mt-3 text-xs text-slate-600 flex justify-between items-center w-full pt-2 border-t border-slate-200/50">
-          <span className="text-[11px] font-semibold text-slate-500 truncate">
-            {zoneLabel}
-          </span>
-          <span className="text-[11px] font-bold text-brand-700">
-            {isOccupied ? 'Ver comanda →' : 'Tocar para abrir'}
           </span>
         </div>
       </button>
@@ -371,21 +349,18 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
 
   const renderZoneSection = (
     title: string,
-    subtitle: string,
+    _subtitle: string,
     IconComponent: React.ComponentType<{ className?: string }>,
     zoneTables: TableItem[]
   ) => (
     <div className="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-xs space-y-3.5">
-      {/* Cabecera del espacio (sin etiqueta de conteo en la parte superior derecha) */}
+      {/* Cabecera del espacio */}
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-brand-50 border border-brand-200/80 flex items-center justify-center text-brand-700 shadow-xs shrink-0">
             <IconComponent className="w-5 h-5 text-brand-700" />
           </div>
-          <div>
-            <h3 className="text-base font-black text-slate-900 leading-tight">{title}</h3>
-            <p className="text-xs text-slate-500">{subtitle} • {zoneTables.length} mesas</p>
-          </div>
+          <h3 className="text-base font-semibold text-slate-900 leading-tight">{title}</h3>
         </div>
       </div>
 

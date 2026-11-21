@@ -45,10 +45,14 @@ describe('TableSelector Interactive Floor View', () => {
     expect(screen.getByRole('tab', { name: /Segundo Piso/i })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: /Afuera del Local/i })).toBeInTheDocument();
 
-    // Zone headers in "Todo el local" view
-    expect(screen.getByText('Salón Principal • 4 mesas')).toBeInTheDocument();
-    expect(screen.getByText('Nivel Superior • 4 mesas')).toBeInTheDocument();
-    expect(screen.getByText('Terraza Exterior • 4 mesas')).toBeInTheDocument();
+    // Zone headers in "Todo el local" view (without subtitles)
+    expect(screen.getByRole('heading', { name: 'Primer Piso' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Segundo Piso' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Afuera del Local' })).toBeInTheDocument();
+
+    // Removed subtitles and footer text must NOT be present
+    expect(screen.queryByText(/Salón Principal • 4 mesas/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Tocar para abrir/i)).not.toBeInTheDocument();
 
     // Upper-right count badges in section headers must NOT be present
     expect(screen.queryByText(/4 libres/i)).not.toBeInTheDocument();
@@ -67,9 +71,9 @@ describe('TableSelector Interactive Floor View', () => {
     fireEvent.click(screen.getByRole('tab', { name: /Segundo Piso/i }));
 
     // Only Segundo Piso section is visible
-    expect(screen.getByText('Nivel Superior • 4 mesas')).toBeInTheDocument();
-    expect(screen.queryByText('Salón Principal • 4 mesas')).not.toBeInTheDocument();
-    expect(screen.queryByText('Terraza Exterior • 4 mesas')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Segundo Piso' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Primer Piso' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Afuera del Local' })).not.toBeInTheDocument();
 
     // Tables M05-M08 are present, M01 is not
     expect(screen.getByText('M05')).toBeInTheDocument();

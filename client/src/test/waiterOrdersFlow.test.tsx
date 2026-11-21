@@ -466,7 +466,7 @@ describe('Waiter Orders Flow (Spec 003 UI)', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText(/Cevichería Lucy — Salón/i)).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /^Salón$/i })).toBeInTheDocument();
       expect(screen.getByText('M-01')).toBeInTheDocument();
       expect(screen.getByText('M-02')).toBeInTheDocument();
     });

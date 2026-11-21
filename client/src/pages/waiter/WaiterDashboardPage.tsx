@@ -6,7 +6,7 @@ import { useOrdersStore } from '../../stores/ordersStore';
 import { useShiftStore } from '../../stores/shiftStore';
 import { useOrderDraftStore } from '../../stores/orderDraftStore';
 import { useOrderEvents } from '../../hooks/useOrderEvents';
-import { TableSelector } from '../../components/waiter/TableSelector';
+import { TableSelector, TableIcon } from '../../components/waiter/TableSelector';
 import { ReadyOrderCard } from '../../components/mozo/ReadyOrderCard';
 import { CancelOrderModal } from '../../components/mozo/CancelOrderModal';
 import { ConnectionBanner } from '../../components/common/ConnectionBanner';
@@ -103,23 +103,11 @@ export const WaiterDashboardPage: React.FC = () => {
       <ConnectionBanner />
 
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex flex-wrap justify-between items-center gap-3 shadow-sm sticky top-0 z-40">
-        <div>
-          <div className="flex items-center space-x-2">
-            <h1 className="text-xl font-black text-brand-700">Cevichería Lucy — Salón</h1>
-            {isShiftOpen ? (
-              <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
-                Turno Abierto
-              </span>
-            ) : (
-              <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-200">
-                Turno Finalizado
-              </span>
-            )}
-          </div>
-          <p className="text-xs text-slate-500">
-            {user?.displayName} ({user?.role}) {currentShift && `• ${currentShift.label}`}
-          </p>
+      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3 flex flex-wrap justify-between items-center gap-3 shadow-sm sticky top-0 z-40">
+        <div className="flex items-center min-w-0">
+          <h1 className="text-xl font-semibold text-brand-700 tracking-tight truncate">
+            Salón
+          </h1>
         </div>
 
         <div className="flex items-center gap-2 sm:gap-2.5">
@@ -229,8 +217,20 @@ export const WaiterDashboardPage: React.FC = () => {
             {safeReady.length > 0 && (
               <section className="space-y-3" aria-labelledby="ready-orders-heading">
                 <div className="flex items-center space-x-2">
-                  <span className="text-2xl animate-bounce">🔔</span>
-                  <h2 id="ready-orders-heading" className="text-lg font-black text-slate-900">
+                  <svg
+                    className="w-5 h-5 text-emerald-600 shrink-0"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                  </svg>
+                  <h2 id="ready-orders-heading" className="text-lg font-semibold text-slate-900">
                     Listos para Servir en Mesa ({safeReady.length})
                   </h2>
                 </div>
@@ -277,38 +277,33 @@ export const WaiterDashboardPage: React.FC = () => {
             aria-modal="true"
             aria-labelledby="table-modal-title"
           >
-            <div className="flex justify-between items-start border-b border-slate-100 pb-3.5">
+            <div className="flex justify-between items-center border-b border-slate-100 pb-3.5">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-brand-50 border border-brand-200 flex items-center justify-center text-brand-700 font-black text-xl shadow-xs">
-                  {selectedTable.code}
+                <div className="w-11 h-11 rounded-2xl bg-brand-50 border border-brand-200 flex items-center justify-center text-brand-700 shadow-xs">
+                  <TableIcon className="w-6 h-6 text-brand-700" />
                 </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 id="table-modal-title" className="text-xl font-black text-slate-900">
-                      Mesa {selectedTable.code}
-                    </h3>
-                    <span
-                      className={`text-xs px-2.5 py-0.5 rounded-full font-bold ${
-                        selectedTable.state === 'LIBRE'
-                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
-                          : selectedTable.state === 'OCUPADA'
-                          ? 'bg-amber-100 text-amber-800 border border-amber-200'
-                          : 'bg-rose-100 text-rose-800 border border-rose-200'
-                      }`}
-                    >
-                      {selectedTable.state}
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Zona: {selectedTable.zone || 'Salón Principal'} • {selectedTable.seats || 4} sillas
-                  </p>
+                <div className="flex items-center gap-2">
+                  <h3 id="table-modal-title" className="text-xl font-medium text-slate-800">
+                    Mesa {selectedTable.code}
+                  </h3>
+                  <span
+                    className={`text-xs px-2.5 py-0.5 rounded-full font-normal ${
+                      selectedTable.state === 'LIBRE'
+                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                        : selectedTable.state === 'OCUPADA'
+                        ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                        : 'bg-rose-100 text-rose-800 border border-rose-200'
+                    }`}
+                  >
+                    {selectedTable.state}
+                  </span>
                 </div>
               </div>
 
               <button
                 type="button"
                 onClick={() => setSelectedTable(null)}
-                className="text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full p-1.5 transition-colors min-h-[36px] min-w-[36px] flex items-center justify-center font-bold text-lg cursor-pointer"
+                className="bg-slate-100 hover:bg-slate-200/80 text-slate-500 hover:text-slate-700 rounded-full p-1.5 transition-colors min-h-[36px] min-w-[36px] flex items-center justify-center font-normal text-base cursor-pointer"
                 aria-label="Cerrar modal"
               >
                 ✕
@@ -327,9 +322,9 @@ export const WaiterDashboardPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleStartOrderForTable(selectedTable)}
-                className="w-full py-3.5 px-4 bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white rounded-2xl text-sm font-black min-h-[48px] shadow-sm flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer"
+                className="w-full py-3.5 px-4 bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white rounded-2xl text-sm font-medium min-h-[48px] shadow-sm flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer"
               >
-                <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <line x1="12" y1="5" x2="12" y2="19" />
                   <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
@@ -339,25 +334,25 @@ export const WaiterDashboardPage: React.FC = () => {
               {/* Pedidos activos de esta mesa */}
               {tableActiveOrders.length > 0 && (
                 <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                  <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">
+                  <span className="text-xs font-medium text-slate-700 uppercase tracking-wider block">
                     Comandas activas en esta mesa ({tableActiveOrders.length}):
                   </span>
                   <div className="space-y-1.5 max-h-36 overflow-y-auto">
                     {tableActiveOrders.map((ord) => (
                       <div key={ord.id} className="flex justify-between items-center text-xs bg-white p-2.5 rounded-xl border border-slate-200">
                         <div>
-                          <span className="font-bold text-slate-900">#{ord.orderNumber}</span>
+                          <span className="font-medium text-slate-900">#{ord.orderNumber}</span>
                           <span className="text-slate-500 ml-2">({ord.items.length} platos)</span>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                          <span className={`text-[10px] font-normal px-2 py-0.5 rounded ${
                             ord.status === 'LISTO' ? 'bg-emerald-100 text-emerald-800' : 'bg-blue-100 text-blue-800'
                           }`}>
                             {ord.status}
                           </span>
                           <Link
                             to={`/mozo/pedidos/${ord.id}`}
-                            className="text-brand-600 hover:text-brand-800 font-bold underline px-1 py-1 min-h-[36px] flex items-center"
+                            className="text-brand-600 hover:text-brand-800 font-medium underline px-1 py-1 min-h-[36px] flex items-center"
                           >
                             Ver →
                           </Link>
@@ -372,7 +367,7 @@ export const WaiterDashboardPage: React.FC = () => {
               {selectedTable.state === 'POR_CERRAR' && selectedTable.openSessionId && (
                 <div className="p-4 bg-rose-50/70 rounded-2xl border border-rose-200 space-y-3">
                   <div>
-                    <h4 className="text-xs font-bold text-rose-900 uppercase tracking-wider">Cierre de Sesión de Mesa</h4>
+                    <h4 className="text-xs font-medium text-rose-900 uppercase tracking-wider">Cierre de Sesión de Mesa</h4>
                     <p className="text-xs text-rose-700">Todos los pedidos han sido entregados. Puedes liberar la mesa.</p>
                   </div>
 
@@ -388,7 +383,7 @@ export const WaiterDashboardPage: React.FC = () => {
                     type="button"
                     onClick={handleCloseSession}
                     disabled={isClosingTable}
-                    className="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold min-h-[44px] disabled:opacity-50 cursor-pointer"
+                    className="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-medium min-h-[44px] disabled:opacity-50 cursor-pointer"
                   >
                     {isClosingTable ? 'Cerrando mesa...' : 'Liberar Mesa'}
                   </button>
@@ -398,7 +393,7 @@ export const WaiterDashboardPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSelectedTable(null)}
-                className="w-full py-2.5 text-xs font-semibold text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors min-h-[40px] cursor-pointer"
+                className="w-full py-2.5 text-xs font-normal text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200/80 rounded-xl transition-colors min-h-[42px] cursor-pointer"
               >
                 Cancelar
               </button>
