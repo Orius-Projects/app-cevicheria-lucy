@@ -15,6 +15,7 @@ export interface NotificationToast {
   orderNumber?: number;
   createdAt: Date | string;
   read: boolean;
+  floatingVisible?: boolean;
 }
 
 export interface PushNotificationInput {
@@ -26,6 +27,7 @@ export interface PushNotificationInput {
   orderNumber?: number;
   createdAt?: Date | string;
   playSound?: boolean;
+  autoHideMs?: number;
 }
 
 interface NotificationsState {
@@ -34,11 +36,28 @@ interface NotificationsState {
   soundEnabled: boolean;
 
   push: (input: PushNotificationInput) => void;
+  hideFloating: (id: string) => void;
   dismiss: (id: string) => void;
   markAllRead: () => void;
   setSoundEnabled: (enabled: boolean) => void;
   toggleSound: () => void;
   clearAll: () => void;
+}
+
+const DEFAULT_FLOATING_DURATION_MS = 5000;
+const floatingTimers = new Map<string, ReturnType<typeof setTimeout>>();
+
+function clearFloatingTimer(id: string) {
+  const timer = floatingTimers.get(id);
+  if (timer) {
+    clearTimeout(timer);
+    floatingTimers.delete(id);
+  }
+}
+
+function clearAllFloatingTimers() {
+  floatingTimers.forEach((timer) => clearTimeout(timer));
+  floatingTimers.clear();
 }
 
 export const useNotificationsStore = create<NotificationsState>((set, get) => ({
@@ -63,7 +82,8 @@ export const useNotificationsStore = create<NotificationsState>((set, get) => ({
       tableCode: input.tableCode,
       orderNumber: input.orderNumber,
       createdAt: input.createdAt || new Date().toISOString(),
-      read: false
+      read: false,
+      floatingVisible: true
     };
 
     // Reproducir sonido para pedidos listos si está habilitado
@@ -78,9 +98,31 @@ export const useNotificationsStore = create<NotificationsState>((set, get) => ({
       toasts: nextToasts,
       unreadCount: unread
     });
+
+    // Temporizador global en el store para ocultar el toast flotante tras 5 segundos
+    // sin importar si el mesero cambia de vista/ruta.
+    const duration = input.autoHideMs ?? DEFAULT_FLOATING_DURATION_MS;
+    if (duration > 0) {
+      clearFloatingTimer(newToast.id);
+      const timer = setTimeout(() => {
+        floatingTimers.delete(newToast.id);
+        get().hideFloating(newToast.id);
+      }, duration);
+      floatingTimers.set(newToast.id, timer);
+    }
+  },
+
+  hideFloating: (id) => {
+    clearFloatingTimer(id);
+    set((state) => ({
+      toasts: state.toasts.map((t) =>
+        t.id === id || t.eventId === id ? { ...t, floatingVisible: false } : t
+      )
+    }));
   },
 
   dismiss: (id) => {
+    clearFloatingTimer(id);
     set((state) => {
       const nextToasts = state.toasts.filter((t) => t.id !== id && t.eventId !== id);
       return {
@@ -108,7 +150,10 @@ export const useNotificationsStore = create<NotificationsState>((set, get) => ({
     set({ soundEnabled: nextVal });
   },
 
-  clearAll: () => set({ toasts: [], unreadCount: 0 })
+  clearAll: () => {
+    clearAllFloatingTimers();
+    set({ toasts: [], unreadCount: 0 });
+  }
 }));
 
 export default useNotificationsStore;

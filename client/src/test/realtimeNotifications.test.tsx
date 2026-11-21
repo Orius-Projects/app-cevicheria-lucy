@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
+import { render, screen, fireEvent, act, waitFor, cleanup } from '@testing-library/react';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ToastContainer } from '../components/notifications/ToastContainer';
 import { NotificationCenter } from '../components/notifications/NotificationCenter';
 import { useNotificationsStore } from '../stores/notificationsStore';
@@ -9,6 +10,10 @@ describe('Realtime Notifications (Spec 005 UI)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     useNotificationsStore.getState().clearAll();
+  });
+
+  afterEach(() => {
+    cleanup();
   });
 
   it('order:ready displays visual toast and updates badge counter', async () => {
@@ -143,5 +148,66 @@ describe('Realtime Notifications (Spec 005 UI)', () => {
     });
 
     expect(screen.queryByTestId('notification-badge')).toBeNull();
+  });
+
+  it('automatically hides floating toast after 5 seconds and does not reappear on remount/navigation, while keeping it in NotificationCenter', () => {
+    vi.useFakeTimers();
+    try {
+      const { unmount } = render(<ToastContainer />);
+
+      act(() => {
+        useNotificationsStore.getState().push({
+          eventId: 'evt-auto-hide',
+          type: 'order:ready',
+          message: '¡Pedido #105 para Mesa M-05 está LISTO para recoger!',
+          tableCode: 'M-05',
+          playSound: false
+        });
+      });
+
+      expect(
+        screen.queryByText(/¡Pedido #105 para Mesa M-05 está LISTO para recoger!/i)
+      ).not.toBeNull();
+
+      // Simular cambio de vista a los 2 segundos (desmonta y vuelve a montar ToastContainer)
+      act(() => {
+        vi.advanceTimersByTime(2000);
+      });
+      unmount();
+      const { unmount: unmount2 } = render(<ToastContainer />);
+
+      // Aún quedan 3 segundos, sigue visible
+      expect(
+        screen.queryByText(/¡Pedido #105 para Mesa M-05 está LISTO para recoger!/i)
+      ).not.toBeNull();
+
+      // Avanzar los 3 segundos restantes para completar los 5 segundos
+      act(() => {
+        vi.advanceTimersByTime(3000);
+      });
+
+      // Ya desapareció el toast flotante
+      expect(
+        screen.queryByText(/¡Pedido #105 para Mesa M-05 está LISTO para recoger!/i)
+      ).toBeNull();
+
+      // Si cambia a otra vista del mesero (remount), NO debe volver a aparecer el toast flotante
+      unmount2();
+      render(
+        <div>
+          <NotificationCenter />
+          <ToastContainer />
+        </div>
+      );
+
+      expect(
+        screen.queryByText(/¡Pedido #105 para Mesa M-05 está LISTO para recoger!/i)
+      ).toBeNull();
+
+      // Pero el aviso sigue disponible en la campanita (badge = 1)
+      expect(screen.getByTestId('notification-badge')).toHaveTextContent('1');
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

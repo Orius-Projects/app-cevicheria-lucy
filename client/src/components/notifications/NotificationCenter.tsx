@@ -181,16 +181,28 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
                   }`}
                 >
                   <div className="flex items-start space-x-2.5">
-                    <span className="text-base mt-0.5">
-                      {toast.type === 'order:ready'
-                        ? '🔔'
-                        : toast.type === 'shift:closed'
-                        ? '🔒'
-                        : 'ℹ️'}
+                    <span className="mt-0.5 text-emerald-600 shrink-0">
+                      {toast.type === 'order:ready' ? (
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg>
+                      ) : toast.type === 'shift:closed' ? (
+                        <svg className="w-4 h-4 text-rose-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="12" y1="16" x2="12" y2="12" />
+                          <line x1="12" y1="8" x2="12.01" y2="8" />
+                        </svg>
+                      )}
                     </span>
                     <div className="space-y-0.5">
                       <p
-                        className={`font-bold ${
+                        className={`font-normal ${
                           variant === 'light' ? 'text-slate-800' : 'text-slate-200'
                         }`}
                       >
