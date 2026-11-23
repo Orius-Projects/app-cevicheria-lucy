@@ -7,8 +7,8 @@ interface ConnectionBannerProps {
 }
 
 /**
- * Banner visible cuando la conexión de sincronización instantánea no está activa.
- * Notifica al usuario que el sistema sigue operando mediante el mecanismo de respaldo REST.
+ * Banner superior visible cuando la sincronización en vivo WebSocket no está activa.
+ * Sigue rigurosamente la Sección 15 del Design System de Cevichería Lucy.
  */
 export const ConnectionBanner: React.FC<ConnectionBannerProps> = ({
   className = '',
@@ -26,18 +26,46 @@ export const ConnectionBanner: React.FC<ConnectionBannerProps> = ({
     <div
       role="alert"
       aria-live="polite"
-      className={`px-4 py-2.5 flex flex-wrap justify-between items-center gap-2 border-b text-xs font-bold transition-colors ${
+      className={`px-4 py-2.5 flex flex-wrap justify-between items-center gap-3 border-b text-xs font-semibold transition-colors ${
         isConnecting
-          ? 'bg-amber-950/90 border-amber-700/80 text-amber-200'
-          : 'bg-rose-950/95 border-rose-700/80 text-rose-200'
+          ? 'bg-amber-50 border-amber-200 text-amber-900'
+          : 'bg-rose-50 border-rose-200 text-rose-900'
       } ${className}`}
     >
-      <div className="flex items-center space-x-2">
-        <span className="text-base">{isConnecting ? '⏳' : '⚠️'}</span>
+      <div className="flex items-center space-x-2.5">
+        {isConnecting ? (
+          <svg
+            className="w-4 h-4 animate-spin text-amber-700 shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+          </svg>
+        ) : (
+          <svg
+            className="w-4 h-4 text-rose-700 shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+        )}
         <span>
           {isConnecting
             ? 'Reconectando con el servidor...'
-            : 'Sin conexión en vivo: los datos se actualizan por REST.'}
+            : 'Sin conexión con el servidor: los datos se sincronizan por respaldo REST.'}
         </span>
       </div>
 
@@ -45,9 +73,9 @@ export const ConnectionBanner: React.FC<ConnectionBannerProps> = ({
         <button
           type="button"
           onClick={onRetry}
-          className="px-3 py-1 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-semibold min-h-[44px] transition-all"
+          className="px-3.5 py-1.5 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs font-bold min-h-[44px] transition-all border border-slate-300 shadow-xs active:scale-95"
         >
-          Reintentar
+          Reintentar conexión
         </button>
       )}
     </div>

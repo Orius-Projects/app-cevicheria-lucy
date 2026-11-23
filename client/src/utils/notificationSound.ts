@@ -1,3 +1,5 @@
+import { triggerOrderReadyVibration } from './haptics';
+
 const SOUND_STORAGE_KEY = 'cevicheria_sound_enabled';
 
 /**
@@ -31,6 +33,9 @@ export function setSoundEnabled(enabled: boolean): void {
  * captura el error silenciosamente (solo debug log) para no interrumpir el flujo visual.
  */
 export function playReadySound(): void {
+  // Siempre dispara el feedback háptico en móviles compatibles
+  triggerOrderReadyVibration();
+
   if (typeof window === 'undefined') return;
   if (!isSoundEnabled()) return;
 
