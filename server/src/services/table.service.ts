@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Table, TableSession, Order } from '../models';
 import { AuthUserPayload } from '../middlewares/auth';
-import { ConflictError, NotFoundError } from '../middlewares/error';
+import { ConflictError, NotFoundError, ValidationError } from '../middlewares/error';
 import { TableStatus } from '@cevicheria/shared';
 
 export interface TableItemResponse {
@@ -226,3 +226,79 @@ export async function closeTableSession(
 
   return session;
 }
+
+export interface CreateTableInput {
+  code: string;
+  zone?: string;
+  seats?: number;
+  active?: boolean;
+}
+
+export interface UpdateTableInput {
+  code?: string;
+  zone?: string;
+  seats?: number;
+  active?: boolean;
+}
+
+export async function createTable(data: CreateTableInput): Promise<TableItemResponse> {
+  const code = (data.code || '').trim().toUpperCase();
+  if (!code) {
+    throw new ValidationError('El código de la mesa es requerido');
+  }
+
+  const existing = await Table.findOne({ code });
+  if (existing) {
+    throw new ConflictError(`Ya existe una mesa registrada con el código ${code}`, 'TABLE_CODE_EXISTS');
+  }
+
+  const newTable = await Table.create({
+    code,
+    zone: data.zone?.trim() || 'Primer Piso',
+    seats: data.seats && data.seats > 0 ? data.seats : 4,
+    active: data.active !== undefined ? data.active : true
+  });
+
+  return {
+    id: newTable._id.toString(),
+    code: newTable.code,
+    zone: newTable.zone,
+    seats: newTable.seats,
+    state: 'LIBRE',
+    openSessionId: null
+  };
+}
+
+export async function updateTable(id: string, data: UpdateTableInput): Promise<TableItemResponse> {
+  const table = await Table.findById(id);
+  if (!table) {
+    throw new NotFoundError('Mesa no encontrada');
+  }
+
+  if (data.code && data.code.trim().toUpperCase() !== table.code) {
+    const code = data.code.trim().toUpperCase();
+    const existing = await Table.findOne({ code, _id: { $ne: table._id } });
+    if (existing) {
+      throw new ConflictError(`Ya existe otra mesa con el código ${code}`, 'TABLE_CODE_EXISTS');
+    }
+    table.code = code;
+  }
+
+  if (data.zone !== undefined) table.zone = data.zone.trim();
+  if (data.seats !== undefined && data.seats > 0) table.seats = data.seats;
+  if (data.active !== undefined) table.active = data.active;
+
+  await table.save();
+
+  const { state, openSession } = await getDerivedTableState(table._id as mongoose.Types.ObjectId);
+
+  return {
+    id: table._id.toString(),
+    code: table.code,
+    zone: table.zone,
+    seats: table.seats,
+    state,
+    openSessionId: openSession ? openSession._id.toString() : null
+  };
+}
+

@@ -6,7 +6,7 @@ import { useRealtimeStore } from '../../../stores/realtimeStore';
 
 describe('ConnectionBanner Component (Design System Section 15)', () => {
   beforeEach(() => {
-    useRealtimeStore.setState({ status: 'connected', isConnected: true });
+    useRealtimeStore.setState({ status: 'connected' });
   });
 
   it('no renderiza nada cuando status es connected', () => {
@@ -15,7 +15,7 @@ describe('ConnectionBanner Component (Design System Section 15)', () => {
   });
 
   it('renderiza banner ámbar con texto de reconexión cuando status es connecting', () => {
-    useRealtimeStore.setState({ status: 'connecting', isConnected: false });
+    useRealtimeStore.setState({ status: 'connecting' });
     render(<ConnectionBanner />);
 
     expect(screen.getByText('Reconectando con el servidor...')).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe('ConnectionBanner Component (Design System Section 15)', () => {
 
   it('renderiza banner de error con botón de reintento cuando status es disconnected', () => {
     const handleRetry = vi.fn();
-    useRealtimeStore.setState({ status: 'disconnected', isConnected: false });
+    useRealtimeStore.setState({ status: 'disconnected' });
     render(<ConnectionBanner onRetry={handleRetry} />);
 
     expect(screen.getByText(/Sin conexión con el servidor/i)).toBeInTheDocument();

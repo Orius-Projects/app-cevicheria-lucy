@@ -169,4 +169,48 @@ describe('orderDraftStore', () => {
     expect(state.notes).toBe('');
     expect(state.clientRequestId).not.toBe(initialRequestId);
   });
+
+  it('maintains independent drafts for different tables without bleeding data', () => {
+    // 1. Tomar pedido para Mesa 1
+    useOrderDraftStore.getState().setTable('tbl-1', 'M-01');
+    useOrderDraftStore.getState().addItem({
+      dishId: 'dish-ceviche',
+      dishName: 'Ceviche Clásico',
+      priceCents: 3500,
+      quantity: 2
+    });
+    useOrderDraftStore.getState().setGeneralNotes('Mesa 1: sin cebolla');
+
+    expect(useOrderDraftStore.getState().itemCount()).toBe(2);
+    expect(useOrderDraftStore.getState().getTableDraftItemCount('tbl-1')).toBe(2);
+
+    // 2. Cambiar a Mesa 2: debe comenzar limpia sin los platos de la Mesa 1
+    useOrderDraftStore.getState().setTable('tbl-2', 'M-02');
+    expect(useOrderDraftStore.getState().items).toHaveLength(0);
+    expect(useOrderDraftStore.getState().notes).toBe('');
+    expect(useOrderDraftStore.getState().totalCents()).toBe(0);
+
+    // 3. Agregar platos a Mesa 2
+    useOrderDraftStore.getState().addItem({
+      dishId: 'dish-chaufa',
+      dishName: 'Chaufa de mariscos',
+      priceCents: 3200,
+      quantity: 1
+    });
+    expect(useOrderDraftStore.getState().itemCount()).toBe(1);
+    expect(useOrderDraftStore.getState().getTableDraftItemCount('tbl-2')).toBe(1);
+
+    // 4. Regresar a Mesa 1: debe conservar sus 2 ceviches y su nota intactos
+    useOrderDraftStore.getState().setTable('tbl-1', 'M-01');
+    expect(useOrderDraftStore.getState().items).toHaveLength(1);
+    expect(useOrderDraftStore.getState().items[0].dishName).toBe('Ceviche Clásico');
+    expect(useOrderDraftStore.getState().items[0].quantity).toBe(2);
+    expect(useOrderDraftStore.getState().notes).toBe('Mesa 1: sin cebolla');
+
+    // 5. Limpiar solo Mesa 2
+    useOrderDraftStore.getState().clearDraftForTable('tbl-2');
+    expect(useOrderDraftStore.getState().getTableDraftItemCount('tbl-2')).toBe(0);
+    // Mesa 1 sigue activa con su borrador
+    expect(useOrderDraftStore.getState().getTableDraftItemCount('tbl-1')).toBe(2);
+  });
 });

@@ -10,6 +10,7 @@ import { KitchenPage } from '../pages/kitchen/KitchenPage';
 import { AdminPage } from '../pages/admin/AdminPage';
 import { DishesPage } from '../pages/encargado/DishesPage';
 import { DishManagementPage } from '../pages/encargado/DishManagementPage';
+import { TablesManagementPage } from '../pages/encargado/TablesManagementPage';
 import { ShiftClosePage } from '../pages/encargado/ShiftClosePage';
 import { MenuView } from '../pages/shared/MenuView';
 import { ProtectedRoute } from './ProtectedRoute';
@@ -110,6 +111,16 @@ export const AppRoutes: React.FC = () => {
             <ProtectedRoute>
               <RoleGuard allowedRoles={['ENCARGADO']}>
                 <DishManagementPage />
+              </RoleGuard>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/encargado/mesas"
+          element={
+            <ProtectedRoute>
+              <RoleGuard allowedRoles={['ENCARGADO']}>
+                <TablesManagementPage />
               </RoleGuard>
             </ProtectedRoute>
           }

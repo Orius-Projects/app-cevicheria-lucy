@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useAuthStore } from '../stores/authStore';
 import { AdminNavigation } from '../components/menu/AdminNavigation';
 import { UserMenuDropdown } from '../components/common/UserMenuDropdown';
+import { NotificationCenter } from '../components/notifications/NotificationCenter';
+import { HelpModal } from '../components/common/HelpModal';
 
 export interface AdminLayoutProps {
   children: React.ReactNode;
@@ -18,6 +20,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 }) => {
   const { user } = useAuthStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
 
   // La marca se muestra completa en móvil; el sufijo de sección pasa a subtítulo.
   const [brandTitle, ...titleRest] = title.split('—');
@@ -158,31 +161,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           {/* Top Right Action Icons + User Avatar Dropdown */}
           <div className="flex items-center gap-1 sm:gap-2 shrink-0">
             {/* 1. Notifications Bell */}
-            <button
-              type="button"
-              className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
-              aria-label="Notificaciones"
-              title="Notificaciones"
-            >
-              <svg
-                className="w-5 h-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-              </svg>
-            </button>
+            <NotificationCenter variant="light" />
 
             {/* 2. Help / Question Mark */}
             <button
               type="button"
-              className="hidden sm:flex p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors min-h-[44px] min-w-[44px] items-center justify-center"
+              onClick={() => setIsHelpOpen(true)}
+              className="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
               aria-label="Ayuda"
               title="Ayuda"
             >
@@ -212,6 +197,12 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           {children}
         </main>
       </div>
+
+      <HelpModal
+        isOpen={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
+        initialRole="ENCARGADO"
+      />
     </div>
   );
 };

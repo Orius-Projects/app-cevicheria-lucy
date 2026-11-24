@@ -40,7 +40,7 @@ describe('AdminLayout Component', () => {
     expect(screen.queryByText('Raciones y Agotados')).not.toBeInTheDocument();
 
     // Top action buttons (gear icon removed as it is redundant)
-    expect(screen.getByLabelText('Notificaciones')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Notificaciones/i)).toBeInTheDocument();
     expect(screen.getByLabelText('Ayuda')).toBeInTheDocument();
     expect(screen.queryByLabelText('Configuración')).not.toBeInTheDocument();
     expect(screen.getByLabelText('Menú de usuario')).toBeInTheDocument();

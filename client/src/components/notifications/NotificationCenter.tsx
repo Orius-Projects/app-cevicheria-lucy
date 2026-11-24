@@ -55,10 +55,10 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
         onClick={handleToggleOpen}
         aria-label="Avisos y notificaciones"
         aria-expanded={isOpen}
-        className={`relative transition-all active:scale-95 flex items-center justify-center cursor-pointer ${
+        className={`relative transition-all active:scale-95 flex items-center justify-center cursor-pointer min-w-[44px] min-h-[44px] ${
           variant === 'light'
-            ? 'p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full min-w-[44px] min-h-[44px]'
-            : 'p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 min-w-[44px] min-h-[44px]'
+            ? 'p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full'
+            : 'p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700'
         }`}
       >
         <svg
@@ -89,36 +89,16 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
         <div
           role="dialog"
           aria-label="Panel de avisos"
-          className={`absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl shadow-2xl z-50 overflow-hidden font-sans flex flex-col max-h-[80vh] ${
-            variant === 'light'
-              ? 'bg-white border border-slate-200 text-slate-800'
-              : 'bg-slate-900 border border-slate-800 text-slate-100'
-          }`}
+          className="fixed inset-x-3 top-16 sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:mt-2 w-auto sm:w-80 md:w-96 rounded-2xl shadow-2xl z-50 overflow-hidden font-sans flex flex-col max-h-[80vh] bg-white dark:bg-marine-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 animate-in fade-in"
         >
           {/* Cabecera del panel */}
-          <div
-            className={`p-3.5 border-b flex justify-between items-center ${
-              variant === 'light'
-                ? 'bg-slate-50 border-slate-100'
-                : 'bg-slate-950/60 border-slate-800'
-            }`}
-          >
+          <div className="p-3.5 border-b border-slate-100 dark:border-slate-700/80 flex justify-between items-center bg-slate-50 dark:bg-marine-900/60">
             <div className="flex items-center space-x-2">
-              <span
-                className={`font-black text-sm ${
-                  variant === 'light' ? 'text-slate-900' : 'text-white'
-                }`}
-              >
+              <span className="font-black text-sm text-slate-900 dark:text-white">
                 Avisos Recientes
               </span>
               {unreadCount > 0 && (
-                <span
-                  className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                    variant === 'light'
-                      ? 'bg-rose-100 text-rose-800 border-rose-200'
-                      : 'bg-rose-950 text-rose-300 border-rose-800'
-                  }`}
-                >
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 border-rose-200 dark:border-rose-800">
                   {unreadCount} sin leer
                 </span>
               )}
@@ -130,11 +110,7 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
                   type="button"
                   onClick={toggleSound}
                   title={soundEnabled ? 'Silenciar sonido' : 'Activar sonido'}
-                  className={`px-2.5 py-1 text-[11px] font-bold rounded-lg border min-h-[44px] ${
-                    variant === 'light'
-                      ? 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
-                      : 'border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300'
-                  }`}
+                  className="px-2.5 py-1 text-[11px] font-bold rounded-lg border min-h-[44px] flex items-center border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 cursor-pointer"
                 >
                   {soundEnabled ? '🔊 Sonido ON' : '🔇 Silenciado'}
                 </button>
@@ -144,26 +120,27 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
                 <button
                   type="button"
                   onClick={markAllRead}
-                  className="px-2.5 py-1 text-[11px] font-semibold text-brand-700 hover:text-brand-800 rounded min-h-[44px]"
+                  className="px-2.5 py-1 text-[11px] font-semibold text-brand-700 dark:text-brand-400 hover:underline rounded min-h-[44px] flex items-center cursor-pointer"
                 >
                   Marcar leídos
                 </button>
               )}
+
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-bold text-lg min-h-[44px] min-w-[32px] flex items-center justify-center sm:hidden"
+                aria-label="Cerrar panel de avisos"
+              >
+                ×
+              </button>
             </div>
           </div>
 
           {/* Lista de Notificaciones */}
-          <div
-            className={`overflow-y-auto flex-1 divide-y max-h-96 ${
-              variant === 'light' ? 'divide-slate-100' : 'divide-slate-800/80'
-            }`}
-          >
+          <div className="overflow-y-auto flex-1 divide-y divide-slate-100 dark:divide-slate-700/60 max-h-96">
             {toasts.length === 0 ? (
-              <div
-                className={`p-6 text-center text-xs ${
-                  variant === 'light' ? 'text-slate-400' : 'text-slate-500'
-                }`}
-              >
+              <div className="p-6 text-center text-xs text-slate-400 dark:text-slate-500">
                 No hay avisos recientes.
               </div>
             ) : (
@@ -171,13 +148,9 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
                 <div
                   key={toast.id}
                   className={`p-3 text-xs flex items-start justify-between gap-2.5 transition-colors ${
-                    variant === 'light'
-                      ? toast.read
-                        ? 'bg-slate-50/50 opacity-75'
-                        : 'bg-white hover:bg-slate-50'
-                      : toast.read
-                      ? 'bg-slate-900/40 opacity-75'
-                      : 'bg-slate-800/50'
+                    toast.read
+                      ? 'bg-slate-50/50 dark:bg-marine-900/30 opacity-75'
+                      : 'bg-white dark:bg-marine-800 hover:bg-slate-50 dark:hover:bg-marine-900/50'
                   }`}
                 >
                   <div className="flex items-start space-x-2.5">
@@ -193,7 +166,7 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
                           <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                         </svg>
                       ) : (
-                        <svg className="w-4 h-4 text-brand-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <svg className="w-4 h-4 text-brand-700 dark:text-brand-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                           <circle cx="12" cy="12" r="10" />
                           <line x1="12" y1="16" x2="12" y2="12" />
                           <line x1="12" y1="8" x2="12.01" y2="8" />
@@ -201,18 +174,10 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
                       )}
                     </span>
                     <div className="space-y-0.5">
-                      <p
-                        className={`font-normal ${
-                          variant === 'light' ? 'text-slate-800' : 'text-slate-200'
-                        }`}
-                      >
+                      <p className="font-normal text-slate-800 dark:text-slate-200">
                         {toast.message}
                       </p>
-                      <span
-                        className={`text-[10px] block ${
-                          variant === 'light' ? 'text-slate-400' : 'text-slate-400'
-                        }`}
-                      >
+                      <span className="text-[10px] block text-slate-400 dark:text-slate-500">
                         {formatLimaTime(toast.createdAt)}
                       </span>
                     </div>
@@ -222,7 +187,7 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({
                     type="button"
                     onClick={() => dismiss(toast.id)}
                     aria-label="Eliminar aviso"
-                    className="text-slate-400 hover:text-slate-600 p-1 min-h-[44px] min-w-[44px] flex items-center justify-center font-bold"
+                    className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 min-h-[44px] min-w-[44px] flex items-center justify-center font-bold cursor-pointer"
                   >
                     ×
                   </button>

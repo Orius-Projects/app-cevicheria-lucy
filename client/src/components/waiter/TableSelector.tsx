@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useTablesStore, TableItem } from '../../stores/tablesStore';
+import { useOrderDraftStore } from '../../stores/orderDraftStore';
 import { TableStatus } from '@cevicheria/shared';
 
 interface TableSelectorProps {
@@ -247,7 +248,32 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
   selectedTableId
 }) => {
   const { tables, isLoading, error, fetchTables, selectTable } = useTablesStore();
+  const { getTableDraftItemCount } = useOrderDraftStore();
   const [activeZone, setActiveZone] = useState<ZoneKey>('TODOS');
+
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const isMouseDownRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollLeftRef = useRef(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!tabsRef.current) return;
+    isMouseDownRef.current = true;
+    startXRef.current = e.pageX - tabsRef.current.offsetLeft;
+    scrollLeftRef.current = tabsRef.current.scrollLeft;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isMouseDownRef.current || !tabsRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - tabsRef.current.offsetLeft;
+    const walk = (x - startXRef.current) * 1.5;
+    tabsRef.current.scrollLeft = scrollLeftRef.current - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    isMouseDownRef.current = false;
+  };
 
   const safeTables = Array.isArray(tables) ? tables : [];
 
@@ -310,6 +336,7 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
     const config = statusColors[stateKey] || statusColors.LIBRE;
     const isSelected = selectedTableId === table.id;
     const isOccupied = stateKey !== 'LIBRE';
+    const draftCount = getTableDraftItemCount(table.id);
 
     return (
       <button
@@ -330,18 +357,25 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
                 <TableIcon className="w-5 h-5 text-emerald-600" />
               )}
             </div>
-            <span className="text-lg font-normal text-slate-800 tracking-tight leading-none block">
+            <span className="text-lg font-bold text-slate-800 tracking-tight leading-none block">
               {table.code}
             </span>
           </div>
 
-          {/* Badge de estado */}
-          <span
-            className={`text-xs px-2.5 py-0.5 rounded-full font-normal border flex items-center gap-1 shrink-0 ${config.bg} ${config.text} ${config.border}`}
-          >
-            {isOccupied && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />}
-            {config.label}
-          </span>
+          {/* Badges: Borrador pendiente + Estado operativo */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            {draftCount > 0 && (
+              <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-brand-100 text-brand-900 border border-brand-300">
+                📝 {draftCount}
+              </span>
+            )}
+            <span
+              className={`text-xs px-2.5 py-0.5 rounded-full font-normal border flex items-center gap-1 shrink-0 ${config.bg} ${config.text} ${config.border}`}
+            >
+              {isOccupied && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />}
+              {config.label}
+            </span>
+          </div>
         </div>
       </button>
     );
@@ -380,11 +414,16 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
     <div className="space-y-4">
       {/* Selector Interactivo de Ambientes / Pisos */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        {/* Pestañas de filtrado interactivo */}
+        {/* Pestañas de filtrado interactivo con soporte swipe / drag */}
         <div
+          ref={tabsRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUpOrLeave}
+          onMouseLeave={handleMouseUpOrLeave}
           role="tablist"
           aria-label="Filtrar por ambientes"
-          className="flex items-center gap-1.5 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/80 overflow-x-auto max-w-full min-w-0 scrollbar-none snap-x"
+          className="flex items-center gap-1.5 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/80 overflow-x-auto max-w-full min-w-0 scrollbar-none snap-x cursor-grab active:cursor-grabbing select-none"
         >
           {ZONES.map((zone) => {
             const isActive = activeZone === zone.key;

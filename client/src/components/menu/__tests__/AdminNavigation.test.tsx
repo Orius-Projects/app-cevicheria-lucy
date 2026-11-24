@@ -9,7 +9,7 @@ import { AdminNavigation } from '../AdminNavigation';
 afterEach(cleanup);
 
 describe('AdminNavigation Component', () => {
-  it('renders the three main navigation options with their labels and icons', () => {
+  it('renders the navigation options with their labels and icons', () => {
     render(
       <MemoryRouter initialEntries={['/encargado']}>
         <AdminNavigation />
@@ -17,6 +17,7 @@ describe('AdminNavigation Component', () => {
     );
 
     expect(screen.getByText('Platos y raciones')).toBeInTheDocument();
+    expect(screen.getByText('Mesas')).toBeInTheDocument();
     expect(screen.getByText('Turno')).toBeInTheDocument();
     expect(screen.getByText('Cierre de turno')).toBeInTheDocument();
 
@@ -25,7 +26,7 @@ describe('AdminNavigation Component', () => {
     expect(screen.queryByText('Raciones y Agotados')).not.toBeInTheDocument();
 
     const links = screen.getAllByRole('link');
-    expect(links).toHaveLength(3);
+    expect(links).toHaveLength(4);
 
     // Each link must have an SVG icon
     links.forEach((link) => {
@@ -44,6 +45,10 @@ describe('AdminNavigation Component', () => {
     expect(screen.getByRole('link', { name: /Platos y raciones/i })).toHaveAttribute(
       'href',
       '/encargado'
+    );
+    expect(screen.getByRole('link', { name: /Mesas/i })).toHaveAttribute(
+      'href',
+      '/encargado/mesas'
     );
     expect(screen.getByRole('link', { name: /^Turno$/i })).toHaveAttribute(
       'href',

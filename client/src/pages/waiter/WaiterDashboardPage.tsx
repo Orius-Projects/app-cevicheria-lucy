@@ -14,6 +14,7 @@ import { ShiftClosedView } from '../../components/common/ShiftClosedView';
 import { UserMenuDropdown } from '../../components/common/UserMenuDropdown';
 import { NotificationCenter } from '../../components/notifications/NotificationCenter';
 import { ToastContainer } from '../../components/notifications/ToastContainer';
+import { HelpModal } from '../../components/common/HelpModal';
 import { OrderDTO } from '@cevicheria/shared';
 
 export const WaiterDashboardPage: React.FC = () => {
@@ -30,6 +31,7 @@ export const WaiterDashboardPage: React.FC = () => {
   const [closeNotes, setCloseNotes] = useState('');
   const [isClosingTable, setIsClosingTable] = useState(false);
   const [tableActionError, setTableActionError] = useState<string | null>(null);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
 
   const [deliveringId, setDeliveringId] = useState<string | null>(null);
   const [cancellingOrder, setCancellingOrder] = useState<OrderDTO | null>(null);
@@ -169,7 +171,8 @@ export const WaiterDashboardPage: React.FC = () => {
           {/* Ayuda */}
           <button
             type="button"
-            className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+            onClick={() => setIsHelpOpen(true)}
+            className="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
             aria-label="Ayuda"
             title="Ayuda"
           >
@@ -417,6 +420,12 @@ export const WaiterDashboardPage: React.FC = () => {
 
       {/* Contenedor de Toasts con aria-live */}
       <ToastContainer />
+
+      <HelpModal
+        isOpen={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
+        initialRole="MOZO"
+      />
     </div>
   );
 };

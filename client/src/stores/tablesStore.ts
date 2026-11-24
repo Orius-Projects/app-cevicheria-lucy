@@ -7,6 +7,7 @@ export interface TableItem {
   code: string;
   zone?: string;
   seats?: number;
+  active?: boolean;
   state: TableStatus;
   openSessionId: string | null;
 }
@@ -17,6 +18,8 @@ interface TablesState {
   isLoading: boolean;
   error: string | null;
   fetchTables: () => Promise<void>;
+  createTable: (payload: { code: string; zone?: string; seats?: number; active?: boolean }) => Promise<TableItem>;
+  updateTable: (id: string, payload: { code?: string; zone?: string; seats?: number; active?: boolean }) => Promise<TableItem>;
   selectTable: (table: TableItem | null) => void;
   closeSession: (sessionId: string, notes?: string) => Promise<void>;
   clearError: () => void;
@@ -41,6 +44,36 @@ export const useTablesStore = create<TablesState>((set, get) => ({
       const message =
         err.response?.data?.error?.message || 'Error al obtener la lista de mesas';
       set({ isLoading: false, error: message });
+    }
+  },
+
+  createTable: async (payload) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await apiClient.post('/tables', payload);
+      await get().fetchTables();
+      set({ isLoading: false });
+      return response.data;
+    } catch (err: any) {
+      const message =
+        err.response?.data?.error?.message || 'Error al crear la mesa';
+      set({ isLoading: false, error: message });
+      throw new Error(message);
+    }
+  },
+
+  updateTable: async (id, payload) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await apiClient.patch(`/tables/${id}`, payload);
+      await get().fetchTables();
+      set({ isLoading: false });
+      return response.data;
+    } catch (err: any) {
+      const message =
+        err.response?.data?.error?.message || 'Error al actualizar la mesa';
+      set({ isLoading: false, error: message });
+      throw new Error(message);
     }
   },
 

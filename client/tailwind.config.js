@@ -4,23 +4,30 @@ export default {
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}'
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        // Escala celeste oficial. Anclas: 100 #b6ffff, 200 #7cdaf9, 500 #0cb7f2.
-        // Documento canónico: specs-cevicheria-lucy/docs/design-system.md
+        // Paleta marina vibrante: turquesas oceánicos, profundidades marinas y azul marino
         brand: {
-          50: '#eefcff',
-          100: '#b6ffff',
-          200: '#7cdaf9',
-          300: '#4ed0f7',
-          400: '#25c5f5',
-          500: '#0cb7f2',
-          600: '#0891c4',
-          700: '#077093',
-          800: '#0a5874',
-          900: '#0b475d',
-          950: '#052e3d'
+          50: '#ecfeff',
+          100: '#cffafe',
+          200: '#a5f3fc',
+          300: '#67e8f9',
+          400: '#22d3ee',
+          500: '#06b6d4',
+          600: '#0891b2',
+          700: '#0e7490',
+          800: '#155e75',
+          900: '#164e63',
+          950: '#082f49'
+        },
+        marine: {
+          700: '#132a48',
+          800: '#0b192c',
+          850: '#081524',
+          900: '#06101e',
+          950: '#030811'
         }
       }
     }

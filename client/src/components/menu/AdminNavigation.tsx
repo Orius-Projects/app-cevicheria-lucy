@@ -95,6 +95,25 @@ export const ShiftCloseIcon: React.FC<{ className?: string }> = ({ className = '
   </svg>
 );
 
+export const TableManagementIcon: React.FC<{ className?: string }> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <rect x="4" y="7" width="16" height="4" rx="1.5" />
+    <path d="M7 11v8" />
+    <path d="M17 11v8" />
+    <path d="M3 10V6a1 1 0 0 1 1-1h1" />
+    <path d="M21 10V6a1 1 0 0 0-1-1h-1" />
+  </svg>
+);
+
 export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
   {
     to: '/encargado',
@@ -102,6 +121,12 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     exact: true,
     icon: DailyMenuIcon,
     description: 'Menú del día, disponibilidad y raciones'
+  },
+  {
+    to: '/encargado/mesas',
+    label: 'Mesas',
+    icon: TableManagementIcon,
+    description: 'Gestión y adición de mesas y ambientes'
   },
   {
     to: '/encargado/turnos',

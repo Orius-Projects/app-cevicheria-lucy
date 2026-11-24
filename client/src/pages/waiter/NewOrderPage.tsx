@@ -14,9 +14,11 @@ import { VariationSheet } from '../../components/mozo/VariationSheet';
 import { ConnectionBanner } from '../../components/common/ConnectionBanner';
 import { ShiftClosedView } from '../../components/common/ShiftClosedView';
 import { UserMenuDropdown } from '../../components/common/UserMenuDropdown';
+import { HelpModal } from '../../components/common/HelpModal';
 import { NotificationCenter } from '../../components/notifications/NotificationCenter';
 import { ToastContainer } from '../../components/notifications/ToastContainer';
 import { useOrderEvents } from '../../hooks/useOrderEvents';
+import { formatSoles } from '../../utils/money';
 import { OrderDTO, DishStatus, DishVariation } from '@cevicheria/shared';
 import { TodayMenuItem } from '../../api/menu.api';
 
@@ -38,7 +40,9 @@ export const NewOrderPage: React.FC = () => {
     setTable,
     addItem,
     clearDraft,
-    syncWithMenu
+    syncWithMenu,
+    totalCents,
+    itemCount
   } = useOrderDraftStore();
 
   const [activeSectionKey, setActiveSectionKey] = useState<string>('ALL');
@@ -49,6 +53,8 @@ export const NewOrderPage: React.FC = () => {
 
   // Estados para modal de confirmación y envío
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [createdOrder, setCreatedOrder] = useState<OrderDTO | null>(null);
@@ -234,12 +240,37 @@ export const NewOrderPage: React.FC = () => {
           </button>
 
           <NotificationCenter variant="light" />
+
+          {/* Ayuda */}
+          <button
+            type="button"
+            onClick={() => setIsHelpOpen(true)}
+            className="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+            aria-label="Ayuda"
+            title="Ayuda"
+          >
+            <svg
+              className="w-5 h-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </button>
+
           <UserMenuDropdown />
         </div>
       </header>
 
       {/* Main Container: 2 columnas en Desktop (Carta a la izq, Carrito a la der) */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 pb-28 lg:pb-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {!isShiftOpen ? (
           <div className="lg:col-span-12">
             <ShiftClosedView
@@ -304,8 +335,8 @@ export const NewOrderPage: React.FC = () => {
               )}
             </div>
 
-            {/* Columna Derecha: Carrito / Comanda actual (4 cols) */}
-            <div className="lg:col-span-5 xl:col-span-4 sticky top-20">
+            {/* Columna Derecha: Carrito / Comanda actual (4 cols en Desktop) */}
+            <div className="hidden lg:block lg:col-span-5 xl:col-span-4 sticky top-20">
               <OrderCart
                 onConfirmOrder={handleConfirmOrder}
                 isSubmitting={isSubmitting}
@@ -314,6 +345,67 @@ export const NewOrderPage: React.FC = () => {
           </>
         )}
       </main>
+
+      {/* Barra Flotante Inferior en Móviles cuando hay ítems seleccionados */}
+      {isShiftOpen && items.length > 0 && (
+        <div className="fixed bottom-0 inset-x-0 z-30 lg:hidden p-3 bg-white/95 dark:bg-marine-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 shadow-2xl flex items-center justify-between gap-3 animate-in slide-in-from-bottom duration-200">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-700 dark:text-brand-300 font-bold flex items-center justify-center text-lg shrink-0">
+              🛒
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">
+                {itemCount()} plato{itemCount() > 1 ? 's' : ''} • {tableCode ? `Mesa ${tableCode}` : 'Sin mesa'}
+              </p>
+              <p className="text-sm font-black text-brand-700 dark:text-brand-400">
+                {formatSoles(totalCents())}
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsMobileCartOpen(true)}
+            className="px-4 py-2.5 bg-brand-500 hover:bg-brand-400 text-brand-950 font-black rounded-xl text-xs flex items-center gap-1.5 shadow-md active:scale-95 transition-all min-h-[44px] shrink-0 cursor-pointer"
+          >
+            <span>Ver Comanda</span>
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="18 15 12 9 6 15" />
+            </svg>
+          </button>
+        </div>
+      )}
+
+      {/* Bottom Sheet Drawer para Comanda en Celulares */}
+      {isMobileCartOpen && (
+        <div className="fixed inset-0 z-50 flex flex-col justify-end bg-slate-900/60 backdrop-blur-xs lg:hidden animate-in fade-in">
+          <div className="bg-white dark:bg-marine-800 rounded-t-3xl max-h-[85vh] flex flex-col shadow-2xl border-t border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div className="w-12 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600 mx-auto mt-3 mb-1" />
+            <div className="flex justify-between items-center px-5 py-2 border-b border-slate-100 dark:border-slate-700/80">
+              <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base">
+                Comanda {tableCode ? `— Mesa ${tableCode}` : ''}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setIsMobileCartOpen(false)}
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-2xl font-bold min-h-[44px] min-w-[44px] flex items-center justify-center cursor-pointer"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="overflow-y-auto p-4 flex-1">
+              <OrderCart
+                onConfirmOrder={() => {
+                  setIsMobileCartOpen(false);
+                  handleConfirmOrder();
+                }}
+                isSubmitting={isSubmitting}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modal para selección de Variaciones */}
       {selectedDishForVariation && (
@@ -451,15 +543,23 @@ export const NewOrderPage: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <button
                 type="button"
-                onClick={() => setCreatedOrder(null)}
-                className="flex-1 py-3 border border-slate-300 text-slate-700 font-bold rounded-xl text-xs min-h-[44px] hover:bg-slate-50"
+                onClick={() => {
+                  setCreatedOrder(null);
+                  clearDraft();
+                  navigate('/mozo', { replace: true });
+                }}
+                className="flex-1 py-3 border border-slate-300 text-slate-700 font-bold rounded-xl text-xs min-h-[44px] hover:bg-slate-50 cursor-pointer"
               >
                 + Nueva Comanda
               </button>
               <button
                 type="button"
-                onClick={() => navigate('/mozo/pedidos')}
-                className="flex-1 py-3 bg-brand-500 hover:bg-brand-400 text-brand-950 font-bold rounded-xl text-xs min-h-[44px] shadow-sm"
+                onClick={() => {
+                  setCreatedOrder(null);
+                  clearDraft();
+                  navigate('/mozo/pedidos', { replace: true });
+                }}
+                className="flex-1 py-3 bg-brand-500 hover:bg-brand-400 text-brand-950 font-bold rounded-xl text-xs min-h-[44px] shadow-sm cursor-pointer"
               >
                 Ver Activos →
               </button>
@@ -470,6 +570,12 @@ export const NewOrderPage: React.FC = () => {
 
       {/* Contenedor de Toasts con aria-live */}
       <ToastContainer />
+
+      <HelpModal
+        isOpen={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
+        initialRole="MOZO"
+      />
     </div>
   );
 };

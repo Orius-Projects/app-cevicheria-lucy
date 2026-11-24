@@ -480,20 +480,20 @@ export const DishManagementPage: React.FC = () => {
                 </div>
 
                 {selectedDate === today && (
-                  <span className="inline-flex min-h-[28px] items-center rounded-lg border border-brand-200 bg-brand-50 px-2.5 py-1 text-xs font-bold text-brand-700">
+                  <span className="inline-flex h-8 items-center rounded-lg border border-brand-200 bg-brand-50 px-2.5 text-xs font-bold text-brand-700">
                     Hoy (Lima)
                   </span>
                 )}
 
                 <span
-                  className={`inline-flex min-h-[28px] items-center rounded-full border px-3 py-1 text-xs font-bold ${menuStatusClass}`}
+                  className={`inline-flex h-8 items-center rounded-full border px-3 text-xs font-bold ${menuStatusClass}`}
                 >
                   {menuStatusLabel}
                 </span>
 
                 <Link
                   to="/encargado/turnos"
-                  className={`inline-flex min-h-[32px] items-center rounded-full border px-3 py-1 text-xs font-bold transition-colors ${
+                  className={`inline-flex h-8 items-center rounded-full border px-3 text-xs font-bold transition-colors ${
                     isShiftOpen
                       ? 'border-emerald-300 bg-emerald-50 text-emerald-800 hover:bg-emerald-100'
                       : 'border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100'
@@ -606,17 +606,21 @@ export const DishManagementPage: React.FC = () => {
             </div>
 
             {groups.length === 0 ? (
-              <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-500">
-                No hay platos que coincidan con la búsqueda o la categoría seleccionada.
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-500 flex flex-col items-center justify-center gap-3">
+                <p>No hay platos que coincidan con la búsqueda o la categoría seleccionada.</p>
                 <button
                   type="button"
                   onClick={() => {
                     setSearchTerm('');
                     setActiveCategory('ALL');
                   }}
-                  className="mt-2 block w-full text-xs font-bold text-brand-700 underline sm:inline sm:w-auto"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-brand-700 bg-brand-50 border border-brand-200 hover:bg-brand-100 transition-colors shadow-xs cursor-pointer min-h-[44px]"
                 >
-                  Limpiar filtros
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                  <span>Limpiar filtros</span>
                 </button>
               </div>
             ) : (

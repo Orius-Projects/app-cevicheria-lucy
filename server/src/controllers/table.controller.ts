@@ -2,7 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import {
   listTablesWithStatus,
   getTableDetail,
-  closeTableSession
+  closeTableSession,
+  createTable,
+  updateTable
 } from '../services/table.service';
 import { UnauthorizedError } from '../middlewares/error';
 
@@ -24,6 +26,24 @@ export async function getTableById(req: Request, res: Response, next: NextFuncti
   }
 }
 
+export async function postTable(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const created = await createTable(req.body);
+    res.status(201).json(created);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function patchTable(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const updated = await updateTable(req.params.id, req.body);
+    res.status(200).json(updated);
+  } catch (error) {
+    next(error);
+  }
+}
+
 export async function closeSession(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     if (!req.user) {
@@ -37,3 +57,4 @@ export async function closeSession(req: Request, res: Response, next: NextFuncti
     next(error);
   }
 }
+
