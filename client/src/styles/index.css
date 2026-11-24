@@ -16,7 +16,13 @@
   }
 
   body {
-    @apply bg-slate-50 text-slate-900 dark:bg-marine-950 dark:text-slate-100 antialiased transition-colors duration-200;
+    @apply antialiased transition-colors duration-200;
+  }
+
+  html.dark body,
+  body.dark {
+    background-color: #030811;
+    color: #f1f5f9;
   }
 
   /* Foco visible y consistente en toda la app (WCAG 2.4.7). */
