@@ -20,8 +20,8 @@ export const KitchenConnectionBanner: React.FC<KitchenConnectionBannerProps> = (
       aria-live="assertive"
       className={`px-4 py-3 border-b flex flex-wrap justify-between items-center gap-3 transition-colors ${
         isReconnecting
-          ? 'bg-amber-50 border-amber-200 text-amber-900'
-          : 'bg-rose-50 border-rose-200 text-rose-800'
+          ? 'bg-amber-50 dark:bg-amber-950/70 border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200'
+          : 'bg-rose-50 dark:bg-rose-950/70 border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-200'
       }`}
     >
       <div className="flex items-center space-x-2">

@@ -15,19 +15,19 @@ export const KitchenItems: React.FC<KitchenItemsProps> = ({
       {items.map((item, idx) => (
         <div
           key={`${item.dishId}_${idx}`}
-          className="bg-brand-50/50 rounded-xl p-3 border border-brand-100 space-y-1.5 transition-all"
+          className="bg-brand-50/50 dark:bg-marine-950/60 rounded-xl p-3 border border-brand-100 dark:border-marine-800 space-y-1.5 transition-all"
         >
           <div className="flex items-start justify-between gap-2">
             <div className="flex items-start space-x-2">
-              <span className="text-base sm:text-lg font-semibold text-brand-700 leading-tight">
+              <span className="text-base sm:text-lg font-bold text-brand-700 dark:text-brand-300 leading-tight">
                 {item.quantity}×
               </span>
               <div>
-                <span className="text-sm sm:text-base font-medium text-slate-800 leading-tight block">
+                <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100 leading-tight block">
                   {item.dishName}
                 </span>
                 {item.sectionName && (
-                  <span className="text-[10px] uppercase font-medium text-brand-700 tracking-wider">
+                  <span className="text-[10px] uppercase font-bold text-brand-700 dark:text-brand-400 tracking-wider">
                     {item.sectionName}
                   </span>
                 )}
@@ -41,10 +41,10 @@ export const KitchenItems: React.FC<KitchenItemsProps> = ({
               {item.variations.map((v) => (
                 <span
                   key={v.id}
-                  className="text-xs px-2.5 py-0.5 rounded-md bg-white text-brand-800 border border-brand-200 font-normal flex items-center gap-1 shadow-xs"
+                  className="text-xs px-2.5 py-0.5 rounded-md bg-white dark:bg-marine-900 text-brand-800 dark:text-brand-200 border border-brand-200 dark:border-marine-700 font-medium flex items-center gap-1 shadow-xs"
                 >
                   <svg
-                    className="w-3 h-3 text-brand-700 shrink-0"
+                    className="w-3 h-3 text-brand-700 dark:text-brand-300 shrink-0"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -63,8 +63,8 @@ export const KitchenItems: React.FC<KitchenItemsProps> = ({
 
           {/* Notas de preparación de ítem */}
           {item.notes && item.notes.trim() && (
-            <div className="mt-1.5 p-2 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900 font-normal">
-              <span className="font-medium text-amber-800 block text-[11px] uppercase tracking-wider">
+            <div className="mt-1.5 p-2 bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800/60 rounded-lg text-xs text-amber-900 dark:text-amber-200 font-normal">
+              <span className="font-bold text-amber-800 dark:text-amber-300 block text-[11px] uppercase tracking-wider">
                 Nota de preparación:
               </span>
               <span>"{item.notes}"</span>

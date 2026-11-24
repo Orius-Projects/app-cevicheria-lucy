@@ -84,11 +84,11 @@ export const KitchenPage: React.FC = () => {
         <div
           role="alert"
           aria-live="polite"
-          className="bg-rose-50 border-b border-rose-200 px-4 py-3 text-rose-800 text-xs font-bold flex justify-between items-center"
+          className="bg-rose-50 dark:bg-rose-950/70 border-b border-rose-200 dark:border-rose-800 px-4 py-3 text-rose-800 dark:text-rose-200 text-xs font-bold flex justify-between items-center"
         >
           <div className="flex items-center space-x-2">
             <svg
-              className="w-4 h-4 text-rose-600 shrink-0"
+              className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

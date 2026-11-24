@@ -23,11 +23,11 @@ export const PendingColumn: React.FC<PendingColumnProps> = ({
       aria-labelledby="pending-heading"
       className={`flex flex-col space-y-4 ${className}`}
     >
-      <div className="flex justify-between items-center border-b border-slate-200 pb-2.5">
+      <div className="flex justify-between items-center border-b border-slate-200 dark:border-marine-800 pb-2.5">
         <div>
-          <h2 id="pending-heading" className="text-lg font-semibold text-slate-800 flex items-center gap-2">
+          <h2 id="pending-heading" className="text-lg font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
             <svg
-              className="w-5 h-5 text-brand-700 shrink-0"
+              className="w-5 h-5 text-brand-600 dark:text-brand-300 shrink-0"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -44,7 +44,7 @@ export const PendingColumn: React.FC<PendingColumnProps> = ({
             <span>Pendientes en Cocina</span>
             <span
               data-testid="pending-counter"
-              className="text-xs px-2.5 py-0.5 rounded-full font-medium bg-amber-100 text-amber-800 border border-amber-200"
+              className="text-xs px-2.5 py-0.5 rounded-full font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-200 border border-amber-200 dark:border-amber-700/60"
             >
               {orders.length}
             </span>

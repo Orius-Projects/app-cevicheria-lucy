@@ -16,11 +16,11 @@ export const ReadyColumn: React.FC<ReadyColumnProps> = ({
       aria-labelledby="ready-heading"
       className={`flex flex-col space-y-4 ${className}`}
     >
-      <div className="flex justify-between items-center border-b border-slate-200 pb-2.5">
+      <div className="flex justify-between items-center border-b border-slate-200 dark:border-marine-800 pb-2.5">
         <div>
-          <h2 id="ready-heading" className="text-lg font-semibold text-slate-800 flex items-center gap-2">
+          <h2 id="ready-heading" className="text-lg font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
             <svg
-              className="w-5 h-5 text-emerald-600 shrink-0"
+              className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -35,7 +35,7 @@ export const ReadyColumn: React.FC<ReadyColumnProps> = ({
             <span>Listos para Recoger</span>
             <span
               data-testid="ready-counter"
-              className="text-xs px-2.5 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-800 border border-emerald-200"
+              className="text-xs px-2.5 py-0.5 rounded-full font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-700/60"
             >
               {orders.length}
             </span>
@@ -44,8 +44,8 @@ export const ReadyColumn: React.FC<ReadyColumnProps> = ({
       </div>
 
       {orders.length === 0 ? (
-        <div className="bg-white border border-brand-100 rounded-2xl p-8 text-center space-y-2 shadow-xs">
-          <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center mx-auto">
+        <div className="bg-white dark:bg-marine-900 border border-brand-100 dark:border-marine-800 rounded-2xl p-8 text-center space-y-2 shadow-xs transition-colors">
+          <div className="w-8 h-8 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center mx-auto">
             <svg
               className="w-4 h-4"
               viewBox="0 0 24 24"
@@ -59,7 +59,7 @@ export const ReadyColumn: React.FC<ReadyColumnProps> = ({
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
-          <p className="text-xs text-slate-500 font-medium">
+          <p className="text-xs text-slate-500 dark:text-slate-300 font-medium">
             No hay pedidos listos esperando ser recogidos.
           </p>
         </div>

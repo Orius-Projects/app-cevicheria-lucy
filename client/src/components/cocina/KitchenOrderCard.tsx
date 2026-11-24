@@ -118,12 +118,12 @@ export const KitchenOrderCard: React.FC<KitchenOrderCardProps> = ({
 
           <div>
             {isPending && (
-              <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-brand-100 text-brand-800 border border-brand-200 uppercase tracking-wider">
+              <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-brand-100 dark:bg-brand-950/80 text-brand-800 dark:text-brand-200 border border-brand-200 dark:border-brand-700 uppercase tracking-wider">
                 ENVIADO
               </span>
             )}
             {isReady && (
-              <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-emerald-100 text-emerald-800 border border-emerald-200 uppercase tracking-wider">
+              <span className="px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-700 uppercase tracking-wider">
                 LISTO
               </span>
             )}
@@ -132,8 +132,8 @@ export const KitchenOrderCard: React.FC<KitchenOrderCardProps> = ({
 
         {/* Nota general de comanda */}
         {order.notes && order.notes.trim() && (
-          <div className="p-2.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900">
-            <span className="font-medium text-amber-800 block text-[11px] uppercase tracking-wider">
+          <div className="p-2.5 bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800/60 rounded-xl text-xs text-amber-900 dark:text-amber-200">
+            <span className="font-bold text-amber-800 dark:text-amber-300 block text-[11px] uppercase tracking-wider">
               Nota general para cocina:
             </span>
             <p className="italic mt-0.5">"{order.notes}"</p>
@@ -145,13 +145,13 @@ export const KitchenOrderCard: React.FC<KitchenOrderCardProps> = ({
       </div>
 
       {/* Pie / Acción de Cocina */}
-      <div className="pt-3 border-t border-slate-100 mt-2">
+      <div className="pt-3 border-t border-slate-100 dark:border-marine-800 mt-2">
         {isPending ? (
           <button
             type="button"
             disabled={isMarking}
             onClick={() => onMarkReady && onMarkReady(order)}
-            className="w-full py-3 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-800 text-white rounded-xl text-sm font-medium min-h-[48px] shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
+            className="w-full py-3 px-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-800 text-white rounded-xl text-sm font-semibold min-h-[48px] shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] cursor-pointer"
           >
             {!isMarking && (
               <svg
@@ -170,9 +170,9 @@ export const KitchenOrderCard: React.FC<KitchenOrderCardProps> = ({
             <span>{isMarking ? 'Marcando listo...' : 'Marcar listo'}</span>
           </button>
         ) : (
-          <div className="w-full py-2.5 px-4 bg-emerald-50 border border-emerald-200 rounded-xl text-center text-xs font-medium text-emerald-800 flex items-center justify-center gap-1.5">
+          <div className="w-full py-2.5 px-4 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 rounded-xl text-center text-xs font-semibold text-emerald-800 dark:text-emerald-200 flex items-center justify-center gap-1.5">
             <svg
-              className="w-4 h-4 text-emerald-600 shrink-0"
+              className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

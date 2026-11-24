@@ -22,9 +22,9 @@ export const KitchenHeader: React.FC<KitchenHeaderProps> = ({
 
   return (
     <>
-      <header className="bg-white dark:bg-marine-900 border-b border-brand-100 dark:border-slate-800 px-4 sm:px-6 py-3 flex justify-between items-center gap-2 sticky top-0 z-40 shadow-xs transition-colors">
+      <header className="bg-white dark:bg-marine-900 border-b border-brand-100 dark:border-marine-800 px-4 sm:px-6 py-3 flex justify-between items-center gap-2 sticky top-0 z-40 shadow-xs transition-colors">
         <div className="flex items-center min-w-0">
-          <h1 className="text-xl font-semibold text-brand-700 dark:text-brand-400 tracking-tight truncate">
+          <h1 className="text-xl font-bold text-brand-700 dark:text-brand-300 tracking-tight truncate">
             Cocina
           </h1>
         </div>
