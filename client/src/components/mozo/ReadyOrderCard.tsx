@@ -20,38 +20,38 @@ export const ReadyOrderCard: React.FC<ReadyOrderCardProps> = ({
     <div
       data-testid="ready-order-card"
       data-order-id={order.id}
-      className="bg-emerald-50/40 border-2 border-emerald-400 rounded-2xl p-4 sm:p-5 shadow-md flex flex-col justify-between space-y-4 animate-fade-in"
+      className="bg-emerald-50/40 dark:bg-marine-900 border-2 border-emerald-400 dark:border-emerald-600/80 rounded-2xl p-4 sm:p-5 shadow-md flex flex-col justify-between space-y-4 animate-fade-in"
     >
       <div className="space-y-3">
         <div className="flex justify-between items-start gap-2">
           <div>
             <div className="flex items-center space-x-2">
-              <span className="text-xl font-black text-slate-900">Mesa {order.tableCode}</span>
-              <span className="text-xs font-bold text-slate-500">#{order.orderNumber}</span>
+              <span className="text-xl font-black text-slate-900 dark:text-slate-100">Mesa {order.tableCode}</span>
+              <span className="text-xs font-bold text-slate-500 dark:text-slate-400">#{order.orderNumber}</span>
             </div>
-            <p className="text-[11px] text-slate-500">
-              Tomado por: <span className="font-semibold text-slate-700">{order.takenByName}</span> • Enviado a las {formatLimaTime(order.enviadoEn)}
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              Tomado por: <span className="font-semibold text-slate-700 dark:text-slate-300">{order.takenByName}</span> • Enviado a las {formatLimaTime(order.enviadoEn)}
             </p>
           </div>
 
           <OrderStatusBadge status="LISTO" />
         </div>
 
-        <div className="bg-white rounded-xl p-3 border border-emerald-200/60 space-y-1.5 text-xs">
-          <span className="font-bold text-emerald-950 uppercase text-[10px] tracking-wider block">
+        <div className="bg-white dark:bg-marine-950 rounded-xl p-3 border border-emerald-200/60 dark:border-slate-800 space-y-1.5 text-xs">
+          <span className="font-bold text-emerald-950 dark:text-emerald-400 uppercase text-[10px] tracking-wider block">
             Platos a Servir:
           </span>
           {order.items.map((item, idx) => (
             <div key={idx} className="flex justify-between items-start">
-              <span className="font-semibold text-slate-800">
+              <span className="font-semibold text-slate-800 dark:text-slate-200">
                 {item.quantity}× {item.dishName}
                 {item.variations && item.variations.length > 0 && (
-                  <span className="text-[11px] font-normal text-slate-500 block">
+                  <span className="text-[11px] font-normal text-slate-500 dark:text-slate-400 block">
                     ({item.variations.map((v) => v.name).join(', ')})
                   </span>
                 )}
                 {item.notes && (
-                  <span className="text-[11px] font-normal text-amber-800 block italic">
+                  <span className="text-[11px] font-normal text-amber-800 dark:text-amber-400 block italic">
                     "{item.notes}"
                   </span>
                 )}
@@ -61,18 +61,18 @@ export const ReadyOrderCard: React.FC<ReadyOrderCardProps> = ({
         </div>
 
         {order.notes && (
-          <p className="text-xs text-amber-900 bg-amber-50 p-2 rounded-lg border border-amber-200 italic">
+          <p className="text-xs text-amber-900 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 p-2 rounded-lg border border-amber-200 dark:border-amber-800 italic">
             Nota general: "{order.notes}"
           </p>
         )}
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-emerald-200/50">
+      <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-emerald-200/50 dark:border-slate-800">
         <button
           type="button"
           onClick={() => onCancel(order)}
           disabled={isDelivering}
-          className="px-4 py-2.5 border border-slate-300 text-slate-600 hover:bg-white rounded-xl text-xs font-bold min-h-[44px] flex items-center justify-center transition-colors"
+          className="px-4 py-2.5 border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-marine-800 rounded-xl text-xs font-bold min-h-[44px] flex items-center justify-center transition-colors"
         >
           Cancelar
         </button>

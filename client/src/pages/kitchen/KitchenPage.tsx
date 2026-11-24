@@ -56,7 +56,7 @@ export const KitchenPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-brand-50/30 text-slate-800 flex flex-col font-sans">
+    <div className="min-h-screen bg-brand-50/30 dark:bg-marine-950 text-slate-800 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
       {/* Región accesible aria-live para anuncios de voz y lectores de pantalla */}
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         {announcement}

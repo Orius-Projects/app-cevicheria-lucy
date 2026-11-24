@@ -426,17 +426,17 @@ export const DishManagementPage: React.FC = () => {
         )}
 
         {/* Cabecera compacta */}
-        <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+        <section className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-marine-900 p-4 shadow-sm sm:p-5">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="min-w-0">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-brand-700">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-brand-700 dark:text-brand-400">
                   Gestión del menú del día
                 </p>
-                <h1 className="mt-0.5 text-xl font-bold leading-tight text-slate-900 sm:text-2xl">
+                <h1 className="mt-0.5 text-xl font-bold leading-tight text-slate-900 dark:text-slate-100 sm:text-2xl">
                   Platos y raciones
                 </h1>
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                   Actualiza la disponibilidad del salón sin salir de esta pantalla.
                 </p>
               </div>
@@ -444,7 +444,7 @@ export const DishManagementPage: React.FC = () => {
               <div className="flex flex-wrap items-center gap-2 sm:justify-end">
                 <Link
                   to="/encargado/platos"
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-brand-200 bg-brand-50 px-3 py-2 text-xs font-bold text-brand-700 transition-colors hover:bg-brand-100"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-brand-200 dark:border-slate-700 bg-brand-50 dark:bg-marine-800 px-3 py-2 text-xs font-bold text-brand-700 dark:text-brand-300 transition-colors hover:bg-brand-100 dark:hover:bg-marine-700"
                 >
                   Catálogo maestro
                 </Link>
@@ -454,7 +454,7 @@ export const DishManagementPage: React.FC = () => {
                     loadDay(selectedDate);
                     fetchCurrentShift();
                   }}
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-marine-800 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors hover:bg-slate-50 dark:hover:bg-marine-700"
                 >
                   Actualizar
                 </button>
@@ -466,7 +466,7 @@ export const DishManagementPage: React.FC = () => {
                 <div className="min-w-0">
                   <label
                     htmlFor="menu-date"
-                    className="mb-1 block text-[11px] font-semibold uppercase tracking-wider text-slate-500"
+                    className="mb-1 block text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400"
                   >
                     Fecha del menú
                   </label>
@@ -475,12 +475,12 @@ export const DishManagementPage: React.FC = () => {
                     type="date"
                     value={selectedDate}
                     onChange={(event) => setSelectedDate(event.target.value)}
-                    className="min-h-[44px] w-full max-w-[12rem] rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600"
+                    className="min-h-[44px] w-full max-w-[12rem] rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-marine-950 text-slate-900 dark:text-slate-100 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-600"
                   />
                 </div>
 
                 {selectedDate === today && (
-                  <span className="inline-flex h-8 items-center rounded-lg border border-brand-200 bg-brand-50 px-2.5 text-xs font-bold text-brand-700">
+                  <span className="inline-flex h-8 items-center rounded-lg border border-brand-200 dark:border-slate-700 bg-brand-50 dark:bg-marine-800 px-2.5 text-xs font-bold text-brand-700 dark:text-brand-300">
                     Hoy (Lima)
                   </span>
                 )}
@@ -509,7 +509,7 @@ export const DishManagementPage: React.FC = () => {
                     type="button"
                     onClick={handleSaveDraft}
                     disabled={isSaving || loading}
-                    className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-sm transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-marine-800 px-4 py-2 text-sm font-bold text-slate-700 dark:text-slate-200 shadow-sm transition-colors hover:bg-slate-50 dark:hover:bg-marine-700 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {isSaving ? 'Guardando...' : 'Guardar'}
                   </button>
@@ -529,18 +529,18 @@ export const DishManagementPage: React.FC = () => {
         <ShiftBanner isOpen={isShiftOpen} isLoading={isShiftLoading} shiftLabel={currentShift?.label} />
 
         {loading && !menuDay ? (
-          <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center text-sm text-slate-400">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-marine-900 p-10 text-center text-sm text-slate-400 dark:text-slate-500">
             Cargando platos y raciones...
           </div>
         ) : !menuDay ? (
-          <section className="space-y-3 rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center sm:p-12">
+          <section className="space-y-3 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-white dark:bg-marine-900 p-8 text-center sm:p-12">
             <div className="text-4xl" aria-hidden="true">
               🍽️
             </div>
-            <h2 className="text-base font-bold text-slate-800">
+            <h2 className="text-base font-bold text-slate-800 dark:text-slate-100">
               No hay menú para el {selectedDate}
             </h2>
-            <p className="mx-auto max-w-md text-xs text-slate-500">
+            <p className="mx-auto max-w-md text-xs text-slate-500 dark:text-slate-400">
               Crea un borrador, elige los platos del catálogo maestro y publícalo cuando esté listo
               para el salón.
             </p>
@@ -556,13 +556,13 @@ export const DishManagementPage: React.FC = () => {
         ) : (
           <div className="min-w-0 space-y-4">
             {menuDay.status === 'PUBLICADO' && (
-              <div className="rounded-xl border border-brand-200 bg-brand-50 p-3 text-xs text-brand-900 sm:p-4">
+              <div className="rounded-xl border border-brand-200 dark:border-slate-800 bg-brand-50 dark:bg-marine-900 p-3 text-xs text-brand-900 dark:text-brand-300 sm:p-4">
                 <span className="font-bold">Menú publicado.</span> Las raciones y la disponibilidad
                 se actualizan al instante. Agregar o quitar platos requiere un menú en borrador.
               </div>
             )}
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-marine-900 p-3 shadow-sm sm:p-4">
               <div className="flex flex-col gap-3">
                 <div className="min-w-0">
                   <CategoryTabs
@@ -580,7 +580,7 @@ export const DishManagementPage: React.FC = () => {
                       onChange={(event) => setSearchTerm(event.target.value)}
                       placeholder="Buscar plato por nombre..."
                       aria-label="Buscar plato por nombre"
-                      className="min-h-[44px] w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600"
+                      className="min-h-[44px] w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-marine-950 text-slate-900 dark:text-slate-100 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-600"
                     />
                   </div>
 
@@ -596,7 +596,7 @@ export const DishManagementPage: React.FC = () => {
                   )}
                 </div>
 
-                <p className="text-[11px] text-slate-500">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
                   {items.length} platos ·{' '}
                   {items.filter((item) => deriveDishStatus(item) === 'AGOTADO').length} agotados ·{' '}
                   {items.filter((item) => deriveDishStatus(item) === 'ULTIMAS_RACIONES').length} en
@@ -606,7 +606,7 @@ export const DishManagementPage: React.FC = () => {
             </div>
 
             {groups.length === 0 ? (
-              <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-500 flex flex-col items-center justify-center gap-3">
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-marine-900 p-8 text-center text-sm text-slate-500 dark:text-slate-400 flex flex-col items-center justify-center gap-3">
                 <p>No hay platos que coincidan con la búsqueda o la categoría seleccionada.</p>
                 <button
                   type="button"
@@ -614,7 +614,7 @@ export const DishManagementPage: React.FC = () => {
                     setSearchTerm('');
                     setActiveCategory('ALL');
                   }}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-brand-700 bg-brand-50 border border-brand-200 hover:bg-brand-100 transition-colors shadow-xs cursor-pointer min-h-[44px]"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-brand-700 dark:text-brand-300 bg-brand-50 dark:bg-marine-800 border border-brand-200 dark:border-slate-700 hover:bg-brand-100 dark:hover:bg-marine-700 transition-colors shadow-xs cursor-pointer min-h-[44px]"
                 >
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18" />

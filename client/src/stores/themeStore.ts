@@ -13,11 +13,10 @@ const THEME_STORAGE_KEY = 'cevicheria_theme';
 
 function applyThemeToDocument(theme: Theme) {
   if (typeof document === 'undefined') return;
-  const root = document.documentElement;
-  if (theme === 'dark') {
-    root.classList.add('dark');
-  } else {
-    root.classList.remove('dark');
+  const isDark = theme === 'dark';
+  document.documentElement.classList.toggle('dark', isDark);
+  if (document.body) {
+    document.body.classList.toggle('dark', isDark);
   }
 }
 

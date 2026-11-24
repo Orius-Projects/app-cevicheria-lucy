@@ -205,22 +205,22 @@ export const NewOrderPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 dark:bg-marine-950 text-slate-900 dark:text-slate-100 flex flex-col transition-colors duration-200">
       {/* Banner de conexión */}
       <ConnectionBanner />
 
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3.5 flex flex-wrap justify-between items-center gap-2 shadow-sm sticky top-0 z-40">
+      <header className="bg-white dark:bg-marine-900 border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-3.5 flex flex-wrap justify-between items-center gap-2 shadow-sm sticky top-0 z-40">
         <div className="flex items-center space-x-3 min-w-0">
           <Link
             to="/mozo"
-            className="text-xs px-3 py-2 min-h-[44px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center border border-slate-200 shrink-0"
+            className="text-xs px-3 py-2 min-h-[44px] bg-slate-100 dark:bg-marine-800 hover:bg-slate-200 dark:hover:bg-marine-700 text-slate-700 dark:text-slate-200 font-bold rounded-xl flex items-center border border-slate-200 dark:border-slate-700 shrink-0"
           >
             ← Salón
           </Link>
           <div className="min-w-0">
-            <h1 className="text-lg font-black text-slate-900 truncate">Nueva Comanda</h1>
-            <p className="text-xs text-slate-500 truncate">
+            <h1 className="text-lg font-black text-slate-900 dark:text-slate-100 truncate">Nueva Comanda</h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
               {user?.displayName} • {tableCode ? `Mesa ${tableCode}` : 'Sin mesa asignada'}
             </p>
           </div>
@@ -230,9 +230,9 @@ export const NewOrderPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsTableModalOpen(true)}
-            className="px-3.5 py-2 min-h-[44px] bg-brand-50 hover:bg-brand-100 text-brand-800 border border-brand-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+            className="px-3.5 py-2 min-h-[44px] bg-brand-50 dark:bg-marine-800 hover:bg-brand-100 dark:hover:bg-marine-700 text-brand-800 dark:text-brand-300 border border-brand-200 dark:border-slate-700 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
           >
-            <svg className="w-4 h-4 text-brand-700 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-4 h-4 text-brand-700 dark:text-brand-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
               <line x1="7" y1="7" x2="7.01" y2="7" />
             </svg>
@@ -285,19 +285,19 @@ export const NewOrderPage: React.FC = () => {
             {/* Columna Izquierda: Carta de Platos (8 cols) */}
             <div className="lg:col-span-7 xl:col-span-8 space-y-4">
               {submissionError && (
-                <div className="p-4 bg-rose-50 border border-rose-300 rounded-2xl text-rose-800 text-xs font-medium" aria-live="assertive">
+                <div className="p-4 bg-rose-50 dark:bg-rose-950/50 border border-rose-300 dark:border-rose-800 rounded-2xl text-rose-800 dark:text-rose-200 text-xs font-medium" aria-live="assertive">
                   {submissionError}
                 </div>
               )}
 
               {menuError && (
-                <div className="p-4 bg-amber-50 border border-amber-300 rounded-2xl text-amber-800 text-xs">
+                <div className="p-4 bg-amber-50 dark:bg-amber-950/50 border border-amber-300 dark:border-amber-800 rounded-2xl text-amber-800 dark:text-amber-200 text-xs">
                   {menuError}
                 </div>
               )}
 
               {/* Filtros de Secciones y Búsqueda */}
-              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+              <div className="bg-white dark:bg-marine-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                 <MenuSectionTabs
                   sections={sections}
                   activeSectionKey={activeSectionKey}
@@ -310,7 +310,7 @@ export const NewOrderPage: React.FC = () => {
                   placeholder="Buscar en carta..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="px-3 py-2 border border-slate-300 rounded-xl text-sm min-h-[44px] w-full sm:w-56 focus:outline-none focus:ring-2 focus:ring-brand-600"
+                  className="px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-marine-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 rounded-xl text-sm min-h-[44px] w-full sm:w-56 focus:outline-none focus:ring-2 focus:ring-brand-600"
                 />
               </div>
 
@@ -318,7 +318,7 @@ export const NewOrderPage: React.FC = () => {
               {isMenuLoading && allMenuItems.length === 0 ? (
                 <div className="text-center py-16 text-slate-400">Cargando carta del día...</div>
               ) : filteredItems.length === 0 ? (
-                <div className="bg-white p-12 rounded-2xl border border-slate-200 text-center text-slate-500 text-sm">
+                <div className="bg-white dark:bg-marine-900 p-12 rounded-2xl border border-slate-200 dark:border-slate-800 text-center text-slate-500 dark:text-slate-400 text-sm">
                   No hay platos disponibles en este momento para la sección seleccionada.
                 </div>
               ) : (
@@ -435,14 +435,14 @@ export const NewOrderPage: React.FC = () => {
 
       {/* Modal Selector de Mesa */}
       {isTableModalOpen && (
-        <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200 max-h-[85dvh] overflow-y-auto">
-            <div className="flex justify-between items-center border-b border-slate-100 pb-3">
-              <h2 className="text-lg font-bold text-slate-900">Seleccionar Mesa para Comanda</h2>
+        <div className="fixed inset-0 bg-slate-900/60 dark:bg-black/75 z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-marine-900 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl border border-slate-200 dark:border-slate-800 max-h-[85dvh] overflow-y-auto">
+            <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Seleccionar Mesa para Comanda</h2>
               <button
                 type="button"
                 onClick={() => setIsTableModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 text-xl font-bold min-h-[44px]"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xl font-bold min-h-[44px]"
               >
                 ×
               </button>
@@ -459,14 +459,14 @@ export const NewOrderPage: React.FC = () => {
                       setTable(t.id, t.code);
                       setIsTableModalOpen(false);
                     }}
-                    className={`p-3.5 rounded-xl border text-left min-h-[56px] transition-all ${
+                    className={`p-3.5 rounded-xl border text-left min-h-[56px] transition-all cursor-pointer ${
                       isCurrent
-                        ? 'border-brand-600 bg-brand-50 text-brand-900 font-black'
-                        : 'border-slate-200 bg-white hover:bg-slate-50'
+                        ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/60 text-brand-900 dark:text-brand-300 font-black'
+                        : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-marine-800 hover:bg-slate-50 dark:hover:bg-marine-700 text-slate-800 dark:text-slate-100'
                     }`}
                   >
                     <div className="text-base font-black">Mesa {t.code}</div>
-                    <div className="text-[11px] text-slate-500">{t.state}</div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">{t.state}</div>
                   </button>
                 );
               })}
@@ -477,14 +477,14 @@ export const NewOrderPage: React.FC = () => {
 
       {/* Modal de Confirmación y Resumen Pre-Envío */}
       {isConfirmModalOpen && (
-        <div className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-slate-200 max-h-[90dvh] overflow-y-auto">
-            <div className="flex justify-between items-center border-b border-slate-100 pb-3">
-              <h2 className="text-lg font-bold text-slate-900">Confirmar Envío a Cocina</h2>
+        <div className="fixed inset-0 bg-slate-900/60 dark:bg-black/75 z-50 flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white dark:bg-marine-900 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-slate-200 dark:border-slate-800 max-h-[90dvh] overflow-y-auto">
+            <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Confirmar Envío a Cocina</h2>
               <button
                 type="button"
                 onClick={() => setIsConfirmModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 text-xl font-bold min-h-[44px]"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xl font-bold min-h-[44px]"
               >
                 ×
               </button>
@@ -496,16 +496,16 @@ export const NewOrderPage: React.FC = () => {
               notes={notes}
             />
 
-            <p className="text-xs text-slate-500 italic">
+            <p className="text-xs text-slate-500 dark:text-slate-400 italic">
               Al confirmar, los platos se enviarán de forma inmediata a la pantalla de cocina y se descontarán las raciones disponibles.
             </p>
 
-            <div className="flex justify-end space-x-3 pt-3 border-t border-slate-100">
+            <div className="flex justify-end space-x-3 pt-3 border-t border-slate-100 dark:border-slate-800">
               <button
                 type="button"
                 onClick={() => setIsConfirmModalOpen(false)}
                 disabled={isSubmitting}
-                className="px-4 py-2.5 border border-slate-300 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 min-h-[44px]"
+                className="px-4 py-2.5 border border-slate-300 dark:border-slate-700 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-marine-800 min-h-[44px]"
               >
                 Volver a editar
               </button>

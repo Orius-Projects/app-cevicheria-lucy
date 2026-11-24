@@ -34,12 +34,12 @@ export const OrderCart: React.FC<OrderCartProps> = ({
   const hasItems = items.length > 0;
 
   return (
-    <div className={`bg-white rounded-2xl border border-slate-200 shadow-md flex flex-col justify-between p-4 sm:p-5 ${className}`}>
+    <div className={`bg-white dark:bg-marine-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md flex flex-col justify-between p-4 sm:p-5 ${className}`}>
       <div className="space-y-4">
-        <div className="flex justify-between items-center border-b border-slate-100 pb-3">
+        <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
           <div>
-            <h2 className="text-base font-bold text-slate-900">Borrador de Comanda</h2>
-            <p className="text-xs text-slate-500">
+            <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">Borrador de Comanda</h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               {tableCode ? `Mesa ${tableCode}` : 'Sin mesa seleccionada'}
             </p>
           </div>
@@ -48,7 +48,7 @@ export const OrderCart: React.FC<OrderCartProps> = ({
             <button
               type="button"
               onClick={clearDraft}
-              className="text-xs text-rose-600 hover:text-rose-800 font-semibold px-2 py-1 min-h-[44px] flex items-center"
+              className="text-xs text-rose-600 dark:text-rose-400 hover:text-rose-800 dark:hover:text-rose-300 font-semibold px-2 py-1 min-h-[44px] flex items-center"
             >
               Vaciar
             </button>
@@ -56,51 +56,51 @@ export const OrderCart: React.FC<OrderCartProps> = ({
         </div>
 
         {items.length === 0 ? (
-          <div className="py-12 text-center text-slate-400 space-y-2">
+          <div className="py-12 text-center text-slate-400 dark:text-slate-500 space-y-2">
             <span className="text-3xl block">📋</span>
             <p className="text-xs font-medium">El carrito está vacío.</p>
-            <p className="text-[11px] text-slate-400">Selecciona platos de la carta para agregarlos.</p>
+            <p className="text-[11px] text-slate-400 dark:text-slate-500">Selecciona platos de la carta para agregarlos.</p>
           </div>
         ) : (
           <div className="space-y-3 max-h-[50vh] overflow-y-auto pr-1">
             {items.map((item, idx) => (
               <div
                 key={`${item.dishId}_${idx}`}
-                className="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-2.5 text-xs"
+                className="bg-slate-50 dark:bg-marine-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 space-y-2.5 text-xs"
               >
                 <div className="flex justify-between items-start">
                   <div>
-                    <h4 className="font-bold text-slate-900 text-sm">{item.dishName}</h4>
-                    <p className="text-brand-700 font-bold">{formatSoles(item.priceCents)} c/u</p>
+                    <h4 className="font-bold text-slate-900 dark:text-slate-100 text-sm">{item.dishName}</h4>
+                    <p className="text-brand-700 dark:text-brand-400 font-bold">{formatSoles(item.priceCents)} c/u</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => removeItem(idx)}
                     aria-label={`Eliminar ${item.dishName}`}
-                    className="text-slate-400 hover:text-rose-600 font-bold text-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
+                    className="text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 font-bold text-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
                   >
                     ×
                   </button>
                 </div>
 
                 {item.variations && item.variations.length > 0 && (
-                  <p className="text-[11px] text-slate-600">
+                  <p className="text-[11px] text-slate-600 dark:text-slate-400">
                     <strong>Variaciones:</strong> {item.variations.map((v) => v.name).join(', ')}
                   </p>
                 )}
 
                 {item.notes && (
-                  <p className="text-[11px] text-amber-800 bg-amber-50 p-1.5 rounded-lg border border-amber-200 italic">
+                  <p className="text-[11px] text-amber-800 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 p-1.5 rounded-lg border border-amber-200 dark:border-amber-800 italic">
                     "{item.notes}"
                   </p>
                 )}
 
-                <div className="flex justify-between items-center pt-1 border-t border-slate-200/60">
+                <div className="flex justify-between items-center pt-1 border-t border-slate-200/60 dark:border-slate-800">
                   <div className="flex space-x-2">
                     <button
                       type="button"
                       onClick={() => setEditingNotesIndex(idx)}
-                      className="text-[11px] text-slate-600 hover:text-brand-700 font-semibold underline min-h-[44px] flex items-center"
+                      className="text-[11px] text-slate-600 dark:text-slate-400 hover:text-brand-700 dark:hover:text-brand-300 font-semibold underline min-h-[44px] flex items-center"
                     >
                       {item.notes ? 'Editar nota' : '+ Nota'}
                     </button>
@@ -118,24 +118,24 @@ export const OrderCart: React.FC<OrderCartProps> = ({
         )}
       </div>
 
-      <div className="pt-4 border-t border-slate-100 space-y-3 mt-4">
+      <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3 mt-4">
         <div className="flex justify-between items-center">
           <button
             type="button"
             onClick={() => setIsGeneralNotesOpen(true)}
-            className="text-xs text-brand-700 hover:text-brand-900 font-semibold underline min-h-[44px] flex items-center"
+            className="text-xs text-brand-700 dark:text-brand-400 hover:text-brand-900 dark:hover:text-brand-300 font-semibold underline min-h-[44px] flex items-center"
           >
             {notes ? '📝 Editar nota de comanda' : '📝 + Nota para cocina'}
           </button>
 
           <div className="text-right">
-            <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Total</span>
-            <span className="text-xl font-black text-brand-700">{formatSoles(total)}</span>
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-wider block">Total</span>
+            <span className="text-xl font-black text-brand-700 dark:text-brand-400">{formatSoles(total)}</span>
           </div>
         </div>
 
         {notes && (
-          <p className="text-[11px] text-slate-600 italic bg-slate-50 p-2 rounded-lg border border-slate-200">
+          <p className="text-[11px] text-slate-600 dark:text-slate-300 italic bg-slate-50 dark:bg-marine-950 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
             Nota general: "{notes}"
           </p>
         )}

@@ -49,12 +49,12 @@ export const DishRationCard: React.FC<DishRationCardProps> = ({
     <article
       data-testid="dish-ration-card"
       data-dish-id={item.dishId}
-      className={`flex min-w-0 flex-col justify-between rounded-2xl border bg-white p-4 shadow-sm transition-shadow sm:p-5 ${
+      className={`flex min-w-0 flex-col justify-between rounded-2xl border bg-white dark:bg-marine-900 p-4 shadow-sm transition-shadow sm:p-5 ${
         item.manuallySoldOut
-          ? 'border-rose-200 bg-rose-50/20'
+          ? 'border-rose-200 dark:border-rose-800 bg-rose-50/20 dark:bg-rose-950/20'
           : item.active
-            ? 'border-slate-200 hover:shadow-md'
-            : 'border-slate-200 bg-slate-50'
+            ? 'border-slate-200 dark:border-slate-800 hover:shadow-md'
+            : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-marine-950'
       }`}
     >
       <button
@@ -65,20 +65,20 @@ export const DishRationCard: React.FC<DishRationCardProps> = ({
       >
         <div className="flex min-w-0 items-start justify-between gap-2">
           <div className="min-w-0 space-y-1.5">
-            <span className="inline-flex items-center rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-slate-600">
+            <span className="inline-flex items-center rounded-md bg-slate-100 dark:bg-marine-800 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
               {sectionName}
             </span>
-            <h3 className="break-words text-base font-bold leading-snug text-slate-900">
+            <h3 className="break-words text-base font-bold leading-snug text-slate-900 dark:text-slate-100">
               {item.dishName}
             </h3>
           </div>
-          <span className="shrink-0 text-base font-black text-brand-700">
+          <span className="shrink-0 text-base font-black text-brand-700 dark:text-brand-400">
             S/ {(item.priceCents / 100).toFixed(2)}
           </span>
         </div>
 
         {description && (
-          <p className="mt-2 line-clamp-2 text-xs text-slate-500">{description}</p>
+          <p className="mt-2 line-clamp-2 text-xs text-slate-500 dark:text-slate-400">{description}</p>
         )}
 
         <div className="mt-2.5 flex flex-wrap items-center gap-2">
@@ -93,13 +93,13 @@ export const DishRationCard: React.FC<DishRationCardProps> = ({
         </div>
       </button>
 
-      <div className="mt-3 border-t border-slate-100 pt-3">
+      <div className="mt-3 border-t border-slate-100 dark:border-slate-800 pt-3">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex min-w-0 items-baseline gap-2">
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+            <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
               Raciones
             </span>
-            <span className="text-sm font-bold text-slate-800" aria-live="polite">
+            <span className="text-sm font-bold text-slate-800 dark:text-slate-200" aria-live="polite">
               {item.hasRationsLimit
                 ? `${remaining} / ${item.totalRations ?? '—'}`
                 : 'Sin límite'}
@@ -113,11 +113,11 @@ export const DishRationCard: React.FC<DishRationCardProps> = ({
                 onClick={() => onDecrement(item)}
                 disabled={!canDecrement || isPending}
                 aria-label={`Quitar una ración a ${item.dishName}`}
-                className={`${actionButtonClass} border-slate-300 bg-white text-slate-700 hover:bg-slate-50`}
+                className={`${actionButtonClass} border-slate-300 dark:border-slate-700 bg-white dark:bg-marine-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-marine-700`}
               >
                 −
               </button>
-              <span className="min-w-[2.75rem] text-center text-sm font-black text-slate-900">
+              <span className="min-w-[2.75rem] text-center text-sm font-black text-slate-900 dark:text-slate-100">
                 {remaining}
               </span>
               <button
@@ -125,7 +125,7 @@ export const DishRationCard: React.FC<DishRationCardProps> = ({
                 onClick={() => onIncrement(item)}
                 disabled={!canIncrement || isPending}
                 aria-label={`Agregar una ración a ${item.dishName}`}
-                className={`${actionButtonClass} border-slate-300 bg-white text-slate-700 hover:bg-slate-50`}
+                className={`${actionButtonClass} border-slate-300 dark:border-slate-700 bg-white dark:bg-marine-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-marine-700`}
               >
                 +
               </button>

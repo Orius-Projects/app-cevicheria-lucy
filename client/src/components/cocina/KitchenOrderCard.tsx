@@ -66,37 +66,37 @@ export const KitchenOrderCard: React.FC<KitchenOrderCardProps> = ({
       data-testid="kitchen-order-card"
       data-order-id={order.id}
       aria-labelledby={`order-title-${order.id}`}
-      className={`bg-white rounded-2xl border-2 p-4 sm:p-5 shadow-xs space-y-4 transition-all duration-300 flex flex-col justify-between ${
+      className={`bg-white dark:bg-marine-900 rounded-2xl border-2 p-4 sm:p-5 shadow-xs space-y-4 transition-all duration-300 flex flex-col justify-between ${
         isHighlighted
-          ? 'ring-4 ring-brand-300 border-brand-500 bg-brand-50/20 scale-[1.01]'
+          ? 'ring-4 ring-brand-300 dark:ring-brand-500/60 border-brand-500 bg-brand-50/20 dark:bg-brand-950/40 scale-[1.01]'
           : isReady
-          ? 'border-emerald-300 bg-emerald-50/25'
-          : 'border-brand-200 hover:border-brand-400'
+          ? 'border-emerald-300 dark:border-emerald-700/80 bg-emerald-50/25 dark:bg-emerald-950/20'
+          : 'border-brand-200 dark:border-slate-800 hover:border-brand-400 dark:hover:border-slate-700'
       } ${className}`}
     >
       <div className="space-y-3.5">
         {/* Cabecera de Comanda: Mesa y Número */}
-        <div className="flex flex-wrap justify-between items-start gap-2 border-b border-slate-100 pb-3">
+        <div className="flex flex-wrap justify-between items-start gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
           <div>
             <div className="flex items-center space-x-2.5">
               <h2
                 id={`order-title-${order.id}`}
-                className="text-xl sm:text-2xl font-semibold text-slate-800 tracking-tight"
+                className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-slate-100 tracking-tight"
               >
                 Mesa {order.tableCode}
               </h2>
-              <span className="text-xs font-medium px-2.5 py-0.5 rounded-lg bg-brand-50 border border-brand-200 text-brand-700">
+              <span className="text-xs font-medium px-2.5 py-0.5 rounded-lg bg-brand-50 dark:bg-marine-800 border border-brand-200 dark:border-slate-700 text-brand-700 dark:text-brand-300">
                 #{order.orderNumber}
               </span>
             </div>
-            <div className="text-xs text-slate-500 mt-1 flex items-center flex-wrap gap-1.5">
+            <div className="text-xs text-slate-500 dark:text-slate-400 mt-1 flex items-center flex-wrap gap-1.5">
               <span>
-                Mozo: <span className="text-slate-700 font-medium">{order.takenByName}</span>
+                Mozo: <span className="text-slate-700 dark:text-slate-300 font-medium">{order.takenByName}</span>
               </span>
               <span>•</span>
               <span
                 data-testid="order-elapsed-timer"
-                className="inline-flex items-center gap-1 text-brand-700 font-medium bg-brand-50 px-2 py-0.5 rounded-md border border-brand-200"
+                className="inline-flex items-center gap-1 text-brand-700 dark:text-brand-300 font-medium bg-brand-50 dark:bg-marine-800 px-2 py-0.5 rounded-md border border-brand-200 dark:border-slate-700"
               >
                 <svg
                   className="w-3.5 h-3.5 text-brand-700 shrink-0"

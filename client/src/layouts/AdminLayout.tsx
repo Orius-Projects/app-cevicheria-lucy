@@ -29,7 +29,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   const userLabel = `${user?.displayName || 'Encargado Demo'} (${user?.role || 'ENCARGADO'})`;
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
+    <div className="min-h-screen bg-slate-50 dark:bg-marine-950 text-slate-900 dark:text-slate-100 flex flex-col md:flex-row transition-colors duration-200">
       {/* Mobile Backdrop */}
       {mobileMenuOpen && (
         <div
@@ -41,14 +41,14 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
       {/* Sidebar (Desktop sticky + Mobile sliding drawer) */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col justify-between transition-transform duration-300 ease-in-out md:static md:translate-x-0 md:min-h-screen md:h-screen md:sticky md:top-0 shadow-sm shrink-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-marine-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between transition-transform duration-300 ease-in-out md:static md:translate-x-0 md:min-h-screen md:h-screen md:sticky md:top-0 shadow-sm shrink-0 ${
           mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >
         {/* Brand Header */}
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between">
+        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-50 border border-brand-100 flex items-center justify-center text-brand-700 shadow-xs">
+            <div className="w-10 h-10 rounded-xl bg-brand-50 dark:bg-marine-800 border border-brand-100 dark:border-slate-700 flex items-center justify-center text-brand-700 dark:text-brand-300 shadow-xs">
               {/* Fish / Restaurant Icon */}
               <svg
                 className="w-6 h-6"
@@ -66,8 +66,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               </svg>
             </div>
             <div>
-              <h2 className="font-bold text-slate-900 text-base leading-tight">Cevichería Lucy</h2>
-              <span className="text-[11px] font-semibold text-brand-700 bg-brand-50 px-2 py-0.5 rounded-full inline-block mt-0.5 border border-brand-100">
+              <h2 className="font-bold text-slate-900 dark:text-slate-100 text-base leading-tight">Cevichería Lucy</h2>
+              <span className="text-[11px] font-semibold text-brand-700 dark:text-brand-300 bg-brand-50 dark:bg-marine-800 px-2 py-0.5 rounded-full inline-block mt-0.5 border border-brand-100 dark:border-slate-700">
                 Administración
               </span>
             </div>
@@ -77,7 +77,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <button
             type="button"
             onClick={() => setMobileMenuOpen(false)}
-            className="md:hidden p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="md:hidden p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
             aria-label="Cerrar menú lateral"
           >
             <svg
@@ -99,7 +99,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         {/* Navigation Section */}
         <div className="flex-1 px-4 py-5 overflow-y-auto space-y-6">
           <div>
-            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2.5">
+            <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-3 mb-2.5">
               Módulos de Gestión
             </p>
             <AdminNavigation onItemClick={() => setMobileMenuOpen(false)} />
@@ -112,13 +112,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 min-h-screen">
         {/* Top Header Bar */}
-        <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3 flex justify-between items-center shadow-xs sticky top-0 z-30">
+        <header className="bg-white dark:bg-marine-900 border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-3 flex justify-between items-center shadow-xs sticky top-0 z-30">
           <div className="flex items-center gap-3 min-w-0">
             {/* Hamburger button on mobile */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
+              className="md:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
               aria-label="Abrir opciones de navegación"
             >
               <svg
@@ -139,13 +139,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
             <div className="min-w-0">
               <div className="flex items-center gap-2.5 flex-wrap">
-                <h1 className="text-lg sm:text-xl font-bold text-brand-700 leading-tight whitespace-nowrap">
+                <h1 className="text-lg sm:text-xl font-bold text-brand-700 dark:text-brand-400 leading-tight whitespace-nowrap">
                   {brandName}
                   {sectionTitle && <span className="hidden sm:inline"> — {sectionTitle}</span>}
                 </h1>
                 {headerExtra}
               </div>
-              <p className="text-xs text-slate-500 truncate">
+              <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
                 {sectionTitle ? (
                   <>
                     <span className="sm:hidden">{sectionTitle}</span>

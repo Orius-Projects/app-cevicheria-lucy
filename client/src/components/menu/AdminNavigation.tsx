@@ -159,8 +159,8 @@ export const AdminNavigation: React.FC<AdminNavigationProps> = ({ onItemClick, c
           className={({ isActive }) =>
             `group flex items-center gap-3 px-3.5 py-3 text-sm rounded-xl font-medium transition-all min-h-[44px] ${
               isActive
-                ? 'bg-brand-50 text-brand-700 font-semibold shadow-xs border border-brand-100'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 border border-transparent'
+                ? 'bg-brand-50 dark:bg-marine-800 text-brand-700 dark:text-brand-300 font-semibold shadow-xs border border-brand-100 dark:border-slate-700'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-marine-800/80 border border-transparent'
             }`
           }
         >
@@ -168,7 +168,7 @@ export const AdminNavigation: React.FC<AdminNavigationProps> = ({ onItemClick, c
             <>
               <tab.icon
                 className={`w-5 h-5 flex-shrink-0 transition-colors ${
-                  isActive ? 'text-brand-700' : 'text-slate-400 group-hover:text-slate-600'
+                  isActive ? 'text-brand-700 dark:text-brand-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'
                 }`}
               />
               <span className="truncate flex-1 text-left">{tab.label}</span>

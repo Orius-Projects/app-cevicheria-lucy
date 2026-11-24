@@ -38,28 +38,28 @@ export const DishCard: React.FC<DishCardProps> = ({
     <div
       data-testid="dish-card"
       data-dish-id={item.dishId}
-      className={`bg-white rounded-2xl border p-4 sm:p-5 flex flex-col justify-between shadow-sm transition-all ${
+      className={`bg-white dark:bg-marine-900 rounded-2xl border p-4 sm:p-5 flex flex-col justify-between shadow-sm transition-all ${
         isSoldOut
-          ? 'border-rose-200 bg-rose-50/20 opacity-80'
+          ? 'border-rose-200 dark:border-rose-800 bg-rose-50/20 dark:bg-rose-950/20 opacity-80'
           : isInactive
-          ? 'border-slate-200 bg-slate-50 opacity-60'
-          : 'border-slate-200 hover:shadow-md'
+          ? 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-marine-950 opacity-60'
+          : 'border-slate-200 dark:border-slate-800 hover:shadow-md'
       }`}
     >
       <div className="space-y-3">
         {/* Header de la tarjeta */}
         <div className="flex justify-between items-start gap-2">
           <div className="space-y-1">
-            <span className="text-[11px] px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-semibold tracking-wide uppercase">
+            <span className="text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-marine-800 text-slate-600 dark:text-slate-300 font-semibold tracking-wide uppercase">
               {item.sectionKey}
             </span>
-            <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug">
               {item.dishName}
             </h3>
           </div>
 
           <div className="text-right">
-            <span className="text-lg font-black text-brand-700">
+            <span className="text-lg font-black text-brand-700 dark:text-brand-400">
               S/ {(item.priceCents / 100).toFixed(2)}
             </span>
           </div>
@@ -78,7 +78,7 @@ export const DishCard: React.FC<DishCardProps> = ({
 
         {/* Descripción del plato */}
         {description && (
-          <p className="text-xs text-slate-500 line-clamp-2">
+          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
             {description}
           </p>
         )}
@@ -86,14 +86,14 @@ export const DishCard: React.FC<DishCardProps> = ({
         {/* Variaciones sin costo */}
         {variations.length > 0 && (
           <div className="pt-1">
-            <p className="text-[11px] text-slate-400 font-medium mb-1">
+            <p className="text-[11px] text-slate-400 dark:text-slate-500 font-medium mb-1">
               Variaciones sin costo adicional:
             </p>
             <div className="flex flex-wrap gap-1">
               {variations.map((v) => (
                 <span
                   key={v.id}
-                  className="text-[11px] px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md border border-slate-200"
+                  className="text-[11px] px-2 py-0.5 bg-slate-100 dark:bg-marine-800 text-slate-700 dark:text-slate-300 rounded-md border border-slate-200 dark:border-slate-700"
                 >
                   {v.name}
                 </span>
@@ -105,7 +105,7 @@ export const DishCard: React.FC<DishCardProps> = ({
 
       {/* Botón Agregar para toma de pedidos */}
       {showAddButton && (
-        <div className="pt-4 border-t border-slate-100 mt-4">
+        <div className="pt-4 border-t border-slate-100 dark:border-slate-800 mt-4">
           <button
             type="button"
             disabled={!isAvailable}
@@ -113,7 +113,7 @@ export const DishCard: React.FC<DishCardProps> = ({
             className={`w-full py-2.5 px-4 rounded-xl text-sm font-bold min-h-[44px] flex items-center justify-center space-x-2 transition-all ${
               isAvailable
                 ? 'bg-brand-500 hover:bg-brand-400 text-brand-950 shadow-sm active:scale-[0.98]'
-                : 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed'
+                : 'bg-slate-100 dark:bg-marine-800 text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700 cursor-not-allowed'
             }`}
           >
             {isSoldOut ? (

@@ -236,31 +236,31 @@ export const ShiftClosePage: React.FC = () => {
             {/* SECCIÓN 1: PENDIENTES */}
             <section
               id="pendientes"
-              className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6"
+              className="bg-white dark:bg-marine-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-6"
             >
-              <div className="flex justify-between items-center border-b border-slate-100 pb-3">
+              <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
                 <div>
-                  <h2 className="text-base font-bold text-slate-900">
+                  <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">
                     1. Verificación de Pendientes
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Revisa que no existan pedidos en preparación ni mesas con sesión abierta antes de proceder al cierre.
                   </p>
                 </div>
 
                 {!hasPending && (
-                  <span className="text-xs font-bold px-3 py-1 bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-full">
+                  <span className="text-xs font-bold px-3 py-1 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 rounded-full">
                     Todo cerrado
                   </span>
                 )}
               </div>
 
               {!hasPending ? (
-                <div className="p-6 bg-emerald-50 border border-emerald-200 rounded-xl text-center space-y-1">
-                  <p className="text-sm font-bold text-emerald-900">
+                <div className="p-6 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-xl text-center space-y-1">
+                  <p className="text-sm font-bold text-emerald-900 dark:text-emerald-200">
                     Todo cerrado
                   </p>
-                  <p className="text-xs text-emerald-700">
+                  <p className="text-xs text-emerald-700 dark:text-emerald-400">
                     No existen pedidos activos ni mesas abiertas. El turno está listo para ser cerrado.
                   </p>
                 </div>
@@ -269,10 +269,10 @@ export const ShiftClosePage: React.FC = () => {
                   {/* Pedidos activos */}
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                         Pedidos Activos ({openOrders.length})
                       </h3>
-                      <span className="text-[11px] text-slate-500">
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400">
                         ENVIADO o LISTO
                       </span>
                     </div>
@@ -287,10 +287,10 @@ export const ShiftClosePage: React.FC = () => {
                   {/* Mesas abiertas */}
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                         Mesas Abiertas ({openTables.length})
                       </h3>
-                      <span className="text-[11px] text-slate-500">
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400">
                         Sesiones activas
                       </span>
                     </div>
@@ -307,13 +307,13 @@ export const ShiftClosePage: React.FC = () => {
             {/* SECCIÓN 2: RESUMEN */}
             <section
               id="resumen"
-              className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6"
+              className="bg-white dark:bg-marine-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-6"
             >
               <div>
-                <h2 className="text-base font-bold text-slate-900">
+                <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">
                   2. Resumen Operativo del Turno
                 </h2>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   Consolidado de platos vendidos, disponibilidad de raciones, agotados y cancelaciones.
                 </p>
               </div>
@@ -324,7 +324,7 @@ export const ShiftClosePage: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
                 {/* Platos vendidos */}
                 <div className="space-y-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                     Platos Vendidos (Solo Entregados)
                   </h3>
                   <SoldDishesTable soldDishes={summary?.soldDishes || []} />
@@ -332,7 +332,7 @@ export const ShiftClosePage: React.FC = () => {
 
                 {/* Raciones restantes */}
                 <div className="space-y-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                     Raciones Restantes
                   </h3>
                   <RemainingRationsTable
@@ -343,10 +343,10 @@ export const ShiftClosePage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2 border-t border-slate-100">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2 border-t border-slate-100 dark:border-slate-800">
                 {/* Agotados */}
                 <div className="space-y-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                     Platos Agotados
                   </h3>
                   <SoldOutList soldOutDishes={summary?.soldOutDishes || []} />
@@ -354,7 +354,7 @@ export const ShiftClosePage: React.FC = () => {
 
                 {/* Cancelaciones */}
                 <div className="space-y-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                     Pedidos Cancelados
                   </h3>
                   <CancellationsTable
@@ -367,14 +367,14 @@ export const ShiftClosePage: React.FC = () => {
             {/* SECCIÓN 3: REGISTROS MANUALES (PAPER) */}
             <section
               id="registros-manuales"
-              className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4"
+              className="bg-white dark:bg-marine-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
                 <div>
-                  <h2 className="text-base font-bold text-slate-900">
+                  <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">
                     3. Registros Manuales por Contingencia (PAPER)
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Consumos atendidos en físico durante corte o falla de red. Se registran de forma independiente sin afectar cocina.
                   </p>
                 </div>
@@ -383,7 +383,7 @@ export const ShiftClosePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setShowManualRecordModal(true)}
-                    className="min-h-[44px] px-4 py-2 bg-brand-50 hover:bg-brand-100 text-brand-800 border border-brand-200 rounded-xl text-xs font-bold transition-colors shrink-0"
+                    className="min-h-[44px] px-4 py-2 bg-brand-50 dark:bg-marine-800 hover:bg-brand-100 dark:hover:bg-marine-700 text-brand-800 dark:text-brand-300 border border-brand-200 dark:border-slate-700 rounded-xl text-xs font-bold transition-colors shrink-0"
                   >
                     + Registrar en papel
                   </button>
@@ -391,11 +391,11 @@ export const ShiftClosePage: React.FC = () => {
               </div>
 
               {(!summary?.manualRecords || summary.manualRecords.length === 0) ? (
-                <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center text-sm text-slate-500">
+                <div className="p-4 bg-slate-50 dark:bg-marine-950 border border-slate-200 dark:border-slate-800 rounded-xl text-center text-sm text-slate-500 dark:text-slate-400">
                   No hay registros manuales en papel para este turno.
                 </div>
               ) : (
-                <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+                <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-marine-900">
                   <table className="w-full text-left text-sm">
                     <thead className="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-500">
                       <tr>

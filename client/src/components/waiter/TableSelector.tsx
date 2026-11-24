@@ -184,21 +184,21 @@ const ZONES: ZoneDefinition[] = [
 
 const statusColors: Record<TableStatus, { bg: string; text: string; border: string; label: string }> = {
   LIBRE: {
-    bg: 'bg-emerald-50/80 hover:bg-emerald-100/90',
-    text: 'text-emerald-800',
-    border: 'border-emerald-300',
+    bg: 'bg-emerald-50/80 hover:bg-emerald-100/90 dark:bg-emerald-950/40 dark:hover:bg-emerald-950/70',
+    text: 'text-emerald-800 dark:text-emerald-300',
+    border: 'border-emerald-300 dark:border-emerald-700/80',
     label: 'Libre'
   },
   OCUPADA: {
-    bg: 'bg-amber-50/90 hover:bg-amber-100',
-    text: 'text-amber-800',
-    border: 'border-amber-300',
+    bg: 'bg-amber-50/90 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-950/70',
+    text: 'text-amber-800 dark:text-amber-300',
+    border: 'border-amber-300 dark:border-amber-700/80',
     label: 'Ocupada'
   },
   POR_CERRAR: {
-    bg: 'bg-rose-50/90 hover:bg-rose-100',
-    text: 'text-rose-800',
-    border: 'border-rose-300',
+    bg: 'bg-rose-50/90 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-950/70',
+    text: 'text-rose-800 dark:text-rose-300',
+    border: 'border-rose-300 dark:border-rose-700/80',
     label: 'Por Cerrar'
   }
 };
@@ -350,14 +350,14 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
         {/* Cabecera de la mesa: Código + Ícono (Mesa si libre, Banderita si ocupada) */}
         <div className="w-full flex justify-between items-center gap-2">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-white/80 border border-slate-200/60 flex items-center justify-center shrink-0 shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-white/80 dark:bg-marine-800 border border-slate-200/60 dark:border-slate-700 flex items-center justify-center shrink-0 shadow-xs">
               {isOccupied ? (
-                <FlagIcon className="w-5 h-5 text-amber-600" />
+                <FlagIcon className="w-5 h-5 text-amber-600 dark:text-amber-400" />
               ) : (
-                <TableIcon className="w-5 h-5 text-emerald-600" />
+                <TableIcon className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               )}
             </div>
-            <span className="text-lg font-bold text-slate-800 tracking-tight leading-none block">
+            <span className="text-lg font-bold text-slate-800 dark:text-slate-100 tracking-tight leading-none block">
               {table.code}
             </span>
           </div>
@@ -365,7 +365,7 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
           {/* Badges: Borrador pendiente + Estado operativo */}
           <div className="flex items-center gap-1.5 shrink-0">
             {draftCount > 0 && (
-              <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-brand-100 text-brand-900 border border-brand-300">
+              <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-brand-100 dark:bg-brand-900/60 text-brand-900 dark:text-brand-200 border border-brand-300 dark:border-brand-700">
                 📝 {draftCount}
               </span>
             )}
@@ -387,19 +387,19 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
     IconComponent: React.ComponentType<{ className?: string }>,
     zoneTables: TableItem[]
   ) => (
-    <div className="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-xs space-y-3.5">
+    <div className="bg-white dark:bg-marine-900 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3.5">
       {/* Cabecera del espacio */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+      <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-brand-50 border border-brand-200/80 flex items-center justify-center text-brand-700 shadow-xs shrink-0">
-            <IconComponent className="w-5 h-5 text-brand-700" />
+          <div className="w-10 h-10 rounded-2xl bg-brand-50 dark:bg-marine-800 border border-brand-200/80 dark:border-slate-700 flex items-center justify-center text-brand-700 dark:text-brand-300 shadow-xs shrink-0">
+            <IconComponent className="w-5 h-5 text-brand-700 dark:text-brand-300" />
           </div>
-          <h3 className="text-base font-semibold text-slate-900 leading-tight">{title}</h3>
+          <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100 leading-tight">{title}</h3>
         </div>
       </div>
 
       {zoneTables.length === 0 ? (
-        <div className="p-4 text-center text-xs text-slate-400 bg-slate-50 rounded-2xl">
+        <div className="p-4 text-center text-xs text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-marine-950/50 rounded-2xl">
           No hay mesas configuradas en este ambiente.
         </div>
       ) : (
@@ -423,7 +423,7 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
           onMouseLeave={handleMouseUpOrLeave}
           role="tablist"
           aria-label="Filtrar por ambientes"
-          className="flex items-center gap-1.5 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/80 overflow-x-auto max-w-full min-w-0 scrollbar-none snap-x cursor-grab active:cursor-grabbing select-none"
+          className="flex items-center gap-1.5 p-1 bg-slate-100/90 dark:bg-marine-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 overflow-x-auto max-w-full min-w-0 scrollbar-none snap-x cursor-grab active:cursor-grabbing select-none"
         >
           {ZONES.map((zone) => {
             const isActive = activeZone === zone.key;
@@ -444,14 +444,14 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
                 className={`shrink-0 snap-start px-3.5 py-2 rounded-xl text-xs font-bold min-h-[44px] flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2 ${
                   isActive
                     ? 'bg-brand-500 text-brand-950 shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/70 dark:hover:bg-marine-800'
                 }`}
               >
                 <ZoneIcon className="w-4 h-4 shrink-0" />
                 <span>{zone.label}</span>
                 <span
                   className={`text-[10px] px-1.5 py-0.5 rounded-full font-black ${
-                    isActive ? 'bg-brand-950/10 text-brand-950' : 'bg-slate-200 text-slate-700'
+                    isActive ? 'bg-brand-950/10 text-brand-950' : 'bg-slate-200 dark:bg-marine-800 text-slate-700 dark:text-slate-300'
                   }`}
                 >
                   {countBadge}
@@ -465,7 +465,7 @@ export const TableSelector: React.FC<TableSelectorProps> = ({
         <button
           type="button"
           onClick={() => fetchTables()}
-          className="text-xs font-bold text-brand-700 hover:text-brand-800 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl px-3.5 py-2 min-h-[44px] flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer ml-auto"
+          className="text-xs font-bold text-brand-700 dark:text-brand-400 hover:text-brand-800 dark:hover:text-brand-300 bg-white dark:bg-marine-900 hover:bg-slate-50 dark:hover:bg-marine-800 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 rounded-xl px-3.5 py-2 min-h-[44px] flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer ml-auto"
         >
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <polyline points="23 4 23 10 17 10" />

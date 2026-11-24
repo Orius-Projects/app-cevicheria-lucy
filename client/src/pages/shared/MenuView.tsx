@@ -57,20 +57,20 @@ export const MenuView: React.FC<MenuViewProps> = ({
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 dark:bg-marine-950 text-slate-900 dark:text-slate-100 flex flex-col transition-colors duration-200">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 shadow-sm">
+      <header className="bg-white dark:bg-marine-900 border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 shadow-sm">
         <div className="min-w-0">
           <div className="flex items-center gap-2 min-w-0">
-            <h1 className="text-lg sm:text-xl font-bold text-brand-700 whitespace-nowrap">
+            <h1 className="text-lg sm:text-xl font-bold text-brand-700 dark:text-brand-400 whitespace-nowrap">
               Cevichería Lucy
               <span className="hidden sm:inline"> — Menú del Día</span>
             </h1>
-            <span className="shrink-0 text-xs px-2.5 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-full">
+            <span className="shrink-0 text-xs px-2.5 py-0.5 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold rounded-full">
               En Vivo
             </span>
           </div>
-          <p className="text-xs text-slate-500 truncate">
+          <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
             <span className="sm:hidden">Menú del Día · </span>
             {user?.displayName} ({user?.role}) {todayMenu?.date && `• ${todayMenu.date}`}
           </p>
@@ -80,7 +80,7 @@ export const MenuView: React.FC<MenuViewProps> = ({
           {user?.role === 'MOZO' && (
             <Link
               to="/mozo"
-              className="text-xs px-3 py-2 min-h-[44px] bg-brand-50 text-brand-700 hover:bg-brand-100 rounded-lg font-semibold flex items-center border border-brand-200"
+              className="text-xs px-3 py-2 min-h-[44px] bg-brand-50 dark:bg-marine-800 text-brand-700 dark:text-brand-300 hover:bg-brand-100 dark:hover:bg-marine-700 rounded-lg font-semibold flex items-center border border-brand-200 dark:border-slate-700"
             >
               ← Volver al Salón
             </Link>
@@ -89,7 +89,7 @@ export const MenuView: React.FC<MenuViewProps> = ({
           {user?.role === 'ENCARGADO' && (
             <Link
               to="/encargado"
-              className="text-xs px-3 py-2 min-h-[44px] bg-brand-50 text-brand-700 hover:bg-brand-100 rounded-lg font-semibold flex items-center border border-brand-200"
+              className="text-xs px-3 py-2 min-h-[44px] bg-brand-50 dark:bg-marine-800 text-brand-700 dark:text-brand-300 hover:bg-brand-100 dark:hover:bg-marine-700 rounded-lg font-semibold flex items-center border border-brand-200 dark:border-slate-700"
             >
               ← Administración
             </Link>
@@ -97,7 +97,7 @@ export const MenuView: React.FC<MenuViewProps> = ({
 
           <button
             onClick={() => logout()}
-            className="text-xs px-3 py-2 min-h-[44px] text-slate-600 hover:text-slate-900 border border-slate-300 rounded-lg"
+            className="text-xs px-3 py-2 min-h-[44px] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-slate-700 rounded-lg"
           >
             Cerrar sesión
           </button>
@@ -110,18 +110,18 @@ export const MenuView: React.FC<MenuViewProps> = ({
         {soldOutToast && (
           <div
             data-testid="sold-out-toast"
-            className="p-4 bg-rose-50 border-l-4 border-rose-500 rounded-r-xl text-rose-900 shadow-md flex justify-between items-center animate-fade-in"
+            className="p-4 bg-rose-50 dark:bg-rose-950/50 border-l-4 border-rose-500 rounded-r-xl text-rose-900 dark:text-rose-200 shadow-md flex justify-between items-center animate-fade-in"
           >
             <div className="flex items-center space-x-3">
               <span className="text-xl">⚠️</span>
               <div>
                 <p className="text-sm font-bold">{soldOutToast}</p>
-                <p className="text-xs text-rose-700">Comunica de inmediato al comensal para que elija otra opción de la carta.</p>
+                <p className="text-xs text-rose-700 dark:text-rose-400">Comunica de inmediato al comensal para que elija otra opción de la carta.</p>
               </div>
             </div>
             <button
               onClick={clearSoldOutToast}
-              className="text-rose-600 hover:text-rose-900 font-bold px-3 py-1 text-sm min-h-[44px]"
+              className="text-rose-600 dark:text-rose-400 hover:text-rose-900 dark:hover:text-white font-bold px-3 py-1 text-sm min-h-[44px]"
             >
               Entendido ×
             </button>
@@ -130,7 +130,7 @@ export const MenuView: React.FC<MenuViewProps> = ({
 
         {/* Mensaje de error general */}
         {error && (
-          <div className="p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-sm flex justify-between items-center">
+          <div className="p-4 bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 rounded-xl text-sm flex justify-between items-center">
             <span>{error}</span>
             <button
               onClick={() => loadToday()}
@@ -142,7 +142,7 @@ export const MenuView: React.FC<MenuViewProps> = ({
         )}
 
         {/* Barra de Filtros y Búsqueda */}
-        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 min-w-0">
+        <div className="bg-white dark:bg-marine-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 min-w-0">
           <MenuSectionTabs
             sections={sections}
             activeSectionKey={activeSectionKey}
@@ -156,14 +156,14 @@ export const MenuView: React.FC<MenuViewProps> = ({
               placeholder="Buscar plato..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="px-3 py-2 border border-slate-300 rounded-lg text-sm min-h-[44px] w-full sm:w-60 focus:outline-none focus:ring-1 focus:ring-brand-600"
+              className="px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-marine-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 rounded-lg text-sm min-h-[44px] w-full sm:w-60 focus:outline-none focus:ring-1 focus:ring-brand-600"
             />
 
             <button
               type="button"
               onClick={() => loadToday()}
               title="Refrescar menú"
-              className="p-2 border border-slate-300 rounded-lg hover:bg-slate-50 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-600"
+              className="p-2 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-marine-800 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-600 dark:text-slate-300"
             >
               ↻
             </button>
@@ -174,7 +174,7 @@ export const MenuView: React.FC<MenuViewProps> = ({
         {loading && !todayMenu ? (
           <div className="text-center py-16 text-slate-400">Cargando menú del día...</div>
         ) : !todayMenu ? (
-          <div className="bg-white p-12 rounded-2xl border border-dashed border-slate-300 text-center space-y-2">
+          <div className="bg-white dark:bg-marine-900 p-12 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 text-center space-y-2">
             <div className="text-4xl">🍽️</div>
             <h3 className="text-base font-bold text-slate-800">Menú no publicado</h3>
             <p className="text-xs text-slate-500 max-w-sm mx-auto">

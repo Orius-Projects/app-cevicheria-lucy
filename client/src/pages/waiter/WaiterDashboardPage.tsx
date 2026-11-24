@@ -100,14 +100,14 @@ export const WaiterDashboardPage: React.FC = () => {
     : [];
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 dark:bg-marine-950 text-slate-900 dark:text-slate-100 flex flex-col transition-colors duration-200">
       {/* Banner de estado de conexión */}
       <ConnectionBanner />
 
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3 flex flex-wrap justify-between items-center gap-3 shadow-sm sticky top-0 z-40">
+      <header className="bg-white dark:bg-marine-900 border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-3 flex flex-wrap justify-between items-center gap-3 shadow-sm sticky top-0 z-40">
         <div className="flex items-center min-w-0">
-          <h1 className="text-xl font-semibold text-brand-700 tracking-tight truncate">
+          <h1 className="text-xl font-semibold text-brand-700 dark:text-brand-400 tracking-tight truncate">
             Salón
           </h1>
         </div>
@@ -116,10 +116,10 @@ export const WaiterDashboardPage: React.FC = () => {
           {isShiftOpen && (
             <Link
               to="/mozo/pedidos"
-              className="inline-flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 rounded-xl text-xs font-bold min-h-[44px] shadow-xs transition-all active:scale-95"
+              className="inline-flex items-center gap-2 px-3.5 py-2 bg-white dark:bg-marine-800 hover:bg-slate-50 dark:hover:bg-marine-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold min-h-[44px] shadow-xs transition-all active:scale-95"
             >
               <svg
-                className="w-4 h-4 text-slate-500 shrink-0"
+                className="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -135,7 +135,7 @@ export const WaiterDashboardPage: React.FC = () => {
                 <polyline points="10 9 9 9 8 9" />
               </svg>
               <span>Pedidos Activos</span>
-              <span className="px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-black border border-slate-200">
+              <span className="px-1.5 py-0.5 rounded-full bg-slate-100 dark:bg-marine-900 text-slate-700 dark:text-slate-200 text-[10px] font-black border border-slate-200 dark:border-slate-700">
                 {safeActive.length}
               </span>
             </Link>
@@ -143,10 +143,10 @@ export const WaiterDashboardPage: React.FC = () => {
 
           <Link
             to="/mozo/menu"
-            className="inline-flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200 hover:border-slate-300 rounded-xl text-xs font-bold min-h-[44px] shadow-xs transition-all active:scale-95"
+            className="inline-flex items-center gap-2 px-3.5 py-2 bg-white dark:bg-marine-800 hover:bg-slate-50 dark:hover:bg-marine-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold min-h-[44px] shadow-xs transition-all active:scale-95"
           >
             <svg
-              className="w-4 h-4 text-slate-500 shrink-0"
+              className="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -163,7 +163,7 @@ export const WaiterDashboardPage: React.FC = () => {
             <span>Ver Menú</span>
           </Link>
 
-          <div className="h-5 w-px bg-slate-200 mx-1 hidden sm:block" />
+          <div className="h-5 w-px bg-slate-200 dark:bg-slate-700 mx-1 hidden sm:block" />
 
           {/* Notificaciones */}
           <NotificationCenter variant="light" />
@@ -233,7 +233,7 @@ export const WaiterDashboardPage: React.FC = () => {
                     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
                     <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                   </svg>
-                  <h2 id="ready-orders-heading" className="text-lg font-semibold text-slate-900">
+                  <h2 id="ready-orders-heading" className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                     Listos para Servir en Mesa ({safeReady.length})
                   </h2>
                 </div>
@@ -269,33 +269,33 @@ export const WaiterDashboardPage: React.FC = () => {
       {/* Modal Popup de Mesa Seleccionada */}
       {selectedTable && (
         <div
-          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-slate-900/60 dark:bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedTable(null)}
           role="presentation"
         >
           <div
-            className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-5 max-h-[90dvh] overflow-y-auto"
+            className="bg-white dark:bg-marine-900 text-slate-900 dark:text-slate-100 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-5 max-h-[90dvh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
             aria-labelledby="table-modal-title"
           >
-            <div className="flex justify-between items-center border-b border-slate-100 pb-3.5">
+            <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3.5">
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-brand-50 border border-brand-200 flex items-center justify-center text-brand-700 shadow-xs">
-                  <TableIcon className="w-6 h-6 text-brand-700" />
+                <div className="w-11 h-11 rounded-2xl bg-brand-50 dark:bg-marine-800 border border-brand-200 dark:border-slate-700 flex items-center justify-center text-brand-700 dark:text-brand-300 shadow-xs">
+                  <TableIcon className="w-6 h-6 text-brand-700 dark:text-brand-300" />
                 </div>
                 <div className="flex items-center gap-2">
-                  <h3 id="table-modal-title" className="text-xl font-medium text-slate-800">
+                  <h3 id="table-modal-title" className="text-xl font-medium text-slate-800 dark:text-slate-100">
                     Mesa {selectedTable.code}
                   </h3>
                   <span
                     className={`text-xs px-2.5 py-0.5 rounded-full font-normal ${
                       selectedTable.state === 'LIBRE'
-                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                        ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-700'
                         : selectedTable.state === 'OCUPADA'
-                        ? 'bg-amber-100 text-amber-800 border border-amber-200'
-                        : 'bg-rose-100 text-rose-800 border border-rose-200'
+                        ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-700'
+                        : 'bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-700'
                     }`}
                   >
                     {selectedTable.state}
@@ -306,7 +306,7 @@ export const WaiterDashboardPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSelectedTable(null)}
-                className="bg-slate-100 hover:bg-slate-200/80 text-slate-500 hover:text-slate-700 rounded-full p-1.5 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center font-normal text-base cursor-pointer"
+                className="bg-slate-100 dark:bg-marine-800 hover:bg-slate-200/80 dark:hover:bg-marine-700 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-full p-1.5 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center font-normal text-base cursor-pointer"
                 aria-label="Cerrar modal"
               >
                 ✕
@@ -314,7 +314,7 @@ export const WaiterDashboardPage: React.FC = () => {
             </div>
 
             {tableActionError && (
-              <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl" aria-live="polite">
+              <div className="p-3 bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs rounded-xl" aria-live="polite">
                 {tableActionError}
               </div>
             )}
@@ -336,26 +336,26 @@ export const WaiterDashboardPage: React.FC = () => {
 
               {/* Pedidos activos de esta mesa */}
               {tableActiveOrders.length > 0 && (
-                <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                  <span className="text-xs font-medium text-slate-700 uppercase tracking-wider block">
+                <div className="p-3.5 bg-slate-50 dark:bg-marine-950/60 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-2">
+                  <span className="text-xs font-medium text-slate-700 dark:text-slate-300 uppercase tracking-wider block">
                     Comandas activas en esta mesa ({tableActiveOrders.length}):
                   </span>
                   <div className="space-y-1.5 max-h-36 overflow-y-auto">
                     {tableActiveOrders.map((ord) => (
-                      <div key={ord.id} className="flex justify-between items-center text-xs bg-white p-2.5 rounded-xl border border-slate-200">
+                      <div key={ord.id} className="flex justify-between items-center text-xs bg-white dark:bg-marine-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
                         <div>
-                          <span className="font-medium text-slate-900">#{ord.orderNumber}</span>
-                          <span className="text-slate-500 ml-2">({ord.items.length} platos)</span>
+                          <span className="font-medium text-slate-900 dark:text-slate-100">#{ord.orderNumber}</span>
+                          <span className="text-slate-500 dark:text-slate-400 ml-2">({ord.items.length} platos)</span>
                         </div>
                         <div className="flex items-center space-x-2">
                           <span className={`text-[10px] font-normal px-2 py-0.5 rounded ${
-                            ord.status === 'LISTO' ? 'bg-emerald-100 text-emerald-800' : 'bg-brand-100 text-brand-800'
+                            ord.status === 'LISTO' ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700' : 'bg-brand-100 dark:bg-brand-950/60 text-brand-800 dark:text-brand-300 border border-brand-300 dark:border-brand-700'
                           }`}>
                             {ord.status}
                           </span>
                           <Link
                             to={`/mozo/pedidos/${ord.id}`}
-                            className="text-brand-700 hover:text-brand-800 font-medium underline px-1 py-1 min-h-[44px] flex items-center"
+                            className="text-brand-700 dark:text-brand-400 hover:text-brand-800 dark:hover:text-brand-300 font-medium underline px-1 py-1 min-h-[44px] flex items-center"
                           >
                             Ver →
                           </Link>
@@ -368,10 +368,10 @@ export const WaiterDashboardPage: React.FC = () => {
 
               {/* Accion de Cierre de Mesa */}
               {selectedTable.state === 'POR_CERRAR' && selectedTable.openSessionId && (
-                <div className="p-4 bg-rose-50/70 rounded-2xl border border-rose-200 space-y-3">
+                <div className="p-4 bg-rose-50/70 dark:bg-rose-950/40 rounded-2xl border border-rose-200 dark:border-rose-800 space-y-3">
                   <div>
-                    <h4 className="text-xs font-medium text-rose-900 uppercase tracking-wider">Cierre de Sesión de Mesa</h4>
-                    <p className="text-xs text-rose-700">Todos los pedidos han sido entregados. Puedes liberar la mesa.</p>
+                    <h4 className="text-xs font-medium text-rose-900 dark:text-rose-300 uppercase tracking-wider">Cierre de Sesión de Mesa</h4>
+                    <p className="text-xs text-rose-700 dark:text-rose-400">Todos los pedidos han sido entregados. Puedes liberar la mesa.</p>
                   </div>
 
                   <input
@@ -379,7 +379,7 @@ export const WaiterDashboardPage: React.FC = () => {
                     value={closeNotes}
                     onChange={(e) => setCloseNotes(e.target.value)}
                     placeholder="Observaciones de cierre (ej. Limpia y desinfectada)"
-                    className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs min-h-[44px] bg-white"
+                    className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-xl text-xs min-h-[44px] bg-white dark:bg-marine-950 text-slate-900 dark:text-slate-100"
                   />
 
                   <button
@@ -396,7 +396,7 @@ export const WaiterDashboardPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSelectedTable(null)}
-                className="w-full py-2.5 text-xs font-normal text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200/80 rounded-xl transition-colors min-h-[44px] cursor-pointer"
+                className="w-full py-2.5 text-xs font-normal text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white bg-slate-100 dark:bg-marine-800 hover:bg-slate-200/80 dark:hover:bg-marine-700 rounded-xl transition-colors min-h-[44px] cursor-pointer"
               >
                 Cancelar
               </button>
