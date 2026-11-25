@@ -563,9 +563,10 @@ describe('Módulo de Pedidos y Concurrencia (T053–T065, T077)', () => {
         $set: { hasRationsLimit: true, totalRations: 10, remainingRations: 5 }
       });
 
-      // Crear Menú B para otra fecha con el mismo plato
+      // Crear Menú B para otra fecha con el mismo plato (fecha fija futura para no
+      // colisionar nunca con el menú del día que siembra seedData)
       const menuDayB = await MenuDay.create({
-        date: '2026-11-25',
+        date: '2099-12-31',
         status: 'PUBLICADO',
         notes: 'Menú futuro'
       });

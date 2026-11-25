@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuthStore } from '../../stores/authStore';
 import { useTablesStore, TableItem } from '../../stores/tablesStore';
 import { useOrdersStore } from '../../stores/ordersStore';
 import { useShiftStore } from '../../stores/shiftStore';
@@ -19,7 +18,6 @@ import { OrderDTO } from '@cevicheria/shared';
 
 export const WaiterDashboardPage: React.FC = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
   const { tables, closeSession } = useTablesStore();
   const { active, ready, deliverOrder, cancelOrder, error, clearError } = useOrdersStore();
   const { currentShift, isOpen: isShiftOpen, fetchCurrentShift } = useShiftStore();
